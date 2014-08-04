@@ -40,11 +40,11 @@
   <component name="libraryTable">
     <library name="openfl-html5-dom" type="Haxe">
       <CLASSES>
-        <root url="file:///usr/lib/haxe/lib/openfl-html5-dom/1,2,1" />
+        <root url="file://$PROJECT_DIR$/lib/openfl-html5-dom" />
       </CLASSES>
       <JAVADOC />
       <SOURCES>
-        <root url="file:///usr/lib/haxe/lib/openfl-html5-dom/1,2,1" />
+        <root url="file://$PROJECT_DIR$/lib/openfl-html5-dom" />
       </SOURCES>
     </library>
   </component>
