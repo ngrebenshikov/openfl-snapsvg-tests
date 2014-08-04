@@ -7,7 +7,7 @@ class DisplayObjectTest extends TestCase {
         var s = new Sprite();
         Lib.current.addChild(s);
 
-        assertTrue(s.graphics.__snap.parent() != null);
-        assertTrue(s.graphics.__snap.parent().node == Lib.current.graphics.__snap.node);
+        assertTrue(s.snap.parent() != null);
+        assertTrue(s.snap.parent().node == Lib.current.snap.node);
     }
 }
