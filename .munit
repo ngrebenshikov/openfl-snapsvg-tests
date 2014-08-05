@@ -5,4 +5,4 @@ report=report
 hxml=test.hxml
 classPaths=src
 templates=templates/munit
-resources=templates/munit/resources
+resources=bin/munit-resources

@@ -1,5 +1,9 @@
 package flash.display;
 
+import massive.munit.Assert;
+import massive.munit.async.AsyncFactory;
+import flash.events.Event;
+
 class GraphicsTest {
     @Test
     public function testLineTo() {
@@ -17,20 +21,25 @@ class GraphicsTest {
         //g.clear();
     }
 
-    public function testCurveTo() {
+    @AsyncTest
+    public function testCurveTo(asyncFactory: AsyncFactory) {
         var g: Graphics = Lib.current.graphics;
 
         g.lineStyle(5, 0x0000FF);
         g.moveTo(250, 200);
         g.curveTo(300, 0, 350, 200);
         g.curveTo(400, 450 , 500, 200);
-        Lib.__getStage().addEventListener("STAGE_RENDERED", assertsTestCurveTo);
+        testCurveHandler = asyncFactory.createHandler(this, assertsTestCurveTo, 300);
+        Lib.__getStage().addEventListener(Event.STAGE_RENDERED, testCurveHandler);
     }
 
-    private function assertsTestCurveTo(args: Dynamic) {
-        Lib.__getStage().removeEventListener("STAGE_RENDERED", assertsTestCurveTo);
+    private var testCurveHandler: Dynamic;
+
+    private function assertsTestCurveTo() {
+        Lib.__getStage().removeEventListener(Event.STAGE_RENDERED, testCurveHandler);
+        testCurveHandler = null;
         var g: Graphics = Lib.current.graphics;
         trace(g.__snap);
-        assertTrue(true);
+        Assert.isTrue(true);
     }
 }
