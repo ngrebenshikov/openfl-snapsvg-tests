@@ -3,7 +3,7 @@
     <meta title="openfl-svg-tests" package="openfl-svg-test" version="0.0.1" company="Nick Grebenshikov" />
 
     <!-- output -->
-    <app main="Main" file="openfl-svg-tests" path="bin" />
+    <app main="TestMain" file="openfl-svg-tests" path="bin" />
 
     <window width="0" height="0" background="0xFFFFFF" fps="60"/>
 
@@ -12,6 +12,8 @@
 
     <haxelib name="openfl" />
     <haxelib name="openfl-snapsvg"/>
+    <haxelib name="munit"/>
+    <haxelib name="hamcrest"/>
 
     <template path="templates" />
 

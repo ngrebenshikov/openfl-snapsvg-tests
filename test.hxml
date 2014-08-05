@@ -1,0 +1,7 @@
+## JavaScript
+-cmd openfl build project.xml html5 -Dtest --haxelib="munit" --haxelib="hamcrest" --source="test" --app-main="TestMain"
+##-cmd mv bin/html5/bin/openfl-svg-tests.js bin/openfl-svg-tests.js
+-cmd cp bin/html5/bin/snap.svg.js bin/munit-resources/snap.svg.js
+##-cmd cp bin/html5/bin/openfl-svg-tests.js.map bin/munit-resources/openfl-svg-tests.js.map
+##-cmd cp -avr /Users/ngrebenshikov/repositories/openfl-snapsvg bin/munit-resources/Users/ngrebenshikov/repositories/openfl-snapsvg
+-js bin/html5/bin/openfl-svg-tests.js

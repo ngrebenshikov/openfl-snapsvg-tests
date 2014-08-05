@@ -1,9 +1,7 @@
 package flash.display;
 
-import haxe.unit.TestCase;
-
-class GraphicsTest extends TestCase {
-
+class GraphicsTest {
+    @Test
     public function testLineTo() {
         var g:Graphics = Lib.current.graphics;
         g.lineStyle();

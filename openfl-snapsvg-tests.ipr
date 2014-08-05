@@ -36,8 +36,27 @@
   </component>
   <component name="VcsDirectoryMappings">
     <mapping directory="" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/../openfl-snapsvg" vcs="Git" />
   </component>
   <component name="libraryTable">
+    <library name="hamcrest" type="Haxe">
+      <CLASSES>
+        <root url="file://$PROJECT_DIR$/lib/hamcrest" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES>
+        <root url="file://$PROJECT_DIR$/lib/hamcrest" />
+      </SOURCES>
+    </library>
+    <library name="munit" type="Haxe">
+      <CLASSES>
+        <root url="file://$PROJECT_DIR$/lib/munit" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES>
+        <root url="file://$PROJECT_DIR$/lib/munit" />
+      </SOURCES>
+    </library>
     <library name="openfl-html5-dom" type="Haxe">
       <CLASSES>
         <root url="file://$PROJECT_DIR$/lib/openfl-html5-dom" />
