@@ -6,6 +6,7 @@ import flash.events.Event;
 
 class GraphicsTest {
     private var g: Graphics;
+    private var sprite: Sprite;
 
     @BeforeClass
     public function beforeClass():Void {}
@@ -15,18 +16,21 @@ class GraphicsTest {
 
     @Before
     public function setup():Void {
-        g = Lib.current.graphics;
-        g.clear();
+        sprite = new Sprite();
+        g = sprite.graphics;
+        Lib.current.addChild(sprite);
     }
 
     @After
     public function tearDown():Void {
         g.clear();
+        Lib.current.removeChild(sprite);
+        sprite = null;
+        g = null;
     }
 
     @AsyncTest
     public function testLineTo1(asyncFactory: AsyncFactory) {
-        var g:Graphics = Lib.current.graphics;
         g.lineStyle(10, 0x123456, 0.4, true, LineScaleMode.NORMAL, CapsStyle.ROUND, JointStyle.BEVEL, 5);
         g.beginFill(0x654321, 0.4);
         g.moveTo(100,100);
@@ -48,7 +52,6 @@ class GraphicsTest {
 
     @AsyncTest
     public function testLineTo2(asyncFactory: AsyncFactory) {
-        var g:Graphics = Lib.current.graphics;
         g.lineStyle(10, 0x123456, 0.4, true, LineScaleMode.NONE, CapsStyle.SQUARE, JointStyle.ROUND, 5);
         g.beginFill(0x654321, 0.4);
         g.moveTo(23, 567);
@@ -69,8 +72,6 @@ class GraphicsTest {
 
     @AsyncTest
     public function testCurveTo(asyncFactory: AsyncFactory) {
-        var g: Graphics = Lib.current.graphics;
-
         g.lineStyle(5, 0x0000FF);
         g.moveTo(250, 200);
         g.curveTo(300, 0, 350, 200);
@@ -84,7 +85,6 @@ class GraphicsTest {
     private function assertsTestCurveTo() {
         Lib.__getStage().removeEventListener(Event.STAGE_RENDERED, testCurveHandler);
         testCurveHandler = null;
-        var g: Graphics = Lib.current.graphics;
         trace(g.__snap);
         Assert.isTrue(true);
     }
