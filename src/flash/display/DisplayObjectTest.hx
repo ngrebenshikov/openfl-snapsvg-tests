@@ -9,12 +9,12 @@ import massive.munit.Assert;
 class DisplayObjectTest {
     @Before
     public function setup():Void {
-        Lib.current.removeChildren();
+       Lib.current.removeChildren();
     }
 
     @After
     public function tearDown():Void {
-        Lib.current.removeChildren();
+       Lib.current.removeChildren();
     }
 
     @Test
@@ -67,4 +67,44 @@ class DisplayObjectTest {
 
     }
     private var testPositioningHandler: Dynamic;
+
+    @AsyncTest
+    public function testRotation1(asyncFactory: AsyncFactory) {
+        var child = new Sprite();
+
+        child.x = 150;
+        child.y = 150;
+        child.rotation = 15;
+        child.graphics.beginFill(0xff0000);
+        child.graphics.drawRect(-50,-50,100,100);
+
+        Lib.current.addChild(child);
+
+        testRotationHandler = asyncFactory.createHandler(this, function() {
+            Assert.areEqual("m0.966,0.259,-0.259,0.966,150,150", child.snap.attr("transform"));
+            Lib.__getStage().removeEventListener(Event.STAGE_RENDERED, testRotationHandler);
+        }, 300);
+        Lib.__getStage().addEventListener(Event.STAGE_RENDERED, testRotationHandler);
+    }
+    private var testRotationHandler: Dynamic;
+
+    @AsyncTest
+    public function testRotation2(asyncFactory: AsyncFactory) {
+        var child = new Sprite();
+
+        child.x = 150;
+        child.y = 150;
+        child.rotation = -15;
+        child.graphics.beginFill(0x00ff00);
+        child.graphics.drawRect(-50,-50,100,100);
+
+        Lib.current.addChild(child);
+
+        testRotationHandler = asyncFactory.createHandler(this, function() {
+            Assert.areEqual("m0.966,-0.259,0.259,0.966,150,150", child.snap.attr("transform"));
+            Lib.__getStage().removeEventListener(Event.STAGE_RENDERED, testRotationHandler);
+        }, 300);
+        Lib.__getStage().addEventListener(Event.STAGE_RENDERED, testRotationHandler);
+    }
+
 }
