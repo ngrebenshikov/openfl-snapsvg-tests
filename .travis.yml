@@ -38,5 +38,5 @@ script:
 
 after_script:
   - cat ./report/test/summary/js/summary.txt
-  - ls
+  - tree ./report
 
