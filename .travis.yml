@@ -16,7 +16,7 @@ install:
   - haxelib install lime-tools 1.2.9
   - haxelib install openfl 1.2.2
   - haxelib install openfl-html5-dom 1.2.1
-  - munit 2.1.0
+  - haxelib install munit 2.1.0
   - git clone https://github.com/mikedotalmond/MassiveUnit ~/munit --depth 1
   - haxelib dev munit ~/munit/src
   - cd ~/munit/tool
