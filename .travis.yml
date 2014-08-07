@@ -35,7 +35,7 @@ before_script:
   - sleep 3
 
 script:
-  - haxelib run munit test -js -browser phantomjs -result-exit-code
+  - haxelib run munit test -js -result-exit-code
 
 after_script:
   - cat ./report/test/summary/js/summary.txt
