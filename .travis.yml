@@ -12,10 +12,11 @@ install:
   - sudo apt-get install haxe -y --force-yes
   - mkdir ~/haxelib
   - haxelib setup ~/haxelib
-  - haxelib install lime
-  - haxelib install lime-tools
-  - haxelib install openfl
-  - haxelib install openfl-html5-dom
+  - haxelib install lime 0.9.4
+  - haxelib install lime-tools 1.2.9
+  - haxelib install openfl 1.2.2
+  - haxelib install openfl-html5-dom 1.2.1
+  - haxelib install munit 2.1.0
   - git clone https://github.com/ngrebenshikov/openfl-snapsvg ~/openfl-snapsvg --depth 1
   - haxelib dev openfl-snapsvg ~/openfl-snapsvg
   - git clone https://github.com/ngrebenshikov/openfl-snapsvg-tests ~/openfl-snapsvg-tests --depth 1
