@@ -12,12 +12,12 @@ class DisplayObjectTest {
 
     @Before
     public function setup():Void {
-       Lib.current.removeChildren();
+       //Lib.current.removeChildren();
     }
 
     @After
     public function tearDown():Void {
-       Lib.current.removeChildren();
+       //Lib.current.removeChildren();
     }
 
     @Test
@@ -136,4 +136,34 @@ class DisplayObjectTest {
         }, 300);
         Lib.__getStage().addEventListener(Event.STAGE_RENDERED, asyncHandler);
     }
+
+    @AsyncTest
+    public function testSize(asyncFactory: AsyncFactory) {
+        var child = new Sprite();
+
+        child.x = 150;
+        child.y = 150;
+        child.graphics.beginFill(0xff00ff);
+        child.graphics.drawRect(0,0,100,100);
+        Lib.current.addChild(child);
+
+        Assert.areEqual(100, child.width);
+        Assert.areEqual(100, child.height);
+        child.width = 205;
+        child.height = 301;
+        Assert.isTrue(Math.abs(205 - child.width) < 0.01);
+        Assert.isTrue(Math.abs(301 - child.height) < 0.01);
+        Assert.areEqual(2.05, child.scaleX);
+        Assert.areEqual(3.01, child.scaleY);
+
+        asyncHandler = asyncFactory.createHandler(this, function() {
+            Lib.__getStage().removeEventListener(Event.STAGE_RENDERED, asyncHandler);
+            Assert.areEqual("m2.05,0,0,3.01,150,150", child.snap.attr("transform"));
+            var box = child.snap.getBBox();
+            Assert.isTrue(Math.abs(205 - box.width) < 0.01);
+            Assert.isTrue(Math.abs(301 - box.height) < 0.01);
+        }, 300);
+        Lib.__getStage().addEventListener(Event.STAGE_RENDERED, asyncHandler);
+    }
+
 }
