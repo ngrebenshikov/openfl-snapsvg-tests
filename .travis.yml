@@ -17,8 +17,6 @@ install:
   - haxelib install openfl 1.2.2
   - haxelib install openfl-html5-dom 1.2.1
   - haxelib install munit 2.1.0
-  - git clone https://github.com/jgranick/MassiveUnit ~/munit --depth 1
-  - haxelib dev munit ~/munit/src
   - git clone https://github.com/ngrebenshikov/openfl-snapsvg ~/openfl-snapsvg --depth 1
   - haxelib dev openfl-snapsvg ~/openfl-snapsvg
   - git clone https://github.com/ngrebenshikov/openfl-snapsvg-tests ~/openfl-snapsvg-tests --depth 1
