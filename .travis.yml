@@ -30,6 +30,7 @@ install:
 before_script:
   - mkdir bin
   - mkdir bin/munit-resources
+  - mkdir report
   - sleep 3
 
 script:
