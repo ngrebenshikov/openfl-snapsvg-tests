@@ -36,6 +36,6 @@ script:
   - haxelib run munit test -js -browser phantomjs -result-exit-code
 
 after_script:
-  - cat report/test/summary/js/summary.txt
-  - ls report/test-runner
-  - phantomjs --version
+  - cat ./report/test/summary/js/summary.txt
+  - ls
+
