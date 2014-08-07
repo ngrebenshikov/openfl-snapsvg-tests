@@ -16,9 +16,7 @@ install:
   - haxelib install lime-tools 1.2.9
   - haxelib install openfl 1.2.2
   - haxelib install openfl-html5-dom 1.2.1
-  - haxelib install mlib
-  - haxelib install mcover
-  - haxelib install hamcrest
+  - munit 2.1.0
   - git clone https://github.com/mikedotalmond/MassiveUnit ~/munit --depth 1
   - haxelib dev munit ~/munit/src
   - cd ~/munit/tool
@@ -35,9 +33,8 @@ before_script:
   - sleep 3
 
 script:
-  - haxelib run munit test -js -browser firefox -result-exit-code
+  - haxelib run munit test -js -browser phantomjs -result-exit-code
 
 after_script:
   - cat ./report/test/summary/js/summary.txt
-  - ls
 
