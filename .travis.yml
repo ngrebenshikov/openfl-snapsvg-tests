@@ -37,3 +37,4 @@ script:
 
 after_script:
   - cat report/test/summary/js/summary.txt
+  - ls report/test-runner
