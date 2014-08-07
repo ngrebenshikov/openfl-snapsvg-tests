@@ -22,16 +22,18 @@ install:
   - haxelib install munit 2.1.0
   - git clone https://github.com/ngrebenshikov/openfl-snapsvg ~/openfl-snapsvg --depth 1
   - haxelib dev openfl-snapsvg ~/openfl-snapsvg
-  - git clone https://github.com/ngrebenshikov/openfl-snapsvg-tests ~/openfl-snapsvg-tests --depth 1
+  - git clone https://github.com/jgranick/MassiveUnit ~/munit --depth 1
+  - haxelib dev munit ~/munit/src
+  - cd ~/munit/tool
+  - haxe build.hxml
 
 before_script:
-  - cd ~/openfl-snapsvg-tests
   - mkdir bin
   - mkdir bin/munit-resources
   - sleep 3
 
 script:
-  - haxelib run munit test -js -browser firefox -result-exit-code
+  - haxelib run munit test -js -browser phantomjs -result-exit-code
 
 after_script:
   - cat report/test/summary/js/summary.txt
