@@ -107,4 +107,33 @@ class DisplayObjectTest {
         }, 300);
         Lib.__getStage().addEventListener(Event.STAGE_RENDERED, asyncHandler);
     }
+
+    @AsyncTest
+    public function testScaling(asyncFactory: AsyncFactory) {
+        var child = new Sprite();
+
+        child.x = 150;
+        child.y = 150;
+        child.graphics.beginFill(0x0000ff);
+        child.graphics.drawRect(0,0,100,100);
+        Lib.current.addChild(child);
+
+        Assert.areEqual(100, child.width);
+        Assert.areEqual(100, child.height);
+        child.scaleX = 2.1;
+        child.scaleY = 3.5;
+        Assert.areEqual(210, child.width);
+        Assert.areEqual(350, child.height);
+
+        asyncHandler = asyncFactory.createHandler(this, function() {
+            Lib.__getStage().removeEventListener(Event.STAGE_RENDERED, asyncHandler);
+            Assert.areEqual("m2.1,0,0,3.5,150,150", child.snap.attr("transform"));
+            Assert.areEqual(210, child.width);
+            Assert.areEqual(350, child.height);
+            var box = child.snap.getBBox();
+            Assert.areEqual(210, box.width);
+            Assert.areEqual(350, box.height);
+        }, 300);
+        Lib.__getStage().addEventListener(Event.STAGE_RENDERED, asyncHandler);
+    }
 }
