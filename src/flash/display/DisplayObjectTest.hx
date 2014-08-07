@@ -139,7 +139,9 @@ class DisplayObjectTest {
 
     @AsyncTest
     public function testSize(asyncFactory: AsyncFactory) {
+
         var child = new Sprite();
+
 
         child.x = 150;
         child.y = 150;
@@ -154,7 +156,7 @@ class DisplayObjectTest {
         Assert.isTrue(Math.abs(205 - child.width) < 0.01);
         Assert.isTrue(Math.abs(301 - child.height) < 0.01);
         Assert.areEqual(2.05, child.scaleX);
-        Assert.areEqual(4.01, child.scaleY);
+        Assert.areEqual(3.01, child.scaleY);
 
         asyncHandler = asyncFactory.createHandler(this, function() {
             Lib.__getStage().removeEventListener(Event.STAGE_RENDERED, asyncHandler);
