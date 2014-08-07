@@ -23,6 +23,7 @@ install:
 
 before_script:
   - cd ~/openfl-snapsvg-tests
+  - mkdir bin
   - mkdir bin/munit-resources
 
 script:
