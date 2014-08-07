@@ -20,8 +20,6 @@ install:
   - git clone https://github.com/ngrebenshikov/openfl-snapsvg ~/openfl-snapsvg --depth 1
   - haxelib dev openfl-snapsvg ~/openfl-snapsvg
   - git clone https://github.com/ngrebenshikov/openfl-snapsvg-tests ~/openfl-snapsvg-tests --depth 1
-  - cd ~/munit/tool
-  - haxe build.hxml
 
 before_script:
   - cd ~/openfl-snapsvg-tests
