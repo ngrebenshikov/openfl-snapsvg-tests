@@ -7,6 +7,9 @@ import flash.geom.Point;
 import massive.munit.Assert;
 
 class DisplayObjectTest {
+
+    private var asyncHandler: Dynamic;
+
     @Before
     public function setup():Void {
        Lib.current.removeChildren();
@@ -56,17 +59,16 @@ class DisplayObjectTest {
         Assert.areEqual(123+12, grandchildPoint.x);
         Assert.areEqual(345+35, grandchildPoint.y);
 
-        testPositioningHandler = asyncFactory.createHandler(this, function() {
+        asyncHandler = asyncFactory.createHandler(this, function() {
             Assert.areEqual("m1,0,0,1,123,345", child.snap.attr("transform"));
             Assert.areEqual("m1,0,0,1,12,35", grandchild.snap.attr("transform"));
             Assert.isTrue(child.snap.node == grandchild.snap.parent().node);
 
-            Lib.__getStage().removeEventListener(Event.STAGE_RENDERED, testPositioningHandler);
+            Lib.__getStage().removeEventListener(Event.STAGE_RENDERED, asyncHandler);
         }, 300);
-        Lib.__getStage().addEventListener(Event.STAGE_RENDERED, testPositioningHandler);
+        Lib.__getStage().addEventListener(Event.STAGE_RENDERED, asyncHandler);
 
     }
-    private var testPositioningHandler: Dynamic;
 
     @AsyncTest
     public function testRotation1(asyncFactory: AsyncFactory) {
@@ -80,13 +82,12 @@ class DisplayObjectTest {
 
         Lib.current.addChild(child);
 
-        testRotationHandler = asyncFactory.createHandler(this, function() {
+        asyncHandler = asyncFactory.createHandler(this, function() {
             Assert.areEqual("m0.966,0.259,-0.259,0.966,150,150", child.snap.attr("transform"));
-            Lib.__getStage().removeEventListener(Event.STAGE_RENDERED, testRotationHandler);
+            Lib.__getStage().removeEventListener(Event.STAGE_RENDERED, asyncHandler);
         }, 300);
-        Lib.__getStage().addEventListener(Event.STAGE_RENDERED, testRotationHandler);
+        Lib.__getStage().addEventListener(Event.STAGE_RENDERED, asyncHandler);
     }
-    private var testRotationHandler: Dynamic;
 
     @AsyncTest
     public function testRotation2(asyncFactory: AsyncFactory) {
@@ -100,11 +101,10 @@ class DisplayObjectTest {
 
         Lib.current.addChild(child);
 
-        testRotationHandler = asyncFactory.createHandler(this, function() {
+        asyncHandler = asyncFactory.createHandler(this, function() {
             Assert.areEqual("m0.966,-0.259,0.259,0.966,150,150", child.snap.attr("transform"));
-            Lib.__getStage().removeEventListener(Event.STAGE_RENDERED, testRotationHandler);
+            Lib.__getStage().removeEventListener(Event.STAGE_RENDERED, asyncHandler);
         }, 300);
-        Lib.__getStage().addEventListener(Event.STAGE_RENDERED, testRotationHandler);
+        Lib.__getStage().addEventListener(Event.STAGE_RENDERED, asyncHandler);
     }
-
 }
