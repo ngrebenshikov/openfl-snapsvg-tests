@@ -27,4 +27,4 @@ before_script:
   - mkdir bin/munit-resources
 
 script:
-  - haxelib run munit test -js
+  - haxelib run munit test -js -browser phantomjs
