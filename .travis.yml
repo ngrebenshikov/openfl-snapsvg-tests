@@ -25,20 +25,19 @@ install:
   - haxe build.hxml
   - git clone https://github.com/ngrebenshikov/openfl-snapsvg ~/openfl-snapsvg --depth 1
   - haxelib dev openfl-snapsvg ~/openfl-snapsvg
+  - git clone https://github.com/ngrebenshikov/openfl-snapsvg-tests ~/openfl-snapsvg-tests --depth 1
 
 before_script:
+  - cd ~/openfl-snapsvg-tests
   - mkdir bin
   - mkdir bin/munit-resources
   - mkdir report
   - sleep 3
 
 script:
-  - haxelib run munit test -js
+  - haxelib run munit test -js -browser phantomjs -result-exit-code
 
 after_script:
   - cat ./report/test/summary/js/summary.txt
-  - ls ./report
-  - ls ./report/test/
-  - ls ./report/test/summary
-  - ls ./report/test/summary/js
+  - ls
 
