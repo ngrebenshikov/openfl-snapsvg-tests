@@ -168,4 +168,23 @@ class DisplayObjectTest {
         Lib.__getStage().addEventListener(Event.STAGE_RENDERED, asyncHandler);
     }
 
+    @AsyncTest
+    public function testMask(asyncFactory: AsyncFactory) {
+
+        var child = new Sprite();
+        child.x = 150;
+        child.y = 150;
+        child.graphics.beginFill(0xffff00);
+        child.graphics.drawRect(0,0,100,100);
+        Lib.current.addChild(child);
+
+        Assert.areEqual(100, child.width);
+        Assert.areEqual(100, child.height);
+
+        asyncHandler = asyncFactory.createHandler(this, function() {
+            Lib.__getStage().removeEventListener(Event.STAGE_RENDERED, asyncHandler);
+        }, 300);
+        Lib.__getStage().addEventListener(Event.STAGE_RENDERED, asyncHandler);
+    }
+
 }
