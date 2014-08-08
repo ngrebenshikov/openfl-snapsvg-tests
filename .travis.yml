@@ -31,4 +31,4 @@ before_script:
   - mkdir bin/munit-resources
 
 script:
-  - haxelib run munit test -js -browser firefox
+  - haxelib run munit test -js -browser firefox  -result-exit-code
