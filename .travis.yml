@@ -32,3 +32,6 @@ before_script:
 
 script:
   - haxelib run munit test -js -browser firefox  -result-exit-code
+
+after_script:
+  - cat report/test/summary/js/summary.txt

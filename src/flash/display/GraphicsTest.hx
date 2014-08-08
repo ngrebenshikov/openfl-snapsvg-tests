@@ -143,7 +143,7 @@ class GraphicsTest {
         testCurveHandler = asyncFactory.createHandler(this, function() {
             var path = g.__snap.select("path");
             Assert.isNotNull(path);
-            Assert.areEqual("M200 250 Q500 450 500 200 Z", path.attr("d"));
+            Assert.areEqual("M200 250 Q400 450 500 200 Z", path.attr("d"));
 
             var strokeParts = cast(path.attr("stroke"), String).split(",");
             Assert.areEqual("rgba(255", strokeParts[0]);
