@@ -165,4 +165,75 @@ class GraphicsTest {
         }, 300);
         Lib.__getStage().addEventListener(Event.STAGE_RENDERED, testCurveHandler);
     }
+
+    private var testColorFillingHandler: Dynamic;
+
+    @AsyncTest
+    public function testColorFilling1(asyncFactory: AsyncFactory)
+    {
+        g.lineStyle(7, 0xAABBCC, 1, true, LineScaleMode.NONE, CapsStyle.SQUARE, JointStyle.BEVEL, 4);
+        g.beginFill(0xFFEEDD, 0.9);
+        g.moveTo(300, 30);
+        g.lineTo(400, 30);
+        g.lineTo(300, 100);
+        g.lineTo(400, 100);
+        g.endFill();
+        testColorFillingHandler = asyncFactory.createHandler(this, function() {
+            var path = g.__snap.select("path");
+            Assert.isNotNull(path);
+            Assert.areEqual("M300 30 L400 30 L300 100 L400 100 L300 30 Z", path.attr("d"));
+            var strokeParts = cast(path.attr("stroke"), String).split(",");
+            //if alpha = 1, rgb scheme used
+            Assert.areEqual("rgb(170", strokeParts[0]);
+            Assert.areEqual(" 187", strokeParts[1]);
+            Assert.areEqual(" 204)", strokeParts[2]);
+
+            var strokeParts = cast(path.attr("fill"), String).split(",");
+            Assert.areEqual("rgba(255", strokeParts[0]);
+            Assert.areEqual(" 238", strokeParts[1]);
+            Assert.areEqual(" 221", strokeParts[2]);
+            var alpha = Std.parseFloat(strokeParts[3].substr(0, strokeParts[3].length-1));
+            Assert.isTrue(Math.abs(0.9-alpha) < 0.01);
+
+            Assert.areEqual("stroke-width: 7" + strokeWidthPostfix + "; stroke-linecap: square; stroke-linejoin: bevel; stroke-miterlimit: 4;" + transformPostfix, path.attr("style"));
+            Assert.areEqual("non-scaling-stroke", path.attr("vector-effect"));
+            testColorFillingHandler = null;
+        }, 300);
+        Lib.__getStage().addEventListener(Event.STAGE_RENDERED, testColorFillingHandler);
+    }
+
+    @AsyncTest
+    public function testColorFilling2(asyncFactory: AsyncFactory)
+    {
+        g.lineStyle(7, 0xAA0110, 0.11, true, LineScaleMode.NONE, CapsStyle.SQUARE, JointStyle.BEVEL, 4);
+        g.beginFill(0xFF2070, 1);
+        g.moveTo(50, 200);
+        g.lineTo(200, 200);
+        g.lineTo(190, 30);
+        g.lineTo(150, 60);
+        g.lineTo(140, 50);
+        g.endFill();
+        testColorFillingHandler = asyncFactory.createHandler(this, function() {
+            var path = g.__snap.select("path");
+            Assert.isNotNull(path);
+            Assert.areEqual("M50 200 L200 200 L190 30 L150 60 L140 50 L50 200 Z", path.attr("d"));
+            var strokeParts = cast(path.attr("stroke"), String).split(",");
+            Assert.areEqual("rgba(170", strokeParts[0]);
+            Assert.areEqual(" 1", strokeParts[1]);
+            Assert.areEqual(" 16", strokeParts[2]);
+            var alpha = Std.parseFloat(strokeParts[3].substr(0, strokeParts[3].length-1));
+            Assert.isTrue(Math.abs(0.11-alpha) < 0.01);
+
+            //if alpha = 1, rgb scheme used
+            var strokeParts = cast(path.attr("fill"), String).split(",");
+            Assert.areEqual("rgb(255", strokeParts[0]);
+            Assert.areEqual(" 32", strokeParts[1]);
+            Assert.areEqual(" 112)", strokeParts[2]);
+
+            Assert.areEqual("stroke-width: 7" + strokeWidthPostfix + "; stroke-linecap: square; stroke-linejoin: bevel; stroke-miterlimit: 4;" + transformPostfix, path.attr("style"));
+            Assert.areEqual("non-scaling-stroke", path.attr("vector-effect"));
+            testColorFillingHandler = null;
+        }, 300);
+        Lib.__getStage().addEventListener(Event.STAGE_RENDERED, testColorFillingHandler);
+    }
 }
