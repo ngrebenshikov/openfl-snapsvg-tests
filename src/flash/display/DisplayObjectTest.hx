@@ -1,6 +1,9 @@
 package flash.display;
 
 
+import haxe.Timer;
+import snap.Snap;
+import StringTools;
 import massive.munit.async.AsyncFactory;
 import flash.events.Event;
 import flash.geom.Point;
@@ -166,6 +169,67 @@ class DisplayObjectTest {
             Assert.isTrue(Math.abs(301 - box.height) < 0.01);
         }, 300);
         Lib.__getStage().addEventListener(Event.STAGE_RENDERED, asyncHandler);
+    }
+
+    @AsyncTest
+    public function testMask(asyncFactory: AsyncFactory) {
+
+        var child = new Sprite();
+        child.x = 150;
+        child.y = 150;
+        child.graphics.beginFill(0xffff00);
+        child.graphics.drawRect(0,0,100,100);
+        Lib.current.addChild(child);
+
+        var maskedChild = new Sprite();
+        maskedChild.x = 150;
+        maskedChild.y = 150;
+        maskedChild.graphics.beginFill(0xff0000);
+        maskedChild.graphics.drawRect(0,0,100,100);
+
+        Lib.current.addChild(maskedChild);
+
+        var mask = new Shape();
+        mask.graphics.beginFill(0xffffff);
+        mask.graphics.drawRect(25,25,50,50);
+
+        maskedChild.mask = mask;
+
+        var maskId: String;
+
+        asyncHandler = asyncFactory.createHandler(this, function() {
+            Lib.__getStage().removeEventListener(Event.STAGE_RENDERED, asyncHandler);
+
+            Assert.isNotNull(maskedChild.snap.attr('mask'));
+
+            maskId = StringTools.replace(StringTools.replace(maskedChild.snap.attr('mask'), 'url(', ''), ')', '');
+            Assert.isNotNull(maskId);
+
+            if (maskId.indexOf('#') != -1) {
+                maskId = maskId.substring(maskId.indexOf('#')+1, maskId.length-1);
+            }
+
+            trace(maskId);
+
+            var mask = Snap.select('#' + maskId);
+            Assert.isNotNull(mask);
+
+            Assert.areEqual('mask', mask.type);
+
+            var path = mask.select('path');
+            Assert.areEqual('M25 25 L75 25 L75 75 L25 75 L25 25 Z', path.attr('d'));
+            Assert.areEqual(if (js.Browser.navigator.userAgent.indexOf("Firefox") != -1) 'rgb(255, 255, 255)' else '#ffffff', path.attr('fill'));
+
+            //Test canceling a mask
+            maskedChild.mask = null;
+        }, 500);
+        Lib.__getStage().addEventListener(Event.STAGE_RENDERED, asyncHandler);
+
+        Timer.delay(asyncFactory.createHandler(this, function() {
+                    Assert.isTrue(null == maskedChild.snap.attr('mask') || 'none' == maskedChild.snap.attr('mask'));
+                    Assert.isNull(Snap.select('#' + maskId));
+                }, 3000),
+            2000);
     }
 
 }
