@@ -2,6 +2,7 @@ import massive.munit.TestSuite;
 
 import flash.display.DisplayObjectTest;
 import flash.display.GraphicsTest;
+import flash.display.TextFieldTest;
 import flash.LibTest;
 
 /**
@@ -18,6 +19,7 @@ class TestSuite extends massive.munit.TestSuite
 
 		add(flash.display.DisplayObjectTest);
 		add(flash.display.GraphicsTest);
+		add(flash.display.TextFieldTest);
 		add(flash.LibTest);
 	}
 }
