@@ -169,8 +169,7 @@ class GraphicsTest {
     private var testColorFillingHandler: Dynamic;
 
     @AsyncTest
-    public function testColorFilling1(asyncFactory: AsyncFactory)
-    {
+    public function testColorFilling1(asyncFactory: AsyncFactory) {
         g.lineStyle(7, 0xAABBCC, 1, true, LineScaleMode.NONE, CapsStyle.SQUARE, JointStyle.BEVEL, 4);
         g.beginFill(0xFFEEDD, 0.9);
         g.moveTo(300, 30);
@@ -203,8 +202,7 @@ class GraphicsTest {
     }
 
     @AsyncTest
-    public function testColorFilling2(asyncFactory: AsyncFactory)
-    {
+    public function testColorFilling2(asyncFactory: AsyncFactory) {
         g.lineStyle(7, 0xAA0110, 0.11, true, LineScaleMode.NONE, CapsStyle.SQUARE, JointStyle.BEVEL, 4);
         g.beginFill(0xFF2070, 1);
         g.moveTo(50, 200);
@@ -235,5 +233,40 @@ class GraphicsTest {
             testColorFillingHandler = null;
         }, 300);
         Lib.__getStage().addEventListener(Event.STAGE_RENDERED, testColorFillingHandler);
+    }
+
+    private var testDrawEllipseHandler: Dynamic;
+
+    @AsyncTest
+    public function testDrawEllipse(asyncFactory: AsyncFactory) {
+        g.lineStyle(8, 0xAA0110, 1, true, LineScaleMode.NONE, CapsStyle.SQUARE, JointStyle.BEVEL, 4);
+        g.beginFill(0xFF2070, 0.4);
+        g.drawEllipse(100, 200, 200, 40);
+        testDrawEllipseHandler = asyncFactory.createHandler(this, function() {
+            var ellipse = g.__snap.select("ellipse");
+            Assert.isNotNull(ellipse);
+            Assert.areEqual("200", ellipse.attr("cx"));
+            Assert.areEqual("220", ellipse.attr("cy"));
+            Assert.areEqual("100", ellipse.attr("rx"));
+            Assert.areEqual("20", ellipse.attr("ry"));
+
+            var strokeParts = cast(ellipse.attr("stroke"), String).split(",");
+            //if alpha = 1, rgb scheme used
+            Assert.areEqual("rgb(170", strokeParts[0]);
+            Assert.areEqual(" 1", strokeParts[1]);
+            Assert.areEqual(" 16)", strokeParts[2]);
+
+            var fillParts = cast(ellipse.attr("fill"), String).split(",");
+            Assert.areEqual("rgba(255", fillParts[0]);
+            Assert.areEqual(" 32", fillParts[1]);
+            Assert.areEqual(" 112", fillParts[2]);
+            var alpha = Std.parseFloat(fillParts[3].substr(0, fillParts[3].length-1));
+            Assert.isTrue(Math.abs(0.4-alpha) < 0.01);
+
+            Assert.areEqual("stroke-width: 8" + strokeWidthPostfix + "; stroke-linecap: square; stroke-linejoin: bevel; stroke-miterlimit: 4;" + transformPostfix, ellipse.attr("style"));
+            Assert.areEqual("non-scaling-stroke", ellipse.attr("vector-effect"));
+            testDrawEllipseHandler = null;
+        }, 300);
+        Lib.__getStage().addEventListener(Event.STAGE_RENDERED, testDrawEllipseHandler);
     }
 }
