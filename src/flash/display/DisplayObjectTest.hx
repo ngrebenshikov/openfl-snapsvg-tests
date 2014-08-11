@@ -1,6 +1,9 @@
 package flash.display;
 
 
+import haxe.Timer;
+import snap.Snap;
+import StringTools;
 import massive.munit.async.AsyncFactory;
 import flash.events.Event;
 import flash.geom.Point;
@@ -192,11 +195,35 @@ class DisplayObjectTest {
 
         maskedChild.mask = mask;
 
+        var maskId: String;
+
         asyncHandler = asyncFactory.createHandler(this, function() {
             Lib.__getStage().removeEventListener(Event.STAGE_RENDERED, asyncHandler);
+
+            Assert.isNotNull(maskedChild.snap.attr('mask'));
+
+            maskId = StringTools.replace(StringTools.replace(maskedChild.snap.attr('mask'), 'url(', ''), ')', '');
+            Assert.isNotNull(maskId);
+
+            var mask = Snap.select('#' + maskId);
+            Assert.isNotNull(mask);
+
+            Assert.areEqual('mask', mask.type);
+
+            var path = mask.select('path');
+            Assert.areEqual('M25 25 L75 25 L75 75 L25 75 L25 25 Z', path.attr('d'));
+            Assert.areEqual('#ffffff', path.attr('fill'));
+
+            //Test canceling a mask
             maskedChild.mask = null;
-        }, 300);
+        }, 500);
         Lib.__getStage().addEventListener(Event.STAGE_RENDERED, asyncHandler);
+
+        Timer.delay(asyncFactory.createHandler(this, function() {
+                    Assert.isTrue(null == maskedChild.snap.attr('mask') || 'none' == maskedChild.snap.attr('mask'));
+                    Assert.isNull(Snap.select('#' + maskId));
+                }, 3000),
+            2000);
     }
 
 }
