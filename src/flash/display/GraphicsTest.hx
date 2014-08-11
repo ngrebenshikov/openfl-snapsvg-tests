@@ -182,11 +182,16 @@ class GraphicsTest {
             var path = g.__snap.select("path");
             Assert.isNotNull(path);
             Assert.areEqual("M300 30 L400 30 L300 100 L400 100 L300 30 Z", path.attr("d"));
-            var strokeParts = cast(path.attr("stroke"), String).split(",");
-            //if alpha = 1, rgb scheme used
-            Assert.areEqual("rgb(170", strokeParts[0]);
-            Assert.areEqual(" 187", strokeParts[1]);
-            Assert.areEqual(" 204)", strokeParts[2]);
+
+            if (js.Browser.navigator.userAgent.indexOf("Firefox") != -1) {
+                var strokeParts = cast(path.attr("stroke"), String).split(",");
+                //if alpha = 1, rgb scheme used
+                Assert.areEqual("rgb(170", strokeParts[0]);
+                Assert.areEqual(" 187", strokeParts[1]);
+                Assert.areEqual(" 204)", strokeParts[2]);
+            } else {
+                Assert.areEqual('#aabbcc', path.attr("stroke"));
+            }
 
             var strokeParts = cast(path.attr("fill"), String).split(",");
             Assert.areEqual("rgba(255", strokeParts[0]);
@@ -224,11 +229,15 @@ class GraphicsTest {
             var alpha = Std.parseFloat(strokeParts[3].substr(0, strokeParts[3].length-1));
             Assert.isTrue(Math.abs(0.11-alpha) < 0.01);
 
-            //if alpha = 1, rgb scheme used
-            var strokeParts = cast(path.attr("fill"), String).split(",");
-            Assert.areEqual("rgb(255", strokeParts[0]);
-            Assert.areEqual(" 32", strokeParts[1]);
-            Assert.areEqual(" 112)", strokeParts[2]);
+            if (js.Browser.navigator.userAgent.indexOf("Firefox") != -1) {
+                //if alpha = 1, rgb scheme used
+                var strokeParts = cast(path.attr("fill"), String).split(",");
+                Assert.areEqual("rgb(255", strokeParts[0]);
+                Assert.areEqual(" 32", strokeParts[1]);
+                Assert.areEqual(" 112)", strokeParts[2]);
+            } else {
+                Assert.areEqual('#ff2070',path.attr("fill"));
+            }
 
             Assert.areEqual("stroke-width: 7" + strokeWidthPostfix + "; stroke-linecap: square; stroke-linejoin: bevel; stroke-miterlimit: 4;" + transformPostfix, path.attr("style"));
             Assert.areEqual("non-scaling-stroke", path.attr("vector-effect"));

@@ -13,163 +13,163 @@ class DisplayObjectTest {
 
     private var asyncHandler: Dynamic;
 
-//    @Before
-//    public function setup():Void {
-//       Lib.current.removeChildren();
-//    }
-//
-//    @After
-//    public function tearDown():Void {
-//       Lib.current.removeChildren();
-//    }
-//
-//    @Test
-//    public function testAddChild() {
-//        var s = new Sprite();
-//        Lib.current.addChild(s);
-//
-//        Assert.isTrue(s.snap.parent() != null);
-//        Assert.isTrue(s.snap.parent().node == Lib.current.snap.node);
-//    }
-//
-//    @AsyncTest
-//    public function testPositioning(asyncFactory: AsyncFactory) {
-//        var child = new Sprite();
-//
-//            child.x = 123;
-//            child.y = 345;
-//            child.name = "child";
-//            child.graphics.beginFill(0xff0000);
-//            child.graphics.drawRect(0,0,100,100);
-//
-//            var grandchild = new Sprite();
-//
-//                grandchild.x = 12;
-//                grandchild.y = 35;
-//                grandchild.name = "grandchild";
-//                grandchild.graphics.beginFill(0x00ff00);
-//                grandchild.graphics.drawRect(0,0,100,100);
-//
-//            child.addChild(grandchild);
-//
-//        Lib.current.addChild(child);
-//
-//        var childPoint = child.localToGlobal(new Point(0,0));
-//        Assert.areEqual(123, childPoint.x);
-//        Assert.areEqual(345, childPoint.y);
-//
-//        var grandchildPoint = grandchild.localToGlobal(new Point(0,0));
-//        Assert.areEqual(123+12, grandchildPoint.x);
-//        Assert.areEqual(345+35, grandchildPoint.y);
-//
-//        asyncHandler = asyncFactory.createHandler(this, function() {
-//            Assert.areEqual("m1,0,0,1,123,345", child.snap.attr("transform"));
-//            Assert.areEqual("m1,0,0,1,12,35", grandchild.snap.attr("transform"));
-//            Assert.isTrue(child.snap.node == grandchild.snap.parent().node);
-//
-//            Lib.__getStage().removeEventListener(Event.STAGE_RENDERED, asyncHandler);
-//        }, 300);
-//        Lib.__getStage().addEventListener(Event.STAGE_RENDERED, asyncHandler);
-//
-//    }
-//
-//    @AsyncTest
-//    public function testRotation1(asyncFactory: AsyncFactory) {
-//        var child = new Sprite();
-//
-//        child.x = 150;
-//        child.y = 150;
-//        child.rotation = 15;
-//        child.graphics.beginFill(0xff0000);
-//        child.graphics.drawRect(-50,-50,100,100);
-//
-//        Lib.current.addChild(child);
-//
-//        asyncHandler = asyncFactory.createHandler(this, function() {
-//            Assert.areEqual("m0.966,0.259,-0.259,0.966,150,150", child.snap.attr("transform"));
-//            Lib.__getStage().removeEventListener(Event.STAGE_RENDERED, asyncHandler);
-//        }, 300);
-//        Lib.__getStage().addEventListener(Event.STAGE_RENDERED, asyncHandler);
-//    }
-//
-//    @AsyncTest
-//    public function testRotation2(asyncFactory: AsyncFactory) {
-//        var child = new Sprite();
-//
-//        child.x = 150;
-//        child.y = 150;
-//        child.rotation = -15;
-//        child.graphics.beginFill(0x00ff00);
-//        child.graphics.drawRect(-50,-50,100,100);
-//
-//        Lib.current.addChild(child);
-//
-//        asyncHandler = asyncFactory.createHandler(this, function() {
-//            Assert.areEqual("m0.966,-0.259,0.259,0.966,150,150", child.snap.attr("transform"));
-//            Lib.__getStage().removeEventListener(Event.STAGE_RENDERED, asyncHandler);
-//        }, 300);
-//        Lib.__getStage().addEventListener(Event.STAGE_RENDERED, asyncHandler);
-//    }
-//
-//    @AsyncTest
-//    public function testScaling(asyncFactory: AsyncFactory) {
-//        var child = new Sprite();
-//
-//        child.x = 150;
-//        child.y = 150;
-//        child.graphics.beginFill(0x0000ff);
-//        child.graphics.drawRect(0,0,100,100);
-//        Lib.current.addChild(child);
-//
-//        Assert.areEqual(100, child.width);
-//        Assert.areEqual(100, child.height);
-//        child.scaleX = 2.1;
-//        child.scaleY = 3.5;
-//        Assert.areEqual(210, child.width);
-//        Assert.areEqual(350, child.height);
-//
-//        asyncHandler = asyncFactory.createHandler(this, function() {
-//            Lib.__getStage().removeEventListener(Event.STAGE_RENDERED, asyncHandler);
-//            Assert.areEqual("m2.1,0,0,3.5,150,150", child.snap.attr("transform"));
-//            Assert.areEqual(210, child.width);
-//            Assert.areEqual(350, child.height);
-//            var box = child.snap.getBBox();
-//            Assert.areEqual(210, box.width);
-//            Assert.areEqual(350, box.height);
-//        }, 300);
-//        Lib.__getStage().addEventListener(Event.STAGE_RENDERED, asyncHandler);
-//    }
-//
-//    @AsyncTest
-//    public function testSize(asyncFactory: AsyncFactory) {
-//
-//        var child = new Sprite();
-//
-//
-//        child.x = 150;
-//        child.y = 150;
-//        child.graphics.beginFill(0xff00ff);
-//        child.graphics.drawRect(0,0,100,100);
-//        Lib.current.addChild(child);
-//
-//        Assert.areEqual(100, child.width);
-//        Assert.areEqual(100, child.height);
-//        child.width = 205;
-//        child.height = 301;
-//        Assert.isTrue(Math.abs(205 - child.width) < 0.01);
-//        Assert.isTrue(Math.abs(301 - child.height) < 0.01);
-//        Assert.areEqual(2.05, child.scaleX);
-//        Assert.areEqual(3.01, child.scaleY);
-//
-//        asyncHandler = asyncFactory.createHandler(this, function() {
-//            Lib.__getStage().removeEventListener(Event.STAGE_RENDERED, asyncHandler);
-//            Assert.areEqual("m2.05,0,0,3.01,150,150", child.snap.attr("transform"));
-//            var box = child.snap.getBBox();
-//            Assert.isTrue(Math.abs(205 - box.width) < 0.01);
-//            Assert.isTrue(Math.abs(301 - box.height) < 0.01);
-//        }, 300);
-//        Lib.__getStage().addEventListener(Event.STAGE_RENDERED, asyncHandler);
-//    }
+    @Before
+    public function setup():Void {
+       Lib.current.removeChildren();
+    }
+
+    @After
+    public function tearDown():Void {
+       Lib.current.removeChildren();
+    }
+
+    @Test
+    public function testAddChild() {
+        var s = new Sprite();
+        Lib.current.addChild(s);
+
+        Assert.isTrue(s.snap.parent() != null);
+        Assert.isTrue(s.snap.parent().node == Lib.current.snap.node);
+    }
+
+    @AsyncTest
+    public function testPositioning(asyncFactory: AsyncFactory) {
+        var child = new Sprite();
+
+            child.x = 123;
+            child.y = 345;
+            child.name = "child";
+            child.graphics.beginFill(0xff0000);
+            child.graphics.drawRect(0,0,100,100);
+
+            var grandchild = new Sprite();
+
+                grandchild.x = 12;
+                grandchild.y = 35;
+                grandchild.name = "grandchild";
+                grandchild.graphics.beginFill(0x00ff00);
+                grandchild.graphics.drawRect(0,0,100,100);
+
+            child.addChild(grandchild);
+
+        Lib.current.addChild(child);
+
+        var childPoint = child.localToGlobal(new Point(0,0));
+        Assert.areEqual(123, childPoint.x);
+        Assert.areEqual(345, childPoint.y);
+
+        var grandchildPoint = grandchild.localToGlobal(new Point(0,0));
+        Assert.areEqual(123+12, grandchildPoint.x);
+        Assert.areEqual(345+35, grandchildPoint.y);
+
+        asyncHandler = asyncFactory.createHandler(this, function() {
+            Assert.areEqual("m1,0,0,1,123,345", child.snap.attr("transform"));
+            Assert.areEqual("m1,0,0,1,12,35", grandchild.snap.attr("transform"));
+            Assert.isTrue(child.snap.node == grandchild.snap.parent().node);
+
+            Lib.__getStage().removeEventListener(Event.STAGE_RENDERED, asyncHandler);
+        }, 300);
+        Lib.__getStage().addEventListener(Event.STAGE_RENDERED, asyncHandler);
+
+    }
+
+    @AsyncTest
+    public function testRotation1(asyncFactory: AsyncFactory) {
+        var child = new Sprite();
+
+        child.x = 150;
+        child.y = 150;
+        child.rotation = 15;
+        child.graphics.beginFill(0xff0000);
+        child.graphics.drawRect(-50,-50,100,100);
+
+        Lib.current.addChild(child);
+
+        asyncHandler = asyncFactory.createHandler(this, function() {
+            Assert.areEqual("m0.966,0.259,-0.259,0.966,150,150", child.snap.attr("transform"));
+            Lib.__getStage().removeEventListener(Event.STAGE_RENDERED, asyncHandler);
+        }, 300);
+        Lib.__getStage().addEventListener(Event.STAGE_RENDERED, asyncHandler);
+    }
+
+    @AsyncTest
+    public function testRotation2(asyncFactory: AsyncFactory) {
+        var child = new Sprite();
+
+        child.x = 150;
+        child.y = 150;
+        child.rotation = -15;
+        child.graphics.beginFill(0x00ff00);
+        child.graphics.drawRect(-50,-50,100,100);
+
+        Lib.current.addChild(child);
+
+        asyncHandler = asyncFactory.createHandler(this, function() {
+            Assert.areEqual("m0.966,-0.259,0.259,0.966,150,150", child.snap.attr("transform"));
+            Lib.__getStage().removeEventListener(Event.STAGE_RENDERED, asyncHandler);
+        }, 300);
+        Lib.__getStage().addEventListener(Event.STAGE_RENDERED, asyncHandler);
+    }
+
+    @AsyncTest
+    public function testScaling(asyncFactory: AsyncFactory) {
+        var child = new Sprite();
+
+        child.x = 150;
+        child.y = 150;
+        child.graphics.beginFill(0x0000ff);
+        child.graphics.drawRect(0,0,100,100);
+        Lib.current.addChild(child);
+
+        Assert.areEqual(100, child.width);
+        Assert.areEqual(100, child.height);
+        child.scaleX = 2.1;
+        child.scaleY = 3.5;
+        Assert.areEqual(210, child.width);
+        Assert.areEqual(350, child.height);
+
+        asyncHandler = asyncFactory.createHandler(this, function() {
+            Lib.__getStage().removeEventListener(Event.STAGE_RENDERED, asyncHandler);
+            Assert.areEqual("m2.1,0,0,3.5,150,150", child.snap.attr("transform"));
+            Assert.areEqual(210, child.width);
+            Assert.areEqual(350, child.height);
+            var box = child.snap.getBBox();
+            Assert.areEqual(210, box.width);
+            Assert.areEqual(350, box.height);
+        }, 300);
+        Lib.__getStage().addEventListener(Event.STAGE_RENDERED, asyncHandler);
+    }
+
+    @AsyncTest
+    public function testSize(asyncFactory: AsyncFactory) {
+
+        var child = new Sprite();
+
+
+        child.x = 150;
+        child.y = 150;
+        child.graphics.beginFill(0xff00ff);
+        child.graphics.drawRect(0,0,100,100);
+        Lib.current.addChild(child);
+
+        Assert.areEqual(100, child.width);
+        Assert.areEqual(100, child.height);
+        child.width = 205;
+        child.height = 301;
+        Assert.isTrue(Math.abs(205 - child.width) < 0.01);
+        Assert.isTrue(Math.abs(301 - child.height) < 0.01);
+        Assert.areEqual(2.05, child.scaleX);
+        Assert.areEqual(3.01, child.scaleY);
+
+        asyncHandler = asyncFactory.createHandler(this, function() {
+            Lib.__getStage().removeEventListener(Event.STAGE_RENDERED, asyncHandler);
+            Assert.areEqual("m2.05,0,0,3.01,150,150", child.snap.attr("transform"));
+            var box = child.snap.getBBox();
+            Assert.isTrue(Math.abs(205 - box.width) < 0.01);
+            Assert.isTrue(Math.abs(301 - box.height) < 0.01);
+        }, 300);
+        Lib.__getStage().addEventListener(Event.STAGE_RENDERED, asyncHandler);
+    }
 
     @AsyncTest
     public function testMask(asyncFactory: AsyncFactory) {
@@ -205,6 +205,12 @@ class DisplayObjectTest {
             maskId = StringTools.replace(StringTools.replace(maskedChild.snap.attr('mask'), 'url(', ''), ')', '');
             Assert.isNotNull(maskId);
 
+            if (maskId.indexOf('#') != -1) {
+                maskId = maskId.substring(maskId.indexOf('#')+1, maskId.length-1);
+            }
+
+            trace(maskId);
+
             var mask = Snap.select('#' + maskId);
             Assert.isNotNull(mask);
 
@@ -212,7 +218,7 @@ class DisplayObjectTest {
 
             var path = mask.select('path');
             Assert.areEqual('M25 25 L75 25 L75 75 L25 75 L25 25 Z', path.attr('d'));
-            Assert.areEqual('#ffffff', path.attr('fill'));
+            Assert.areEqual(if (js.Browser.navigator.userAgent.indexOf("Firefox") != -1) 'rgb(255, 255, 255)' else '#ffffff', path.attr('fill'));
 
             //Test canceling a mask
             maskedChild.mask = null;
