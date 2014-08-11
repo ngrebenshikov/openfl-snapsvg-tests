@@ -259,11 +259,15 @@ class GraphicsTest {
             Assert.areEqual("100", ellipse.attr("rx"));
             Assert.areEqual("20", ellipse.attr("ry"));
 
-            var strokeParts = cast(ellipse.attr("stroke"), String).split(",");
-            //if alpha = 1, rgb scheme used
-            Assert.areEqual("rgb(170", strokeParts[0]);
-            Assert.areEqual(" 1", strokeParts[1]);
-            Assert.areEqual(" 16)", strokeParts[2]);
+            if (js.Browser.navigator.userAgent.indexOf("Firefox") != -1) {
+                var strokeParts = cast(ellipse.attr("stroke"), String).split(",");
+                //if alpha = 1, rgb scheme used
+                Assert.areEqual("rgb(170", strokeParts[0]);
+                Assert.areEqual(" 1", strokeParts[1]);
+                Assert.areEqual(" 16)", strokeParts[2]);
+            } else {
+                Assert.areEqual('#aa0110', ellipse.attr("stroke"));
+            }
 
             var fillParts = cast(ellipse.attr("fill"), String).split(",");
             Assert.areEqual("rgba(255", fillParts[0]);
