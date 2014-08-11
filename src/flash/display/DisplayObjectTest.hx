@@ -218,7 +218,7 @@ class DisplayObjectTest {
 
             var path = mask.select('path');
             Assert.areEqual('M25 25 L75 25 L75 75 L25 75 L25 25 Z', path.attr('d'));
-            Assert.areEqual(if (js.Browser.navigator.userAgent.indexOf("Firefox") != -1) 'rgb(255, 255, 255)' else '#ffffff', path.attr('fill'));
+            Assert.isTrue(tools.Color.areColorsEqual('rgb(255, 255, 255)', path.attr('fill')));
 
             //Test canceling a mask
             maskedChild.mask = null;
