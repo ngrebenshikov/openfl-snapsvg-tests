@@ -91,7 +91,6 @@ class GraphicsTest {
             Assert.isNotNull(path);
             Assert.areEqual("M250 200 Q300 0 350 200 Z", path.attr("d"));
 
-            trace(path.attr('stroke'));
             Assert.isTrue(tools.Color.areColorsEqual('rgba(0,0,255,0.7)', path.attr('stroke')));
             Assert.isTrue(tools.Color.areColorsEqual('transparent', path.attr('fill')));
 
@@ -191,22 +190,8 @@ class GraphicsTest {
             Assert.areEqual("100", ellipse.attr("rx"));
             Assert.areEqual("20", ellipse.attr("ry"));
 
-            if (js.Browser.navigator.userAgent.indexOf("Firefox") != -1) {
-                var strokeParts = cast(ellipse.attr("stroke"), String).split(",");
-                //if alpha = 1, rgb scheme used
-                Assert.areEqual("rgb(170", strokeParts[0]);
-                Assert.areEqual(" 1", strokeParts[1]);
-                Assert.areEqual(" 16)", strokeParts[2]);
-            } else {
-                Assert.areEqual('#aa0110', ellipse.attr("stroke"));
-            }
-
-            var fillParts = cast(ellipse.attr("fill"), String).split(",");
-            Assert.areEqual("rgba(255", fillParts[0]);
-            Assert.areEqual(" 32", fillParts[1]);
-            Assert.areEqual(" 112", fillParts[2]);
-            var alpha = Std.parseFloat(fillParts[3].substr(0, fillParts[3].length-1));
-            Assert.isTrue(Math.abs(0.4-alpha) < 0.01);
+            Assert.isTrue(tools.Color.areColorsEqual('#aa0110', ellipse.attr("stroke")));
+            Assert.isTrue(tools.Color.areColorsEqual('rgba(255,32,112,0.4)', ellipse.attr("fill")));
 
             Assert.areEqual("stroke-width: 8" + strokeWidthPostfix + "; stroke-linecap: square; stroke-linejoin: bevel; stroke-miterlimit: 4;" + transformPostfix, ellipse.attr("style"));
             Assert.areEqual("non-scaling-stroke", ellipse.attr("vector-effect"));
@@ -229,15 +214,9 @@ class GraphicsTest {
             Assert.areEqual("20", ellipse.attr("ry"));
 
             Assert.areEqual('none', ellipse.attr("stroke"));
-
-            var fillParts = cast(ellipse.attr("fill"), String).split(",");
-            Assert.areEqual("rgba(255", fillParts[0]);
-            Assert.areEqual(" 32", fillParts[1]);
-            Assert.areEqual(" 112", fillParts[2]);
-            var alpha = Std.parseFloat(fillParts[3].substr(0, fillParts[3].length-1));
-            Assert.isTrue(Math.abs(0.4-alpha) < 0.01);
-
             Assert.areEqual("", ellipse.attr("style"));
+
+            Assert.isTrue(tools.Color.areColorsEqual('rgba(255,32,112,0.4)', ellipse.attr("fill")));
             testDrawEllipseHandler = null;
         }, 300);
         Lib.__getStage().addEventListener(Event.STAGE_RENDERED, testDrawEllipseHandler);
