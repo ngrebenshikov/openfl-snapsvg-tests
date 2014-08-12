@@ -1,6 +1,7 @@
 package flash.display;
 
 
+import tools.Helper;
 import flash.filters.ConvolutionFilter;
 import flash.filters.ColorMatrixFilter;
 import flash.filters.BevelFilter;
@@ -208,14 +209,8 @@ class DisplayObjectTest {
 
             Assert.isNotNull(maskedChild.snap.attr('mask'));
 
-            maskId = StringTools.replace(StringTools.replace(maskedChild.snap.attr('mask'), 'url(', ''), ')', '');
+            maskId = Helper.getAnchorIdFromUrl(maskedChild.snap.attr('mask'));
             Assert.isNotNull(maskId);
-
-            if (maskId.indexOf('#') != -1) {
-                maskId = maskId.substring(maskId.indexOf('#')+1, maskId.length-1);
-            }
-
-            trace(maskId);
 
             var mask = Snap.select('#' + maskId);
             Assert.isNotNull(mask);
