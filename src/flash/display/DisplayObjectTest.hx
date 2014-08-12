@@ -2,15 +2,9 @@ package flash.display;
 
 
 import tools.Helper;
-import flash.filters.ConvolutionFilter;
-import flash.filters.ColorMatrixFilter;
-import flash.filters.BevelFilter;
-import flash.filters.BlurFilter;
-import flash.filters.BitmapFilterQuality;
-import flash.filters.DropShadowFilter;
+
 import haxe.Timer;
 import snap.Snap;
-import StringTools;
 import massive.munit.async.AsyncFactory;
 import flash.events.Event;
 import flash.geom.Point;
