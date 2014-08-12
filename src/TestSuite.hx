@@ -1,6 +1,6 @@
 import massive.munit.TestSuite;
 
-import flash.display.DisplayObjectTest;
+import flash.FiltersTest;
 
 /**
  * Auto generated Test Suite for MassiveUnit.
@@ -14,6 +14,6 @@ class TestSuite extends massive.munit.TestSuite
 	{
 		super();
 
-		add(flash.display.DisplayObjectTest);
+		add(flash.FiltersTest);
 	}
 }
