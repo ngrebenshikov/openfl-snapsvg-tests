@@ -20,12 +20,12 @@ class FiltersTest {
 
     @Before
     public function setup():Void {
-//        Lib.current.removeChildren();
+        Lib.current.removeChildren();
     }
 
     @After
     public function tearDown():Void {
-//        Lib.current.removeChildren();
+        Lib.current.removeChildren();
     }
 
     private function getFilterSnapWithCommonTesting(obj: DisplayObject): SnapElement {

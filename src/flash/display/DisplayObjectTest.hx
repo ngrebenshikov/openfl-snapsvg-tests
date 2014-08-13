@@ -226,4 +226,29 @@ class DisplayObjectTest {
                 }, 3000),
             2000);
     }
+
+//    @AsyncTest
+//    public function testBlendMode(asyncFactory: AsyncFactory) {
+//
+//        var child1 = new Sprite();
+//        child1.x = 150;
+//        child1.y = 150;
+//        child1.graphics.beginFill(0xff00ff);
+//        child1.graphics.drawRect(0,0,100,100);
+//        Lib.current.addChild(child1);
+//
+//        var child2 = new Sprite();
+//        child2.x = 190;
+//        child2.y = 190;
+//        child2.graphics.beginFill(0xff0000);
+//        child2.graphics.drawRect(0,0,100,100);
+//        child2.blendMode = BlendMode.SCREEN;
+//        Lib.current.addChild(child2);
+//
+//        asyncHandler = asyncFactory.createHandler(this, function() {
+//            Lib.__getStage().removeEventListener(Event.STAGE_RENDERED, asyncHandler);
+//        }, 500);
+//        Lib.__getStage().addEventListener(Event.STAGE_RENDERED, asyncHandler);
+//    }
+
 }
