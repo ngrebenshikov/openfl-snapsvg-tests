@@ -227,28 +227,56 @@ class DisplayObjectTest {
             2000);
     }
 
-//    @AsyncTest
-//    public function testBlendMode(asyncFactory: AsyncFactory) {
-//
-//        var child1 = new Sprite();
-//        child1.x = 150;
-//        child1.y = 150;
-//        child1.graphics.beginFill(0xff00ff);
-//        child1.graphics.drawRect(0,0,100,100);
-//        Lib.current.addChild(child1);
-//
-//        var child2 = new Sprite();
-//        child2.x = 190;
-//        child2.y = 190;
-//        child2.graphics.beginFill(0xff0000);
-//        child2.graphics.drawRect(0,0,100,100);
-//        child2.blendMode = BlendMode.SCREEN;
-//        Lib.current.addChild(child2);
-//
-//        asyncHandler = asyncFactory.createHandler(this, function() {
-//            Lib.__getStage().removeEventListener(Event.STAGE_RENDERED, asyncHandler);
-//        }, 500);
-//        Lib.__getStage().addEventListener(Event.STAGE_RENDERED, asyncHandler);
-//    }
+    @AsyncTest
+    public function testHitTestPoint(asyncFactory: AsyncFactory) {
+
+        var child = new Sprite();
+        child.x = 150;
+        child.y = 150;
+        child.graphics.beginFill(0xff00ff);
+        child.graphics.drawRect(0,0,100,100);
+        Lib.current.addChild(child);
+
+        var child2 = new Sprite();
+        child2.x = 25;
+        child2.y = 25;
+        child2.graphics.beginFill(0xff0000);
+        child2.graphics.drawRect(0,0,50,50);
+        child.addChild(child2);
+
+        var child3 = new Sprite();
+        child3.x = 75;
+        child3.y = 75;
+        child3.graphics.beginFill(0x00ff00);
+        child3.graphics.drawRect(0,0,50,50);
+        child.addChild(child3);
+
+        asyncHandler = asyncFactory.createHandler(this, function() {
+            Lib.__getStage().removeEventListener(Event.STAGE_RENDERED, asyncHandler);
+            Assert.isTrue(child.hitTestPoint(150, 150, true));
+            Assert.isFalse(child.hitTestPoint(149, 150, true));
+            Assert.isFalse(child.hitTestPoint(150, 149, true));
+            Assert.isTrue(child.hitTestPoint(200, 200, true));
+            Assert.isTrue(child.hitTestPoint(250, 250, true));
+            Assert.isTrue(child.hitTestPoint(251, 251, true));
+            Assert.isTrue(child.hitTestPoint(275, 275, true));
+            Assert.isFalse(child.hitTestPoint(276, 276, true));
+            Assert.isTrue(child.hitTestPoint(150, 250, true));
+            Assert.isFalse(child.hitTestPoint(150, 251, true));
+
+            Assert.isTrue(child.hitTestPoint(150, 150));
+            Assert.isFalse(child.hitTestPoint(149, 150));
+            Assert.isFalse(child.hitTestPoint(150, 149));
+            Assert.isTrue(child.hitTestPoint(200, 200));
+            Assert.isTrue(child.hitTestPoint(250, 250));
+            Assert.isTrue(child.hitTestPoint(251, 251));
+            Assert.isTrue(child.hitTestPoint(275, 275));
+            Assert.isFalse(child.hitTestPoint(276, 276));
+            Assert.isTrue(child.hitTestPoint(150, 250));
+            Assert.isTrue(child.hitTestPoint(150, 251));
+
+        }, 500);
+        Lib.__getStage().addEventListener(Event.STAGE_RENDERED, asyncHandler);
+    }
 
 }
