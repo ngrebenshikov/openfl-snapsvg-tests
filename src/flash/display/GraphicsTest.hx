@@ -221,4 +221,54 @@ class GraphicsTest {
         }, 300);
         Lib.__getStage().addEventListener(Event.STAGE_RENDERED, testDrawEllipseHandler);
     }
+
+    private var testDrawCircleHandler: Dynamic;
+
+    @AsyncTest
+    public function testDrawCircle1(asyncFactory: AsyncFactory) {
+        g.lineStyle(8, 0xAA0110, 1, true, LineScaleMode.NONE, CapsStyle.SQUARE, JointStyle.BEVEL, 4);
+        g.beginFill(0xFF2070, 0.4);
+        g.drawCircle(15, 17, 42.7);
+        testDrawCircleHandler = asyncFactory.createHandler(this, function() {
+            var circle = g.__snap.select("circle");
+            Assert.isNotNull(circle);
+            Assert.areEqual("15", circle.attr("cx"));
+            Assert.areEqual("17", circle.attr("cy"));
+            var rad = Std.parseFloat(circle.attr("r"));
+            Assert.isTrue(Math.abs(42.7-rad) < 0.01);
+
+            Assert.isTrue(tools.Color.areColorsEqual('#aa0110', circle.attr("stroke")));
+            Assert.isTrue(tools.Color.areColorsEqual('rgba(255,32,112,0.4)', circle.attr("fill")));
+
+            Assert.areEqual("stroke-width: 8" + strokeWidthPostfix + "; stroke-linecap: square; stroke-linejoin: bevel; stroke-miterlimit: 4;" + transformPostfix, circle.attr("style"));
+            Assert.areEqual("non-scaling-stroke", circle.attr("vector-effect"));
+            testDrawCircleHandler = null;
+        }, 300);
+        Lib.__getStage().addEventListener(Event.STAGE_RENDERED, testDrawCircleHandler);
+    }
+
+    @AsyncTest
+    public function testDrawCircle2(asyncFactory: AsyncFactory) {
+        g.lineStyle(4, 0x1001AA, 1, true, LineScaleMode.NONE, CapsStyle.SQUARE, JointStyle.BEVEL, 4);
+        g.beginFill(0x7020FF, 0.6);
+        g.drawCircle(15.23, 17.78, 42.7);
+        testDrawCircleHandler = asyncFactory.createHandler(this, function() {
+            var circle = g.__snap.select("circle");
+            Assert.isNotNull(circle);
+            var cx = Std.parseFloat(circle.attr("cx"));
+            Assert.isTrue(Math.abs(15.23 - cx) < 0.01);
+            var cy = Std.parseFloat(circle.attr("cy"));
+            Assert.isTrue(Math.abs(17.78 - cy) < 0.01);
+            Assert.areEqual("42.7", circle.attr("r"));
+
+
+            Assert.isTrue(tools.Color.areColorsEqual('#1001aa', circle.attr("stroke")));
+            Assert.isTrue(tools.Color.areColorsEqual('rgba(112,32,255,0.6)', circle.attr("fill")));
+
+            Assert.areEqual("stroke-width: 4" + strokeWidthPostfix + "; stroke-linecap: square; stroke-linejoin: bevel; stroke-miterlimit: 4;" + transformPostfix, circle.attr("style"));
+            Assert.areEqual("non-scaling-stroke", circle.attr("vector-effect"));
+            testDrawCircleHandler = null;
+        }, 300);
+        Lib.__getStage().addEventListener(Event.STAGE_RENDERED, testDrawCircleHandler);
+    }
 }
