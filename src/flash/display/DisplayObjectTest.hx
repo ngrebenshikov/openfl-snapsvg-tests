@@ -211,9 +211,14 @@ class DisplayObjectTest {
 
             Assert.areEqual('mask', mask.type);
 
-            var path = mask.select('path');
-            Assert.areEqual('M25 25 L75 25 L75 75 L25 75 L25 25 Z', path.attr('d'));
-            Assert.isTrue(tools.Color.areColorsEqual('rgb(255, 255, 255)', path.attr('fill')));
+            var rect = mask.select('rect');
+            Assert.areEqual('25', rect.attr('x'));
+            Assert.areEqual('25', rect.attr('y'));
+            Assert.areEqual('50', rect.attr('width'));
+            Assert.areEqual('50', rect.attr('height'));
+            Assert.areEqual('0', rect.attr('rx'));
+            Assert.areEqual('0', rect.attr('ry'));
+            Assert.isTrue(tools.Color.areColorsEqual('rgb(255, 255, 255)', rect.attr('fill')));
 
             //Test canceling a mask
             maskedChild.mask = null;

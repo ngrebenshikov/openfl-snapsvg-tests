@@ -271,4 +271,122 @@ class GraphicsTest {
         }, 300);
         Lib.__getStage().addEventListener(Event.STAGE_RENDERED, testDrawCircleHandler);
     }
+
+    private var testDrawRectHandler: Dynamic;
+
+    @AsyncTest
+    public function testDrawRect1(asyncFactory: AsyncFactory) {
+        g.lineStyle(4, 0x1001AA, 1, true, LineScaleMode.NONE, CapsStyle.SQUARE, JointStyle.BEVEL, 4);
+        g.beginFill(0x7020FF, 0.6);
+        g.drawRect(10, 15, 70, 42);
+        testDrawRectHandler = asyncFactory.createHandler(this, function() {
+            var rect = g.__snap.select("rect");
+            Assert.isNotNull(rect);
+            Assert.areEqual("10", rect.attr("x"));
+            Assert.areEqual("15", rect.attr("y"));
+            Assert.areEqual("70", rect.attr("width"));
+            Assert.areEqual("42", rect.attr("height"));
+            Assert.areEqual("0", rect.attr("rx"));
+            Assert.areEqual("0", rect.attr("ry"));
+
+
+            Assert.isTrue(tools.Color.areColorsEqual('#1001aa', rect.attr("stroke")));
+            Assert.isTrue(tools.Color.areColorsEqual('rgba(112,32,255,0.6)', rect.attr("fill")));
+
+            Assert.areEqual("stroke-width: 4" + strokeWidthPostfix + "; stroke-linecap: square; stroke-linejoin: bevel; stroke-miterlimit: 4;" + transformPostfix, rect.attr("style"));
+            Assert.areEqual("non-scaling-stroke", rect.attr("vector-effect"));
+            testDrawRectHandler = null;
+        }, 300);
+        Lib.__getStage().addEventListener(Event.STAGE_RENDERED, testDrawRectHandler);
+    }
+
+    @AsyncTest
+    public function testDrawRect2(asyncFactory: AsyncFactory) {
+        g.lineStyle(8, 0xAA0110, 1, true, LineScaleMode.NONE, CapsStyle.SQUARE, JointStyle.BEVEL, 4);
+        g.beginFill(0xFF2070, 0.4);
+        g.drawRect(20.9, 3.22, 37.6, 88.3);
+        testDrawRectHandler = asyncFactory.createHandler(this, function() {
+            var rect = g.__snap.select("rect");
+            Assert.isNotNull(rect);
+            var val = Std.parseFloat(rect.attr("x"));
+            Assert.isTrue(Math.abs(20.9-val) < 0.01);
+            var val = Std.parseFloat(rect.attr("y"));
+            Assert.isTrue(Math.abs(3.22-val) < 0.01);
+            var val = Std.parseFloat(rect.attr("width"));
+            Assert.isTrue(Math.abs(37.6-val) < 0.01);
+            var val = Std.parseFloat(rect.attr("height"));
+            Assert.isTrue(Math.abs(88.3-val) < 0.01);
+            Assert.areEqual("0", rect.attr("rx"));
+            Assert.areEqual("0", rect.attr("ry"));
+
+
+            Assert.isTrue(tools.Color.areColorsEqual('#aa0110', rect.attr("stroke")));
+            Assert.isTrue(tools.Color.areColorsEqual('rgba(255,32,112,0.4)', rect.attr("fill")));
+
+            Assert.areEqual("stroke-width: 8" + strokeWidthPostfix + "; stroke-linecap: square; stroke-linejoin: bevel; stroke-miterlimit: 4;" + transformPostfix, rect.attr("style"));
+            Assert.areEqual("non-scaling-stroke", rect.attr("vector-effect"));
+            testDrawRectHandler = null;
+        }, 300);
+        Lib.__getStage().addEventListener(Event.STAGE_RENDERED, testDrawRectHandler);
+    }
+
+    private var testDrawRoundRectHandler: Dynamic;
+
+    @AsyncTest
+    public function testDrawRoundRect1(asyncFactory: AsyncFactory) {
+        g.lineStyle(4, 0x1001AA, 1, true, LineScaleMode.NONE, CapsStyle.SQUARE, JointStyle.BEVEL, 4);
+        g.beginFill(0x7020FF, 0.6);
+        g.drawRoundRect(10, 15, 70, 42, 7);
+        testDrawRoundRectHandler = asyncFactory.createHandler(this, function() {
+            var rect = g.__snap.select("rect");
+            Assert.isNotNull(rect);
+            Assert.areEqual("10", rect.attr("x"));
+            Assert.areEqual("15", rect.attr("y"));
+            Assert.areEqual("70", rect.attr("width"));
+            Assert.areEqual("42", rect.attr("height"));
+            Assert.areEqual("7", rect.attr("rx"));
+            Assert.areEqual("7", rect.attr("ry"));
+
+
+            Assert.isTrue(tools.Color.areColorsEqual('#1001aa', rect.attr("stroke")));
+            Assert.isTrue(tools.Color.areColorsEqual('rgba(112,32,255,0.6)', rect.attr("fill")));
+
+            Assert.areEqual("stroke-width: 4" + strokeWidthPostfix + "; stroke-linecap: square; stroke-linejoin: bevel; stroke-miterlimit: 4;" + transformPostfix, rect.attr("style"));
+            Assert.areEqual("non-scaling-stroke", rect.attr("vector-effect"));
+            testDrawRoundRectHandler = null;
+        }, 300);
+        Lib.__getStage().addEventListener(Event.STAGE_RENDERED, testDrawRoundRectHandler);
+    }
+
+    @AsyncTest
+    public function testDrawRoundRect2(asyncFactory: AsyncFactory) {
+        g.lineStyle(8, 0xAA0110, 1, true, LineScaleMode.NONE, CapsStyle.SQUARE, JointStyle.BEVEL, 4);
+        g.beginFill(0xFF2070, 0.4);
+        g.drawRoundRect(20.9, 3.22, 37.6, 7.3, 2.5);
+        testDrawRoundRectHandler = asyncFactory.createHandler(this, function() {
+            var rect = g.__snap.select("rect");
+            Assert.isNotNull(rect);
+            var val = Std.parseFloat(rect.attr("x"));
+            Assert.isTrue(Math.abs(20.9-val) < 0.01);
+            var val = Std.parseFloat(rect.attr("y"));
+            Assert.isTrue(Math.abs(3.22-val) < 0.01);
+            var val = Std.parseFloat(rect.attr("width"));
+            Assert.isTrue(Math.abs(37.6-val) < 0.01);
+            var val = Std.parseFloat(rect.attr("height"));
+            Assert.isTrue(Math.abs(7.3-val) < 0.01);
+            var val = Std.parseFloat(rect.attr("rx"));
+            Assert.isTrue(Math.abs(2.5-val) < 0.01);
+            var val = Std.parseFloat(rect.attr("ry"));
+            Assert.isTrue(Math.abs(2.5-val) < 0.01);
+
+
+            Assert.isTrue(tools.Color.areColorsEqual('#aa0110', rect.attr("stroke")));
+            Assert.isTrue(tools.Color.areColorsEqual('rgba(255,32,112,0.4)', rect.attr("fill")));
+
+            Assert.areEqual("stroke-width: 8" + strokeWidthPostfix + "; stroke-linecap: square; stroke-linejoin: bevel; stroke-miterlimit: 4;" + transformPostfix, rect.attr("style"));
+            Assert.areEqual("non-scaling-stroke", rect.attr("vector-effect"));
+            testDrawRoundRectHandler = null;
+        }, 300);
+        Lib.__getStage().addEventListener(Event.STAGE_RENDERED, testDrawRoundRectHandler);
+    }
 }
