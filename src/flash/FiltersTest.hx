@@ -176,7 +176,6 @@ class FiltersTest {
         asyncHandler = asyncFactory.createHandler(this, function() {
             Lib.__getStage().removeEventListener(Event.STAGE_RENDERED, asyncHandler);
             var filter = getFilterSnapWithCommonTesting(child);
-            trace(filter.innerSVG());
             Assert.areEqual(6, filter.node.childNodes.item(0).attributes.getNamedItem('stdDeviation').nodeValue);
             var offset = filter.node.childNodes.item(1);
             Assert.areEqual('0', offset.attributes.getNamedItem('dx').nodeValue);
