@@ -15,12 +15,12 @@ class TextFieldTest {
 
     @Before
     public function setup():Void {
-        Lib.current.removeChildren();
+//        Lib.current.removeChildren();
     }
 
     @After
     public function tearDown():Void {
-        Lib.current.removeChildren();
+//        Lib.current.removeChildren();
     }
 
     @AsyncTest
@@ -38,6 +38,8 @@ class TextFieldTest {
         tf.backgroundColor = 0xFFE100;
         tf.x = 20;
         tf.y = 100;
+        tf.width = 150;
+        tf.wordWrap = true;
         tf.textColor = 0x45ad00;
         tf.defaultTextFormat = format;
         tf.text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.\nCras quis arcu cursus, tincidunt ligula eget, semper\ndiam. Nulla sodales diam ut sapien dictum blandit.";
