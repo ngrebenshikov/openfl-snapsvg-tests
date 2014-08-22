@@ -16,18 +16,16 @@ class TextFieldTest {
 
     @Before
     public function setup():Void {
-//        Lib.current.removeChildren();
+        Lib.current.removeChildren();
     }
 
     @After
     public function tearDown():Void {
-//        Lib.current.removeChildren();
+        Lib.current.removeChildren();
     }
 
     @AsyncTest
-    public function testAddChild(asyncFactory: AsyncFactory) {
-        trace("AddChild text field test");
-
+    public function testSetText(asyncFactory: AsyncFactory) {
         tf = new TextField();
 
         var format = new TextFormat();
@@ -41,8 +39,8 @@ class TextFieldTest {
         tf.y = 100;
         tf.width = 400;
         tf.height = 20;
-        //tf.wordWrap = true;
-        //tf.autoSize = TextFieldAutoSize.LEFT;
+        tf.wordWrap = true;
+        tf.autoSize = TextFieldAutoSize.LEFT;
         tf.textColor = 0x45ad00;
         tf.defaultTextFormat = format;
         tf.text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.\nCras quis arcu cursus, tincidunt ligula eget, semper\ndiam. Nulla sodales diam ut sapien dictum blandit.";
@@ -63,8 +61,47 @@ class TextFieldTest {
 
         }, 300);
         Lib.__getStage().addEventListener(Event.STAGE_RENDERED, testTextFieldHandler);
+    }
 
+    @AsyncTest
+    public function testSetTextFormat(asyncFactory: AsyncFactory) {
+        tf = new TextField();
 
+        var format = new TextFormat();
+        format.size = 18;
+        format.font = "Tahoma";
+        Lib.current.addChild(tf);
+
+        tf.background = true;
+        tf.backgroundColor = 0xFFE100;
+        tf.x = 20;
+        tf.y = 100;
+        tf.width = 400;
+        tf.height = 20;
+        tf.wordWrap = true;
+        tf.autoSize = TextFieldAutoSize.LEFT;
+        tf.textColor = 0x45ad00;
+        tf.defaultTextFormat = format;
+        tf.text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.\nCras quis arcu cursus, tincidunt ligula eget, semper\ndiam. Nulla sodales diam ut sapien dictum blandit.";
+        tf.setTextFormat(new TextFormat('Arial', 30, 0xff00ff, true, true, true), 30, 40);
+        tf.setTextFormat(new TextFormat('Times', 40, 0x0000ff, false, true, true), 35, 50);
+
+        testTextFieldHandler = asyncFactory.createHandler(this, function() {
+            Assert.isTrue(tf.snap.parent() != null);
+            Assert.isTrue(tf.snap.parent().node == Lib.current.snap.node);
+            trace(tf.snap.attr("transform"));
+            var text = tf.snap.select("text");
+            trace( text );
+            trace( text.attr("font-family") );
+            trace( text.attr("font-size") );
+            trace( text.attr("fill") );
+            Assert.isTrue( text != null );
+            Assert.areEqual( "m1,0,0,1,20,100", tf.snap.attr("transform") );
+            Assert.areEqual( "Tahoma", text.attr("font-family") );
+            Assert.areEqual( "18px", text.attr("font-size") );
+
+        }, 300);
+        Lib.__getStage().addEventListener(Event.STAGE_RENDERED, testTextFieldHandler);
     }
 
 }
