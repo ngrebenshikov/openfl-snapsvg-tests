@@ -320,5 +320,32 @@ class DisplayObjectTest {
             500);
     }
 
+    @AsyncTest
+    public function testAlpha(asyncFactory: AsyncFactory) {
+
+        var child1 = new Sprite();
+        child1.x = 100;
+        child1.y = 100;
+        child1.graphics.beginFill(0xffff00);
+        child1.graphics.drawRect(0,0,100,100);
+
+        var child = new Sprite();
+        child.x = 150;
+        child.y = 150;
+        child.graphics.beginFill(0xff00ff);
+        child.graphics.drawRect(0,0,100,100);
+        child.alpha = 0.5;
+
+        Lib.current.addChild(child1);
+        Lib.current.addChild(child);
+
+        asyncHandler = asyncFactory.createHandler(this, function() {
+            Lib.__getStage().removeEventListener(Event.STAGE_RENDERED, asyncHandler);
+            Assert.isTrue(Math.abs(0.5 - Std.parseFloat(child.snap.attr('opacity'))) < 0.01);
+        }, 500);
+        Lib.__getStage().addEventListener(Event.STAGE_RENDERED, asyncHandler);
+
+
+    }
 
 }
