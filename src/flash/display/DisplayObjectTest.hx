@@ -226,12 +226,9 @@ class DisplayObjectTest {
             maskedChild.mask = null;
         };
 
-        trace(maskedChild.snap.attr('mask'));
-
         Lib.__getStage().addEventListener(Event.STAGE_RENDERED, asyncHandler);
 
         Timer.delay(asyncFactory.createHandler(this, function() {
-                    trace(maskedChild.snap.attr('mask'));
                     Assert.isTrue(null == maskedChild.snap.attr('mask') || 'none' == maskedChild.snap.attr('mask'));
                     Assert.isNull(Snap.select('#' + maskId));
                 }, 1000),
@@ -330,14 +327,28 @@ class DisplayObjectTest {
         child1.graphics.drawRect(0,0,100,100);
 
         var child = new Sprite();
-        child.x = 150;
-        child.y = 150;
+        child.x = 50;
+        child.y = 50;
         child.graphics.beginFill(0xff00ff);
         child.graphics.drawRect(0,0,100,100);
         child.alpha = 0.5;
 
+        var child2 = new Sprite();
+        child2.x = 100;
+        child2.y = 100;
+        child2.graphics.beginFill(0x00ffff);
+        child2.graphics.drawRect(0,0,100,100);
+
+        var child3 = new Sprite();
+        child3.x = 75;
+        child3.y = 75;
+        child3.graphics.beginFill(0x666666);
+        child3.graphics.drawRect(0,0,100,100);
+
         Lib.current.addChild(child1);
-        Lib.current.addChild(child);
+        child1.addChild(child3);
+        child1.addChild(child);
+        child1.addChildAt(child2,0);
 
         asyncHandler = asyncFactory.createHandler(this, function() {
             Lib.__getStage().removeEventListener(Event.STAGE_RENDERED, asyncHandler);
