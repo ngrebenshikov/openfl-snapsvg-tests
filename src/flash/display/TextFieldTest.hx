@@ -1,5 +1,6 @@
 package flash.display;
 
+import flash.text.TextFieldType;
 import flash.text.TextFieldAutoSize;
 import massive.munit.async.AsyncFactory;
 import flash.events.Event;
@@ -100,6 +101,26 @@ class TextFieldTest {
             Assert.areEqual( "Tahoma", text.attr("font-family") );
             Assert.areEqual( "18px", text.attr("font-size") );
 
+        }, 300);
+        Lib.__getStage().addEventListener(Event.STAGE_RENDERED, testTextFieldHandler);
+    }
+
+    @AsyncTest
+    public function testInputMode(asyncFactory: AsyncFactory) {
+        tf = new TextField();
+        tf.background = true;
+        tf.backgroundColor = 0xcccccc;
+        tf.x = 20;
+        tf.y = 100;
+        tf.width = 400;
+        tf.height = 20;
+        tf.textColor = 0x45ad00;
+        tf.type = TextFieldType.INPUT;
+
+        Lib.current.addChild(tf);
+
+        testTextFieldHandler = asyncFactory.createHandler(this, function() {
+            Lib.__getStage().removeEventListener(Event.STAGE_RENDERED, testTextFieldHandler);
         }, 300);
         Lib.__getStage().addEventListener(Event.STAGE_RENDERED, testTextFieldHandler);
     }

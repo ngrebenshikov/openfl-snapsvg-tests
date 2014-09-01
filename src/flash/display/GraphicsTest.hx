@@ -55,7 +55,7 @@ class GraphicsTest {
             Assert.isTrue(tools.Color.areColorsEqual('rgba(18,52,86,0.4)', path.attr('stroke')));
             Assert.isTrue(tools.Color.areColorsEqual('rgba(101,67,33,0.4)', path.attr('fill')));
 
-            Assert.areEqual("stroke-width: 10" + strokeWidthPostfix + "; stroke-linecap: round; stroke-linejoin: bevel; stroke-miterlimit: 5;" + transformPostfix, path.attr("style"));
+            Assert.areEqual("stroke-width: 10" + strokeWidthPostfix + "; stroke-linecap: round; stroke-linejoin: bevel; stroke-miterlimit: 5; fill-rule: evenodd;" + transformPostfix, path.attr("style"));
             Assert.areEqual("none", path.attr("vector-effect"));
             testLineToHandler = null;
         }, 300);
@@ -78,7 +78,7 @@ class GraphicsTest {
             Assert.isTrue(tools.Color.areColorsEqual('rgba(18,52,86,0.4)', path.attr('stroke')));
             Assert.isTrue(tools.Color.areColorsEqual('rgba(101,67,33,0.4)', path.attr('fill')));
 
-            Assert.areEqual("stroke-width: 10" + strokeWidthPostfix + "; stroke-linecap: square; stroke-linejoin: round; stroke-miterlimit: 5;" + transformPostfix, path.attr("style"));
+            Assert.areEqual("stroke-width: 10" + strokeWidthPostfix + "; stroke-linecap: square; stroke-linejoin: round; stroke-miterlimit: 5; fill-rule: evenodd;" + transformPostfix, path.attr("style"));
             Assert.areEqual("non-scaling-stroke", path.attr("vector-effect"));
             testLineToHandler = null;
         }, 300);
@@ -98,7 +98,7 @@ class GraphicsTest {
             Assert.isTrue(tools.Color.areColorsEqual('rgba(0,0,255,0.7)', path.attr('stroke')));
             Assert.isTrue(tools.Color.areColorsEqual('transparent', path.attr('fill')));
 
-            Assert.areEqual("stroke-width: 5" + strokeWidthPostfix + "; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 7;" + transformPostfix, path.attr("style"));
+            Assert.areEqual("stroke-width: 5" + strokeWidthPostfix + "; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 7; fill-rule: evenodd;" + transformPostfix, path.attr("style"));
             Assert.areEqual("non-scaling-stroke", path.attr("vector-effect"));
             testCurveHandler = null;
         }, 300);
@@ -121,7 +121,7 @@ class GraphicsTest {
             Assert.isTrue(tools.Color.areColorsEqual('rgb(255,238,170,0.3)', path.attr('stroke')));
             Assert.isTrue(tools.Color.areColorsEqual('rgb(100,42, 21, 0.85)', path.attr('fill')));
 
-            Assert.areEqual("stroke-width: 30" + strokeWidthPostfix + "; stroke-linecap: square; stroke-linejoin: bevel; stroke-miterlimit: 4;" + transformPostfix, path.attr("style"));
+            Assert.areEqual("stroke-width: 30" + strokeWidthPostfix + "; stroke-linecap: square; stroke-linejoin: bevel; stroke-miterlimit: 4; fill-rule: evenodd;" + transformPostfix, path.attr("style"));
             Assert.areEqual("non-scaling-stroke", path.attr("vector-effect"));
             testCurveHandler = null;
         }, 300);
@@ -147,7 +147,7 @@ class GraphicsTest {
             Assert.isTrue(tools.Color.areColorsEqual('#aabbcc', path.attr("stroke")));
             Assert.isTrue(tools.Color.areColorsEqual('rgba(255,238,221,0.9)', path.attr("fill")));
 
-            Assert.areEqual("stroke-width: 7" + strokeWidthPostfix + "; stroke-linecap: square; stroke-linejoin: bevel; stroke-miterlimit: 4;" + transformPostfix, path.attr("style"));
+            Assert.areEqual("stroke-width: 7" + strokeWidthPostfix + "; stroke-linecap: square; stroke-linejoin: bevel; stroke-miterlimit: 4; fill-rule: evenodd;" + transformPostfix, path.attr("style"));
             Assert.areEqual("non-scaling-stroke", path.attr("vector-effect"));
             testColorFillingHandler = null;
         }, 300);
@@ -172,7 +172,7 @@ class GraphicsTest {
             Assert.isTrue(tools.Color.areColorsEqual('rgba(170,1,16,0.11)', path.attr("stroke")));
             Assert.isTrue(tools.Color.areColorsEqual('#ff2070', path.attr("fill")));
 
-            Assert.areEqual("stroke-width: 7" + strokeWidthPostfix + "; stroke-linecap: square; stroke-linejoin: bevel; stroke-miterlimit: 4;" + transformPostfix, path.attr("style"));
+            Assert.areEqual("stroke-width: 7" + strokeWidthPostfix + "; stroke-linecap: square; stroke-linejoin: bevel; stroke-miterlimit: 4; fill-rule: evenodd;" + transformPostfix, path.attr("style"));
             Assert.areEqual("non-scaling-stroke", path.attr("vector-effect"));
             testColorFillingHandler = null;
         }, 300);
@@ -197,7 +197,7 @@ class GraphicsTest {
             Assert.isTrue(tools.Color.areColorsEqual('#aa0110', ellipse.attr("stroke")));
             Assert.isTrue(tools.Color.areColorsEqual('rgba(255,32,112,0.4)', ellipse.attr("fill")));
 
-            Assert.areEqual("stroke-width: 8" + strokeWidthPostfix + "; stroke-linecap: square; stroke-linejoin: bevel; stroke-miterlimit: 4;" + transformPostfix, ellipse.attr("style"));
+            Assert.areEqual("stroke-width: 8" + strokeWidthPostfix + "; stroke-linecap: square; stroke-linejoin: bevel; stroke-miterlimit: 4; fill-rule: evenodd;" + transformPostfix, ellipse.attr("style"));
             Assert.areEqual("non-scaling-stroke", ellipse.attr("vector-effect"));
             testDrawEllipseHandler = null;
         }, 300);
@@ -218,7 +218,7 @@ class GraphicsTest {
             Assert.areEqual("20", ellipse.attr("ry"));
 
             Assert.areEqual('none', ellipse.attr("stroke"));
-            Assert.areEqual("", ellipse.attr("style"));
+            Assert.areEqual("fill-rule: evenodd;"+transformPostfix, ellipse.attr("style"));
 
             Assert.isTrue(tools.Color.areColorsEqual('rgba(255,32,112,0.4)', ellipse.attr("fill")));
             testDrawEllipseHandler = null;
@@ -244,7 +244,7 @@ class GraphicsTest {
             Assert.isTrue(tools.Color.areColorsEqual('#aa0110', circle.attr("stroke")));
             Assert.isTrue(tools.Color.areColorsEqual('rgba(255,32,112,0.4)', circle.attr("fill")));
 
-            Assert.areEqual("stroke-width: 8" + strokeWidthPostfix + "; stroke-linecap: square; stroke-linejoin: bevel; stroke-miterlimit: 4;" + transformPostfix, circle.attr("style"));
+            Assert.areEqual("stroke-width: 8" + strokeWidthPostfix + "; stroke-linecap: square; stroke-linejoin: bevel; stroke-miterlimit: 4; fill-rule: evenodd;" + transformPostfix, circle.attr("style"));
             Assert.areEqual("non-scaling-stroke", circle.attr("vector-effect"));
             testDrawCircleHandler = null;
         }, 300);
@@ -269,7 +269,7 @@ class GraphicsTest {
             Assert.isTrue(tools.Color.areColorsEqual('#1001aa', circle.attr("stroke")));
             Assert.isTrue(tools.Color.areColorsEqual('rgba(112,32,255,0.6)', circle.attr("fill")));
 
-            Assert.areEqual("stroke-width: 4" + strokeWidthPostfix + "; stroke-linecap: square; stroke-linejoin: bevel; stroke-miterlimit: 4;" + transformPostfix, circle.attr("style"));
+            Assert.areEqual("stroke-width: 4" + strokeWidthPostfix + "; stroke-linecap: square; stroke-linejoin: bevel; stroke-miterlimit: 4; fill-rule: evenodd;" + transformPostfix, circle.attr("style"));
             Assert.areEqual("non-scaling-stroke", circle.attr("vector-effect"));
             testDrawCircleHandler = null;
         }, 300);
@@ -297,7 +297,7 @@ class GraphicsTest {
             Assert.isTrue(tools.Color.areColorsEqual('#1001aa', rect.attr("stroke")));
             Assert.isTrue(tools.Color.areColorsEqual('rgba(112,32,255,0.6)', rect.attr("fill")));
 
-            Assert.areEqual("stroke-width: 4" + strokeWidthPostfix + "; stroke-linecap: square; stroke-linejoin: bevel; stroke-miterlimit: 4;" + transformPostfix, rect.attr("style"));
+            Assert.areEqual("stroke-width: 4" + strokeWidthPostfix + "; stroke-linecap: square; stroke-linejoin: bevel; stroke-miterlimit: 4; fill-rule: evenodd;" + transformPostfix, rect.attr("style"));
             Assert.areEqual("non-scaling-stroke", rect.attr("vector-effect"));
             testDrawRectHandler = null;
         }, 300);
@@ -327,7 +327,7 @@ class GraphicsTest {
             Assert.isTrue(tools.Color.areColorsEqual('#aa0110', rect.attr("stroke")));
             Assert.isTrue(tools.Color.areColorsEqual('rgba(255,32,112,0.4)', rect.attr("fill")));
 
-            Assert.areEqual("stroke-width: 8" + strokeWidthPostfix + "; stroke-linecap: square; stroke-linejoin: bevel; stroke-miterlimit: 4;" + transformPostfix, rect.attr("style"));
+            Assert.areEqual("stroke-width: 8" + strokeWidthPostfix + "; stroke-linecap: square; stroke-linejoin: bevel; stroke-miterlimit: 4; fill-rule: evenodd;" + transformPostfix, rect.attr("style"));
             Assert.areEqual("non-scaling-stroke", rect.attr("vector-effect"));
             testDrawRectHandler = null;
         }, 300);
@@ -355,7 +355,7 @@ class GraphicsTest {
             Assert.isTrue(tools.Color.areColorsEqual('#1001aa', rect.attr("stroke")));
             Assert.isTrue(tools.Color.areColorsEqual('rgba(112,32,255,0.6)', rect.attr("fill")));
 
-            Assert.areEqual("stroke-width: 4" + strokeWidthPostfix + "; stroke-linecap: square; stroke-linejoin: bevel; stroke-miterlimit: 4;" + transformPostfix, rect.attr("style"));
+            Assert.areEqual("stroke-width: 4" + strokeWidthPostfix + "; stroke-linecap: square; stroke-linejoin: bevel; stroke-miterlimit: 4; fill-rule: evenodd;" + transformPostfix, rect.attr("style"));
             Assert.areEqual("non-scaling-stroke", rect.attr("vector-effect"));
             testDrawRoundRectHandler = null;
         }, 300);
@@ -387,7 +387,7 @@ class GraphicsTest {
             Assert.isTrue(tools.Color.areColorsEqual('#aa0110', rect.attr("stroke")));
             Assert.isTrue(tools.Color.areColorsEqual('rgba(255,32,112,0.4)', rect.attr("fill")));
 
-            Assert.areEqual("stroke-width: 8" + strokeWidthPostfix + "; stroke-linecap: square; stroke-linejoin: bevel; stroke-miterlimit: 4;" + transformPostfix, rect.attr("style"));
+            Assert.areEqual("stroke-width: 8" + strokeWidthPostfix + "; stroke-linecap: square; stroke-linejoin: bevel; stroke-miterlimit: 4; fill-rule: evenodd;" + transformPostfix, rect.attr("style"));
             Assert.areEqual("non-scaling-stroke", rect.attr("vector-effect"));
             testDrawRoundRectHandler = null;
         }, 300);

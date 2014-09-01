@@ -66,7 +66,7 @@ class FiltersTest {
         asyncHandler = asyncFactory.createHandler(this, function() {
             Lib.__getStage().removeEventListener(Event.STAGE_RENDERED, asyncHandler);
             var filter = getFilterSnapWithCommonTesting(child);
-            Assert.areEqual(10, filter.node.childNodes.item(0).attributes.getNamedItem('stdDeviation').nodeValue);
+            Assert.areEqual(5, filter.node.childNodes.item(0).attributes.getNamedItem('stdDeviation').nodeValue);
             var offset = filter.node.childNodes.item(1);
             Assert.isTrue(Math.abs(Std.parseFloat(offset.attributes.getNamedItem('dx').nodeValue) - 30 * Math.sin(2*Math.PI*-145/360.0)) < 0.01);
             Assert.isTrue(Math.abs(Std.parseFloat(offset.attributes.getNamedItem('dy').nodeValue) - 30 * Math.cos(2*Math.PI*-145/360.0)) < 0.01);
@@ -176,7 +176,7 @@ class FiltersTest {
         asyncHandler = asyncFactory.createHandler(this, function() {
             Lib.__getStage().removeEventListener(Event.STAGE_RENDERED, asyncHandler);
             var filter = getFilterSnapWithCommonTesting(child);
-            Assert.areEqual(6, filter.node.childNodes.item(0).attributes.getNamedItem('stdDeviation').nodeValue);
+            Assert.areEqual(3, filter.node.childNodes.item(0).attributes.getNamedItem('stdDeviation').nodeValue);
             var offset = filter.node.childNodes.item(1);
             Assert.areEqual('0', offset.attributes.getNamedItem('dx').nodeValue);
             Assert.areEqual('0', offset.attributes.getNamedItem('dy').nodeValue);
