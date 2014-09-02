@@ -68,8 +68,8 @@ class FiltersTest {
             var filter = getFilterSnapWithCommonTesting(child);
             Assert.areEqual(5, filter.node.childNodes.item(0).attributes.getNamedItem('stdDeviation').nodeValue);
             var offset = filter.node.childNodes.item(1);
-            Assert.isTrue(Math.abs(Std.parseFloat(offset.attributes.getNamedItem('dx').nodeValue) - 30 * Math.sin(2*Math.PI*-145/360.0)) < 0.01);
-            Assert.isTrue(Math.abs(Std.parseFloat(offset.attributes.getNamedItem('dy').nodeValue) - 30 * Math.cos(2*Math.PI*-145/360.0)) < 0.01);
+            Assert.isTrue(Math.abs(Std.parseFloat(offset.attributes.getNamedItem('dx').nodeValue) - Math.round(30 * Math.sin(2*Math.PI*-145/360.0))) < 0.01);
+            Assert.isTrue(Math.abs(Std.parseFloat(offset.attributes.getNamedItem('dy').nodeValue) - Math.round(30 * Math.cos(2*Math.PI*-145/360.0))) < 0.01);
             Assert.isTrue(tools.Color.areColorsEqual("rgba(255,255,0,0.7)", filter.node.childNodes.item(2).attributes.getNamedItem('flood-color').nodeValue));
         }, 500);
         Lib.__getStage().addEventListener(Event.STAGE_RENDERED, asyncHandler);
