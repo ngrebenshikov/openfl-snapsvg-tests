@@ -35,17 +35,8 @@ class Bitmap extends DisplayObject {
 			//bitmapData.__referenceCount++;
 			
 			if (bitmapData.__referenceCount == 1) {
-
-                var canvas = bitmapData.handle();
-				__graphics =
-                    new Graphics (
-                        Lib.snap.image(
-                            (cast canvas).toDataUrl("image/png"),
-                            0, 0,
-                            canvas.width,
-                            canvas.height
-                        )
-                    );
+				
+				__graphics = new Graphics (bitmapData.handle ());
 				
 			}
 			
@@ -168,56 +159,56 @@ class Bitmap extends DisplayObject {
 			__validateMatrix ();
 			
 		}
-//TODO: uncomment
-//		if (bitmapData.handle () != __graphics.__surface) {
-//
-//			var imageDataLease = bitmapData.__getLease ();
-//
-//			if (imageDataLease != null && (__currentLease == null || imageDataLease.seed != __currentLease.seed || imageDataLease.time != __currentLease.time)) {
-//
-//				var srcCanvas = bitmapData.handle ();
-//
-//				__graphics.__surface.width = srcCanvas.width;
-//				__graphics.__surface.height = srcCanvas.height;
-//				__graphics.clear ();
-//
-//				Lib.__drawToSurface(srcCanvas, __graphics.__surface);
-//				__currentLease = imageDataLease.clone();
-//
-//				handleGraphicsUpdated (__graphics);
-//
-//			}
-//
-//		}
-//
-//		if (inMask != null) {
-//
-//			__applyFilters (__graphics.__surface);
-//			var m = getBitmapSurfaceTransform (__graphics);
-//			Lib.__drawToSurface (__graphics.__surface, inMask, m, (parent != null ? parent.__combinedAlpha : 1) * alpha, clipRect, smoothing);
-//
-//		} else {
-//
-//			if (__testFlag (DisplayObject.TRANSFORM_INVALID)) {
-//
-//				var m = getBitmapSurfaceTransform (__graphics);
-//				Lib.__setSurfaceTransform (__graphics.__surface, m);
-//				__clearFlag (DisplayObject.TRANSFORM_INVALID);
-//
-//			}
-//
-//			if (!__init) {
-//
-//				Lib.__setSurfaceOpacity (__graphics.__surface, 0);
-//				__init = true;
-//
-//			} else {
-//
-//				Lib.__setSurfaceOpacity(__graphics.__surface, (parent != null ? parent.__combinedAlpha : 1) * alpha);
-//
-//			}
-//
-//		}
+		
+		if (bitmapData.handle () != __graphics.__surface) {
+			
+			var imageDataLease = bitmapData.__getLease ();
+			
+			if (imageDataLease != null && (__currentLease == null || imageDataLease.seed != __currentLease.seed || imageDataLease.time != __currentLease.time)) {
+				
+				var srcCanvas = bitmapData.handle ();
+				
+				__graphics.__surface.width = srcCanvas.width;
+				__graphics.__surface.height = srcCanvas.height;
+				__graphics.clear ();
+				
+				Lib.__drawToSurface(srcCanvas, __graphics.__surface);
+				__currentLease = imageDataLease.clone();
+				
+				handleGraphicsUpdated (__graphics);
+				
+			}
+			
+		}
+		
+		if (inMask != null) {
+			
+			__applyFilters (__graphics.__surface);
+			var m = getBitmapSurfaceTransform (__graphics);
+			Lib.__drawToSurface (__graphics.__surface, inMask, m, (parent != null ? parent.__combinedAlpha : 1) * alpha, clipRect, smoothing);
+			
+		} else {
+			
+			if (__testFlag (DisplayObject.TRANSFORM_INVALID)) {
+				
+				var m = getBitmapSurfaceTransform (__graphics);
+				Lib.__setSurfaceTransform (__graphics.__surface, m);
+				__clearFlag (DisplayObject.TRANSFORM_INVALID);
+				
+			}
+			
+			if (!__init) {
+				
+				Lib.__setSurfaceOpacity (__graphics.__surface, 0);
+				__init = true;
+				
+			} else {
+				
+				Lib.__setSurfaceOpacity(__graphics.__surface, (parent != null ? parent.__combinedAlpha : 1) * alpha);
+				
+			}
+			
+		}
 		
 	}
 	
@@ -236,13 +227,12 @@ class Bitmap extends DisplayObject {
 			if (bitmapData != null) {
 				
 				bitmapData.__referenceCount--;
-
-//TODO: uncomment
-//				if (__graphics.__surface == bitmapData.handle ()) {
-//
-//					Lib.__setSurfaceOpacity (bitmapData.handle (), 0);
-//
-//				}
+				
+				if (__graphics.__surface == bitmapData.handle ()) {
+					
+					Lib.__setSurfaceOpacity (bitmapData.handle (), 0);
+					
+				}
 				
 			}
 			

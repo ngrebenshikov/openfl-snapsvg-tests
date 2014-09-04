@@ -1090,19 +1090,19 @@ class Graphics {
 		closePolygon (true);
 		var padding = _padding;
 		
-//		if (filters != null) {
-//
-//			for (filter in filters) {
-//
-//				if (Reflect.hasField (filter, "blurX")) {
-//
-//					padding += (Math.max (Reflect.field (filter, "blurX"), Reflect.field (filter, "blurY")) * 4);
-//
-//				}
-//
-//			}
-//
-//		}
+		if (filters != null) {
+			
+			for (filter in filters) {
+				
+				if (Reflect.hasField (filter, "blurX")) {
+					
+					padding += (Math.max (Reflect.field (filter, "blurX"), Reflect.field (filter, "blurY")) * 4);
+					
+				}
+				
+			}
+			
+		}
 		
 		__expandFilteredExtent ( - (padding * sx) / 2, - (padding * sy) / 2);
 		
@@ -1120,207 +1120,211 @@ class Graphics {
 			
 		}
 		
-
-//		if (clip0 != null) {
-//
-//			ctx.beginPath ();
-//			ctx.moveTo (clip0.x * sx, clip0.y * sy);
-//			ctx.lineTo (clip1.x * sx, clip1.y * sy);
-//			ctx.lineTo (clip2.x * sx, clip2.y * sy);
-//			ctx.lineTo (clip3.x * sx, clip3.y * sy);
-//			ctx.closePath ();
-//			ctx.clip ();
-//
-//		}
+		var ctx = getContext ();
+		if (ctx == null) return false;
 		
-//		if (filters != null) {
-//
-//			for (filter in filters) {
-//
-//				if (Std.is (filter, DropShadowFilter)) {
-//
-//					// shadow must be applied before we draw to the context
-//					filter.__applyFilter (__surface, null, true);
-//
-//				}
-//
-//			}
-//
-//		}
+		if (clip0 != null) {
+			
+			ctx.beginPath ();
+			ctx.moveTo (clip0.x * sx, clip0.y * sy);
+			ctx.lineTo (clip1.x * sx, clip1.y * sy);
+			ctx.lineTo (clip2.x * sx, clip2.y * sy);
+			ctx.lineTo (clip3.x * sx, clip3.y * sy);
+			ctx.closePath ();
+			ctx.clip ();
+			
+		}
+		
+		if (filters != null) {
+			
+			for (filter in filters) {
+				
+				if (Std.is (filter, DropShadowFilter)) {
+					
+					// shadow must be applied before we draw to the context
+					filter.__applyFilter (__surface, null, true);
+					
+				}
+				
+			}
+			
+		}
 		
 		var len:Int = mDrawList.length;
+		ctx.save ();
+		
 		if (__extentWithFilters.x != 0 || __extentWithFilters.y != 0) {
-
+			
 			ctx.translate ( -__extentWithFilters.x * sx, -__extentWithFilters.y * sy);
-
+			
 		}
-
-//		if (sx != 1 || sy != 0) {
-//
-//			ctx.scale (sx, sy);
-//
-//		}
-//
-//		var doStroke = false;
-//
-//		for (i in nextDrawIndex...len) {
-//
-//			var d = mDrawList[(len - 1) - i];
-//
-//			if (d.tileJob != null) {
-//
-//				__drawTiles (d.tileJob.sheet, d.tileJob.drawList, d.tileJob.flags);
-//
-//			} else {
-//
-//				if (d.lineJobs.length > 0) {
-//
-//					for (lj in d.lineJobs) {
-//
-//						ctx.lineWidth = lj.thickness;
-//
-//						switch (lj.joints) {
-//
-//							case CORNER_ROUND: ctx.lineJoin = "round";
-//							case CORNER_MITER: ctx.lineJoin = "miter";
-//							case CORNER_BEVEL: ctx.lineJoin = "bevel";
-//
-//						}
-//
-//						switch (lj.caps) {
-//
-//							case END_ROUND: ctx.lineCap = "round";
-//							case END_SQUARE: ctx.lineCap = "square";
-//							case END_NONE: ctx.lineCap = "butt";
-//
-//						}
-//
-//						ctx.miterLimit = lj.miter_limit;
-//
-//						if (lj.grad != null) {
-//
-//							ctx.strokeStyle = createCanvasGradient (ctx, lj.grad);
-//
-//						} else {
-//
-//							ctx.strokeStyle = createCanvasColor (lj.colour, lj.alpha);
-//
-//						}
-//
-//						ctx.beginPath();
-//
-//						for (i in lj.point_idx0...lj.point_idx1 + 1) {
-//
-//							var p = d.points[i];
-//
-//							switch (p.type) {
-//
-//								case MOVE: ctx.moveTo (p.x, p.y);
-//								case CURVE: ctx.quadraticCurveTo (p.cx, p.cy, p.x, p.y);
-//								default: ctx.lineTo (p.x, p.y);
-//
-//							}
-//
-//						}
-//
-//						ctx.closePath ();
-//						doStroke = true;
-//
-//					}
-//
-//				} else {
-//
-//					ctx.beginPath ();
-//
-//					for (p in d.points) {
-//
-//						switch (p.type) {
-//
-//							case MOVE: ctx.moveTo (p.x, p.y);
-//							case CURVE: ctx.quadraticCurveTo (p.cx, p.cy, p.x, p.y);
-//							default: ctx.lineTo (p.x, p.y);
-//
-//						}
-//
-//					}
-//
-//					ctx.closePath ();
-//
-//				}
-//
-//				var fillColour = d.fillColour;
-//				var fillAlpha = d.fillAlpha;
-//				var g = d.solidGradient;
-//				var bitmap = d.bitmap;
-//
-//				if (g != null) {
-//
-//					ctx.fillStyle = createCanvasGradient (ctx, g);
-//
-//				} else if (bitmap != null && ((bitmap.flags & BMP_REPEAT) > 0)) {
-//
-//					var m = bitmap.matrix;
-//
-//					if (m != null) {
-//
-//						ctx.transform (m.a, m.b, m.c, m.d, m.tx, m.ty);
-//
-//					}
-//
-//					if (bitmap.flags & BMP_SMOOTH == 0) {
-//
-//						untyped ctx.mozImageSmoothingEnabled = false;
-//						untyped ctx.webkitImageSmoothingEnabled = false;
-//
-//					}
-//
-//					ctx.fillStyle = ctx.createPattern (bitmap.texture_buffer, "repeat");
-//
-//				} else {
-//
-//					// Alpha value gets clamped in [0;1] range.
-//					ctx.fillStyle = createCanvasColor (fillColour, Math.min (1.0, Math.max (0.0, fillAlpha)));
-//
-//				}
-//
-//				ctx.fill ();
-//				if (doStroke) ctx.stroke ();
-//				ctx.save ();
-//
-//				if (bitmap != null && ((bitmap.flags & BMP_REPEAT) == 0)) {
-//
-//					ctx.clip ();
-//					var img = bitmap.texture_buffer;
-//					var m = bitmap.matrix;
-//
-//					if (m != null) {
-//
-//						ctx.transform (m.a, m.b, m.c, m.d, m.tx, m.ty);
-//
-//					}
-//
-//					//if (bitmap.flags & BMP_SMOOTH == 0) {
-//						//
-//						//untyped ctx.mozImageSmoothingEnabled = false;
-//						//untyped ctx.webkitImageSmoothingEnabled = false;
-//						//
-//					//}
-//
-//					ctx.drawImage (img, 0, 0);
-//
-//				}
-//
-//				ctx.restore ();
-//
-//			}
-//
-//		}
-//
-//		ctx.restore ();
-//
-//		__changed = false;
-//		nextDrawIndex = len > 0 ? len - 1 : 0;
-//		mDrawList = [];
+		
+		if (sx != 1 || sy != 0) {
+			
+			ctx.scale (sx, sy);
+			
+		}
+		
+		var doStroke = false;
+		
+		for (i in nextDrawIndex...len) {
+			
+			var d = mDrawList[(len - 1) - i];
+			
+			if (d.tileJob != null) {
+				
+				__drawTiles (d.tileJob.sheet, d.tileJob.drawList, d.tileJob.flags);
+				
+			} else {
+				
+				if (d.lineJobs.length > 0) {
+					
+					for (lj in d.lineJobs) {
+						
+						ctx.lineWidth = lj.thickness;
+						
+						switch (lj.joints) {
+							
+							case CORNER_ROUND: ctx.lineJoin = "round";
+							case CORNER_MITER: ctx.lineJoin = "miter";
+							case CORNER_BEVEL: ctx.lineJoin = "bevel";
+							
+						}
+						
+						switch (lj.caps) {
+							
+							case END_ROUND: ctx.lineCap = "round";
+							case END_SQUARE: ctx.lineCap = "square";
+							case END_NONE: ctx.lineCap = "butt";
+							
+						}
+						
+						ctx.miterLimit = lj.miter_limit;
+						
+						if (lj.grad != null) {
+							
+							ctx.strokeStyle = createCanvasGradient (ctx, lj.grad);
+							
+						} else {
+							
+							ctx.strokeStyle = createCanvasColor (lj.colour, lj.alpha);
+							
+						}
+						
+						ctx.beginPath();
+						
+						for (i in lj.point_idx0...lj.point_idx1 + 1) {
+							
+							var p = d.points[i];
+							
+							switch (p.type) {
+								
+								case MOVE: ctx.moveTo (p.x, p.y);
+								case CURVE: ctx.quadraticCurveTo (p.cx, p.cy, p.x, p.y);
+								default: ctx.lineTo (p.x, p.y);
+								
+							}
+							
+						}
+						
+						ctx.closePath ();
+						doStroke = true;
+						
+					}
+					
+				} else {
+					
+					ctx.beginPath ();
+					
+					for (p in d.points) {
+						
+						switch (p.type) {
+							
+							case MOVE: ctx.moveTo (p.x, p.y);
+							case CURVE: ctx.quadraticCurveTo (p.cx, p.cy, p.x, p.y);
+							default: ctx.lineTo (p.x, p.y);
+							
+						}
+						
+					}
+					
+					ctx.closePath ();
+					
+				}
+				
+				var fillColour = d.fillColour;
+				var fillAlpha = d.fillAlpha;
+				var g = d.solidGradient;
+				var bitmap = d.bitmap;
+				
+				if (g != null) {
+					
+					ctx.fillStyle = createCanvasGradient (ctx, g);
+					
+				} else if (bitmap != null && ((bitmap.flags & BMP_REPEAT) > 0)) {
+					
+					var m = bitmap.matrix;
+					
+					if (m != null) {
+						
+						ctx.transform (m.a, m.b, m.c, m.d, m.tx, m.ty);
+						
+					}
+					
+					if (bitmap.flags & BMP_SMOOTH == 0) {
+						
+						untyped ctx.mozImageSmoothingEnabled = false;
+						untyped ctx.webkitImageSmoothingEnabled = false;
+						
+					}
+					
+					ctx.fillStyle = ctx.createPattern (bitmap.texture_buffer, "repeat");
+					
+				} else {
+					
+					// Alpha value gets clamped in [0;1] range.
+					ctx.fillStyle = createCanvasColor (fillColour, Math.min (1.0, Math.max (0.0, fillAlpha)));
+					
+				}
+				
+				ctx.fill ();
+				if (doStroke) ctx.stroke ();
+				ctx.save ();
+				
+				if (bitmap != null && ((bitmap.flags & BMP_REPEAT) == 0)) {
+					
+					ctx.clip ();
+					var img = bitmap.texture_buffer;
+					var m = bitmap.matrix;
+					
+					if (m != null) {
+						
+						ctx.transform (m.a, m.b, m.c, m.d, m.tx, m.ty);
+						
+					}
+					
+					//if (bitmap.flags & BMP_SMOOTH == 0) {
+						//
+						//untyped ctx.mozImageSmoothingEnabled = false;
+						//untyped ctx.webkitImageSmoothingEnabled = false;
+						//
+					//}
+					
+					ctx.drawImage (img, 0, 0);
+					
+				}
+				
+				ctx.restore ();
+				
+			}
+			
+		}
+		
+		ctx.restore ();
+		
+		__changed = false;
+		nextDrawIndex = len > 0 ? len - 1 : 0;
+		mDrawList = [];
 		
 		return true;
 		

@@ -67,17 +67,17 @@ class Lib {
 		
 		__scr.style.setProperty ("overflow", "hidden", "");
 		__scr.style.setProperty ("position", "absolute", ""); // necessary for chrome ctx.isPointInPath
-
+		
 		if (__scr.style.getPropertyValue ("width") != "100%") {
-
+			
 			__scr.style.width = width + "px";
-
+			
 		}
-
+		
 		if (__scr.style.getPropertyValue ("height") != "100%") {
-
+			
 			__scr.style.height = height + "px";
-
+			
 		}
 		
 	}

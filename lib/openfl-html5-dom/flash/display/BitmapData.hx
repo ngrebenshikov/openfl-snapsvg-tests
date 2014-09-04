@@ -63,8 +63,7 @@ class BitmapData implements IBitmapDrawable {
 		___textureBuffer.width = width;
 		___textureBuffer.height = height;
 		___id = Uuid.uuid ();
-        //TODO: uncomment
-		//Lib.__setSurfaceId (___textureBuffer, ___id);
+		Lib.__setSurfaceId (___textureBuffer, ___id);
 		
 		__transparent = transparent;
 		rect = new Rectangle (0, 0, width, height);

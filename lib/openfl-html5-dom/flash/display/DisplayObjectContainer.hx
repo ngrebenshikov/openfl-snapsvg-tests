@@ -595,23 +595,23 @@ class DisplayObjectContainer extends InteractiveObject {
 	
 	
 	private function __swapSurface (c1:Int, c2:Int):Void {
-//TODO: uncomment
-//		if (__children[c1] == null) throw "Null element at index " + c1 + " length " + __children.length;
-//		if (__children[c2] == null) throw "Null element at index " + c2 + " length " + __children.length;
-//
-//		var gfx1 = __children[c1].__getGraphics ();
-//		var gfx2 = __children[c2].__getGraphics ();
-//
-//		if (gfx1 != null && gfx2 != null) {
-//
-//			var surface1 = __children[c1].__scrollRect == null ? gfx1.__surface : __children[c1].__getSrWindow ();
-//			var surface2 = __children[c2].__scrollRect == null ? gfx2.__surface : __children[c2].__getSrWindow ();
-//
-//			if (surface1 != null && surface2 != null) {
-//				Lib.__swapSurface (surface1, surface2);
-//			}
-//
-//		}
+		
+		if (__children[c1] == null) throw "Null element at index " + c1 + " length " + __children.length;
+		if (__children[c2] == null) throw "Null element at index " + c2 + " length " + __children.length;
+		
+		var gfx1 = __children[c1].__getGraphics ();
+		var gfx2 = __children[c2].__getGraphics ();
+		
+		if (gfx1 != null && gfx2 != null) {
+			
+			var surface1 = __children[c1].__scrollRect == null ? gfx1.__surface : __children[c1].__getSrWindow ();
+			var surface2 = __children[c2].__scrollRect == null ? gfx2.__surface : __children[c2].__getSrWindow ();
+			
+			if (surface1 != null && surface2 != null) {
+				Lib.__swapSurface (surface1, surface2);
+			}
+			
+		}
 		
 	}
 	

@@ -1,5 +1,6 @@
 package flash.display;
 
+import js.html.svg.TextElement;
 import flash.text.TextFieldType;
 import flash.text.TextFieldAutoSize;
 import massive.munit.async.AsyncFactory;
@@ -49,17 +50,12 @@ class TextFieldTest {
         testTextFieldHandler = asyncFactory.createHandler(this, function() {
             Assert.isTrue(tf.snap.parent() != null);
             Assert.isTrue(tf.snap.parent().node == Lib.current.snap.node);
-            trace(tf.snap.attr("transform"));
             var text = tf.snap.select("text");
-            trace( text );
-            trace( text.attr("font-family") );
-            trace( text.attr("font-size") );
-            trace( text.attr("fill") );
+            var textElement: TextElement = text.node;
             Assert.isTrue( text != null );
-            Assert.areEqual( "m1,0,0,1,20,100", tf.snap.attr("transform") );
+            Assert.areEqual( "t20,100", tf.snap.attr("transform") );
             Assert.areEqual( "Tahoma", text.attr("font-family") );
-            Assert.areEqual( "18px", text.attr("font-size") );
-
+            Assert.areEqual( "18px", textElement.getAttribute("font-size") );
         }, 300);
         Lib.__getStage().addEventListener(Event.STAGE_RENDERED, testTextFieldHandler);
     }
@@ -90,16 +86,12 @@ class TextFieldTest {
         testTextFieldHandler = asyncFactory.createHandler(this, function() {
             Assert.isTrue(tf.snap.parent() != null);
             Assert.isTrue(tf.snap.parent().node == Lib.current.snap.node);
-            trace(tf.snap.attr("transform"));
             var text = tf.snap.select("text");
-            trace( text );
-            trace( text.attr("font-family") );
-            trace( text.attr("font-size") );
-            trace( text.attr("fill") );
+            var textElement: TextElement = text.node;
             Assert.isTrue( text != null );
-            Assert.areEqual( "m1,0,0,1,20,100", tf.snap.attr("transform") );
+            Assert.areEqual( "t20,100", tf.snap.attr("transform") );
             Assert.areEqual( "Tahoma", text.attr("font-family") );
-            Assert.areEqual( "18px", text.attr("font-size") );
+            Assert.areEqual( "18px", textElement.getAttribute("font-size") );
 
         }, 300);
         Lib.__getStage().addEventListener(Event.STAGE_RENDERED, testTextFieldHandler);

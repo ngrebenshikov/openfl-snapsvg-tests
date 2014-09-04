@@ -637,32 +637,32 @@ class TextField extends InteractiveObject {
 			handleGraphicsUpdated (__graphics);
 			
 		}
-//TODO: uncomment
-//		if (!mHTMLMode && inMask != null) {
-//
-//			var m = getSurfaceTransform (__graphics);
-//			Lib.__drawToSurface (__graphics.__surface, inMask, m, (parent != null ? parent.__combinedAlpha : 1) * alpha, clipRect, (gridFitType != GridFitType.PIXEL));
-//
-//		} else {
-//
-//			if (__testFlag (DisplayObject.TRANSFORM_INVALID)) {
-//
-//				var m = getSurfaceTransform (__graphics);
-//				Lib.__setSurfaceTransform (__graphics.__surface, m);
-//				__clearFlag (DisplayObject.TRANSFORM_INVALID);
-//
-//			}
-//
-//			Lib.__setSurfaceOpacity (__graphics.__surface, (parent != null ? parent.__combinedAlpha : 1) * alpha);
-//
-//			/*if (clipRect != null) {
-//				var rect = new Rectangle();
-//				rect.topLeft = this.globalToLocal(this.parent.localToGlobal(clipRect.topLeft));
-//				rect.bottomRight = this.globalToLocal(this.parent.localToGlobal(clipRect.bottomRight));
-//				Lib.__setSurfaceClipping(__graphics.__surface, rect);
-//			}*/
-//
-//		}
+		
+		if (!mHTMLMode && inMask != null) {
+			
+			var m = getSurfaceTransform (__graphics);
+			Lib.__drawToSurface (__graphics.__surface, inMask, m, (parent != null ? parent.__combinedAlpha : 1) * alpha, clipRect, (gridFitType != GridFitType.PIXEL));
+			
+		} else {
+			
+			if (__testFlag (DisplayObject.TRANSFORM_INVALID)) {
+				
+				var m = getSurfaceTransform (__graphics);
+				Lib.__setSurfaceTransform (__graphics.__surface, m);
+				__clearFlag (DisplayObject.TRANSFORM_INVALID);
+				
+			}
+			
+			Lib.__setSurfaceOpacity (__graphics.__surface, (parent != null ? parent.__combinedAlpha : 1) * alpha);
+			
+			/*if (clipRect != null) {
+				var rect = new Rectangle();
+				rect.topLeft = this.globalToLocal(this.parent.localToGlobal(clipRect.topLeft));
+				rect.bottomRight = this.globalToLocal(this.parent.localToGlobal(clipRect.bottomRight));
+				Lib.__setSurfaceClipping(__graphics.__surface, rect);
+			}*/
+			
+		}
 		
 	}
 	
@@ -796,79 +796,79 @@ class TextField extends InteractiveObject {
 		
 		mParagraphs = new Paragraphs ();
 		mHTMLText = inHTMLText;
-//TODO: uncomment
-//		if (!mHTMLMode) {
-//
-//			var domElement:Dynamic = Browser.document.createElement ("div");
-//
-//			if (background || border) {
-//
-//				domElement.style.width = mWidth + "px";
-//				domElement.style.height = mHeight + "px";
-//
-//			}
-//
-//			if (background) {
-//
-//				domElement.style.backgroundColor = "#" + StringTools.hex (backgroundColor,6);
-//
-//			}
-//
-//			if (border) {
-//
-//				domElement.style.border = "1px solid #" + StringTools.hex (borderColor,6);
-//
-//			}
-//
-//
-//			// ---
-//			// This will set: font-face, color, font-size, align in <div style="..." />
-//			// It assumes that, the font-face used is already loaded by the browser.
-//			// As it uses canvas wrapper tags, this is the best possible here.
-//			//
-//			// WARNING: do not set (domElement.style.cssText), or (domElement.style.font)
-//			//
-//			// TODO (Encore): we need to script our custom font loading into a .css file
-//			// TODO (Service): app server should send correct mime-type for .ttf files
-//			//                 not application/octet-stream, may be application/x-font-ttf
-//			//
-//			//
-//			// TODO HAXE: compiler needs to be fixed to link .css files into html header.
-//			//
-//
-//			domElement.style.color = "#" + StringTools.hex (mTextColour, 6);
-//			domElement.style.fontFamily = mFace;
-//			domElement.style.fontSize = mTextHeight + "px";
-//			domElement.style.textAlign = Std.string (mAlign);
-//
-//			var wrapper:CanvasElement = cast domElement;
-//			wrapper.innerHTML = inHTMLText;
-//
-//			var destination = new Graphics (wrapper);
-//			var __surface = __graphics.__surface;
-//
-//			if (Lib.__isOnStage (__surface)) {
-//
-//				Lib.__appendSurface (wrapper);
-//				Lib.__copyStyle (__surface, wrapper);
-//				Lib.__swapSurface (__surface, wrapper);
-//				Lib.__removeSurface (__surface);
-//
-//			}
-//
-//			__graphics = destination;
-//			__graphics.__extent.width = wrapper.width;
-//			__graphics.__extent.height = wrapper.height;
-//
-//		} else {
-//
-//			__graphics.__surface.innerHTML = inHTMLText;
-//
-//		}
-//
-//		mHTMLMode = true;
-//		RebuildText ();
-//		__invalidateBounds ();
+		
+		if (!mHTMLMode) {
+			
+			var domElement:Dynamic = Browser.document.createElement ("div");
+			
+			if (background || border) {
+				
+				domElement.style.width = mWidth + "px";
+				domElement.style.height = mHeight + "px";
+				
+			}
+			
+			if (background) {
+				
+				domElement.style.backgroundColor = "#" + StringTools.hex (backgroundColor,6);
+				
+			}
+			
+			if (border) {
+				
+				domElement.style.border = "1px solid #" + StringTools.hex (borderColor,6);
+				
+			}
+			
+			
+			// ---
+			// This will set: font-face, color, font-size, align in <div style="..." />
+			// It assumes that, the font-face used is already loaded by the browser.
+			// As it uses canvas wrapper tags, this is the best possible here.
+			//
+			// WARNING: do not set (domElement.style.cssText), or (domElement.style.font)
+			//
+			// TODO (Encore): we need to script our custom font loading into a .css file 
+			// TODO (Service): app server should send correct mime-type for .ttf files
+			//                 not application/octet-stream, may be application/x-font-ttf
+			// 
+			// 
+			// TODO HAXE: compiler needs to be fixed to link .css files into html header.
+			//
+			
+			domElement.style.color = "#" + StringTools.hex (mTextColour, 6);
+			domElement.style.fontFamily = mFace;
+			domElement.style.fontSize = mTextHeight + "px";
+			domElement.style.textAlign = Std.string (mAlign);
+			
+			var wrapper:CanvasElement = cast domElement;
+			wrapper.innerHTML = inHTMLText;
+			
+			var destination = new Graphics (wrapper);
+			var __surface = __graphics.__surface;
+			
+			if (Lib.__isOnStage (__surface)) {
+				
+				Lib.__appendSurface (wrapper);
+				Lib.__copyStyle (__surface, wrapper);
+				Lib.__swapSurface (__surface, wrapper);
+				Lib.__removeSurface (__surface);
+				
+			}
+			
+			__graphics = destination;
+			__graphics.__extent.width = wrapper.width;
+			__graphics.__extent.height = wrapper.height;
+			
+		} else {
+			
+			__graphics.__surface.innerHTML = inHTMLText;
+			
+		}
+		
+		mHTMLMode = true;
+		RebuildText ();
+		__invalidateBounds ();
 		
 		return mHTMLText;
 		
@@ -932,26 +932,25 @@ class TextField extends InteractiveObject {
 		mType = inType;
 		__inputEnabled = (mType == TextFieldType.INPUT);
 		
-//TODO: uncomment
-//		if (mHTMLMode) {
-//
-//			if (__inputEnabled) {
-//
-//				Lib.__setContentEditable(__graphics.__surface, true);
-//
-//			} else {
-//
-//				Lib.__setContentEditable(__graphics.__surface, false);
-//
-//			}
-//
-//		} else if (__inputEnabled) {
-//
-//			// implicitly convert text to a HTML field, and set contenteditable
-//			set_htmlText (StringTools.replace (mText, "\n", "<BR />"));
-//			Lib.__setContentEditable (__graphics.__surface, true);
-//
-//		}
+		if (mHTMLMode) {
+			
+			if (__inputEnabled) {
+				
+				Lib.__setContentEditable(__graphics.__surface, true);
+				
+			} else {
+				
+				Lib.__setContentEditable(__graphics.__surface, false);
+				
+			}
+			
+		} else if (__inputEnabled) {
+			
+			// implicitly convert text to a HTML field, and set contenteditable
+			set_htmlText (StringTools.replace (mText, "\n", "<BR />"));
+			Lib.__setContentEditable (__graphics.__surface, true);
+			
+		}
 		
 		tabEnabled = (type == TextFieldType.INPUT);
 		
