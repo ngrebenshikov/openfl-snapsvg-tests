@@ -178,15 +178,6 @@
         <root url="file://$PROJECT_DIR$/lib/munit" />
       </SOURCES>
     </library>
-    <library name="openfl-html5-dom" type="Haxe">
-      <CLASSES>
-        <root url="file://$PROJECT_DIR$/lib/openfl-html5-dom" />
-      </CLASSES>
-      <JAVADOC />
-      <SOURCES>
-        <root url="file://$PROJECT_DIR$/lib/openfl-html5-dom" />
-      </SOURCES>
-    </library>
   </component>
 </project>
 
