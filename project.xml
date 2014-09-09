@@ -17,4 +17,6 @@
 
     <template path="templates" />
 
+    <assets path="Assets" rename="assets" />
+
 </project>

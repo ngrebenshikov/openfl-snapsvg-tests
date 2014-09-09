@@ -2,10 +2,11 @@ package openfl.display;
 
 import snap.Snap;
 import tools.Helper;
-import flash.geom.Matrix;
+import tools.Color;
+import openfl.geom.Matrix;
 import massive.munit.Assert;
 import massive.munit.async.AsyncFactory;
-import flash.events.Event;
+import openfl.events.Event;
 
 class GraphicsTest {
     private var g: Graphics;
@@ -47,7 +48,8 @@ class GraphicsTest {
         g.moveTo(100,100);
         g.lineTo(200, 200);
 
-        testLineToHandler = asyncFactory.createHandler(this, function() {
+        asyncHandler = asyncFactory.createHandler(this, function() {
+            Lib.__getStage().removeEventListener(Event.STAGE_RENDERED, asyncHandler);
             var path = g.__snap.select("path");
             Assert.isNotNull(path);
             Assert.areEqual("M100 100 L200 200 Z", path.attr("d"));
@@ -57,11 +59,9 @@ class GraphicsTest {
 
             Assert.areEqual("stroke-width: 10" + strokeWidthPostfix + "; stroke-linecap: round; stroke-linejoin: bevel; stroke-miterlimit: 5; fill-rule: evenodd;" + transformPostfix, path.attr("style"));
             Assert.areEqual("none", path.attr("vector-effect"));
-            testLineToHandler = null;
         }, 300);
-        Lib.__getStage().addEventListener(Event.STAGE_RENDERED, testLineToHandler);
+        Lib.__getStage().addEventListener(Event.STAGE_RENDERED, asyncHandler);
     }
-    private var testLineToHandler: Dynamic;
 
     @AsyncTest
     public function testLineTo2(asyncFactory: AsyncFactory) {
@@ -70,7 +70,8 @@ class GraphicsTest {
         g.moveTo(23, 567);
         g.lineTo(987, 456);
 
-        testLineToHandler = asyncFactory.createHandler(this, function() {
+        asyncHandler = asyncFactory.createHandler(this, function() {
+            Lib.__getStage().removeEventListener(Event.STAGE_RENDERED, asyncHandler);
             var path = g.__snap.select("path");
             Assert.isNotNull(path);
             Assert.areEqual("M23 567 L987 456 Z", path.attr("d"));
@@ -80,9 +81,8 @@ class GraphicsTest {
 
             Assert.areEqual("stroke-width: 10" + strokeWidthPostfix + "; stroke-linecap: square; stroke-linejoin: round; stroke-miterlimit: 5; fill-rule: evenodd;" + transformPostfix, path.attr("style"));
             Assert.areEqual("non-scaling-stroke", path.attr("vector-effect"));
-            testLineToHandler = null;
         }, 300);
-        Lib.__getStage().addEventListener(Event.STAGE_RENDERED, testLineToHandler);
+        Lib.__getStage().addEventListener(Event.STAGE_RENDERED, asyncHandler);
     }
 
     @AsyncTest
@@ -90,7 +90,8 @@ class GraphicsTest {
         g.lineStyle(5, 0x0000FF, 0.7, true, LineScaleMode.NONE, CapsStyle.ROUND, JointStyle.ROUND, 7);
         g.moveTo(250, 200);
         g.curveTo(300, 0, 350, 200);
-        testCurveHandler = asyncFactory.createHandler(this, function() {
+        asyncHandler = asyncFactory.createHandler(this, function() {
+            Lib.__getStage().removeEventListener(Event.STAGE_RENDERED, asyncHandler);
             var path = g.__snap.select("path");
             Assert.isNotNull(path);
             Assert.areEqual("M250 200 Q300 0 350 200 Z", path.attr("d"));
@@ -100,12 +101,9 @@ class GraphicsTest {
 
             Assert.areEqual("stroke-width: 5" + strokeWidthPostfix + "; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 7; fill-rule: evenodd;" + transformPostfix, path.attr("style"));
             Assert.areEqual("non-scaling-stroke", path.attr("vector-effect"));
-            testCurveHandler = null;
         }, 300);
-        Lib.__getStage().addEventListener(Event.STAGE_RENDERED, testCurveHandler);
+        Lib.__getStage().addEventListener(Event.STAGE_RENDERED, asyncHandler);
     }
-
-    private var testCurveHandler: Dynamic;
 
     @AsyncTest
     public function testCurveTo2(asyncFactory: AsyncFactory) {
@@ -113,7 +111,8 @@ class GraphicsTest {
         g.beginFill(0x642A15, 0.85);
         g.moveTo(200, 250);
         g.curveTo(400, 450 , 500, 200);
-        testCurveHandler = asyncFactory.createHandler(this, function() {
+        asyncHandler = asyncFactory.createHandler(this, function() {
+            Lib.__getStage().removeEventListener(Event.STAGE_RENDERED, asyncHandler);
             var path = g.__snap.select("path");
             Assert.isNotNull(path);
             Assert.areEqual("M200 250 Q400 450 500 200 Z", path.attr("d"));
@@ -123,12 +122,9 @@ class GraphicsTest {
 
             Assert.areEqual("stroke-width: 30" + strokeWidthPostfix + "; stroke-linecap: square; stroke-linejoin: bevel; stroke-miterlimit: 4; fill-rule: evenodd;" + transformPostfix, path.attr("style"));
             Assert.areEqual("non-scaling-stroke", path.attr("vector-effect"));
-            testCurveHandler = null;
         }, 300);
-        Lib.__getStage().addEventListener(Event.STAGE_RENDERED, testCurveHandler);
+        Lib.__getStage().addEventListener(Event.STAGE_RENDERED, asyncHandler);
     }
-
-    private var testColorFillingHandler: Dynamic;
 
     @AsyncTest
     public function testColorFilling1(asyncFactory: AsyncFactory) {
@@ -139,7 +135,8 @@ class GraphicsTest {
         g.lineTo(300, 100);
         g.lineTo(400, 100);
         g.endFill();
-        testColorFillingHandler = asyncFactory.createHandler(this, function() {
+        asyncHandler = asyncFactory.createHandler(this, function() {
+            Lib.__getStage().removeEventListener(Event.STAGE_RENDERED, asyncHandler);
             var path = g.__snap.select("path");
             Assert.isNotNull(path);
             Assert.areEqual("M300 30 L400 30 L300 100 L400 100 L300 30 Z", path.attr("d"));
@@ -149,9 +146,8 @@ class GraphicsTest {
 
             Assert.areEqual("stroke-width: 7" + strokeWidthPostfix + "; stroke-linecap: square; stroke-linejoin: bevel; stroke-miterlimit: 4; fill-rule: evenodd;" + transformPostfix, path.attr("style"));
             Assert.areEqual("non-scaling-stroke", path.attr("vector-effect"));
-            testColorFillingHandler = null;
         }, 300);
-        Lib.__getStage().addEventListener(Event.STAGE_RENDERED, testColorFillingHandler);
+        Lib.__getStage().addEventListener(Event.STAGE_RENDERED, asyncHandler);
     }
 
     @AsyncTest
@@ -164,7 +160,8 @@ class GraphicsTest {
         g.lineTo(150, 60);
         g.lineTo(140, 50);
         g.endFill();
-        testColorFillingHandler = asyncFactory.createHandler(this, function() {
+        asyncHandler = asyncFactory.createHandler(this, function() {
+            Lib.__getStage().removeEventListener(Event.STAGE_RENDERED, asyncHandler);
             var path = g.__snap.select("path");
             Assert.isNotNull(path);
             Assert.areEqual("M50 200 L200 200 L190 30 L150 60 L140 50 L50 200 Z", path.attr("d"));
@@ -174,19 +171,17 @@ class GraphicsTest {
 
             Assert.areEqual("stroke-width: 7" + strokeWidthPostfix + "; stroke-linecap: square; stroke-linejoin: bevel; stroke-miterlimit: 4; fill-rule: evenodd;" + transformPostfix, path.attr("style"));
             Assert.areEqual("non-scaling-stroke", path.attr("vector-effect"));
-            testColorFillingHandler = null;
         }, 300);
-        Lib.__getStage().addEventListener(Event.STAGE_RENDERED, testColorFillingHandler);
+        Lib.__getStage().addEventListener(Event.STAGE_RENDERED, asyncHandler);
     }
-
-    private var testDrawEllipseHandler: Dynamic;
 
     @AsyncTest
     public function testDrawEllipse1(asyncFactory: AsyncFactory) {
         g.lineStyle(8, 0xAA0110, 1, true, LineScaleMode.NONE, CapsStyle.SQUARE, JointStyle.BEVEL, 4);
         g.beginFill(0xFF2070, 0.4);
         g.drawEllipse(100, 200, 200, 40);
-        testDrawEllipseHandler = asyncFactory.createHandler(this, function() {
+        asyncHandler = asyncFactory.createHandler(this, function() {
+            Lib.__getStage().removeEventListener(Event.STAGE_RENDERED, asyncHandler);
             var ellipse = g.__snap.select("ellipse");
             Assert.isNotNull(ellipse);
             Assert.areEqual("200", ellipse.attr("cx"));
@@ -199,9 +194,8 @@ class GraphicsTest {
 
             Assert.areEqual("stroke-width: 8" + strokeWidthPostfix + "; stroke-linecap: square; stroke-linejoin: bevel; stroke-miterlimit: 4; fill-rule: evenodd;" + transformPostfix, ellipse.attr("style"));
             Assert.areEqual("non-scaling-stroke", ellipse.attr("vector-effect"));
-            testDrawEllipseHandler = null;
         }, 300);
-        Lib.__getStage().addEventListener(Event.STAGE_RENDERED, testDrawEllipseHandler);
+        Lib.__getStage().addEventListener(Event.STAGE_RENDERED, asyncHandler);
     }
 
     @AsyncTest
@@ -209,7 +203,8 @@ class GraphicsTest {
         g.lineStyle(0);
         g.beginFill(0xFF2070, 0.4);
         g.drawEllipse(300, 200, 200, 40);
-        testDrawEllipseHandler = asyncFactory.createHandler(this, function() {
+        asyncHandler = asyncFactory.createHandler(this, function() {
+            Lib.__getStage().removeEventListener(Event.STAGE_RENDERED, asyncHandler);
             var ellipse = g.__snap.select("ellipse");
             Assert.isNotNull(ellipse);
             Assert.areEqual("400", ellipse.attr("cx"));
@@ -221,19 +216,17 @@ class GraphicsTest {
             Assert.areEqual("fill-rule: evenodd;"+transformPostfix, ellipse.attr("style"));
 
             Assert.isTrue(tools.Color.areColorsEqual('rgba(255,32,112,0.4)', ellipse.attr("fill")));
-            testDrawEllipseHandler = null;
         }, 300);
-        Lib.__getStage().addEventListener(Event.STAGE_RENDERED, testDrawEllipseHandler);
+        Lib.__getStage().addEventListener(Event.STAGE_RENDERED, asyncHandler);
     }
-
-    private var testDrawCircleHandler: Dynamic;
 
     @AsyncTest
     public function testDrawCircle1(asyncFactory: AsyncFactory) {
         g.lineStyle(8, 0xAA0110, 1, true, LineScaleMode.NONE, CapsStyle.SQUARE, JointStyle.BEVEL, 4);
         g.beginFill(0xFF2070, 0.4);
         g.drawCircle(15, 17, 42.7);
-        testDrawCircleHandler = asyncFactory.createHandler(this, function() {
+        asyncHandler = asyncFactory.createHandler(this, function() {
+            Lib.__getStage().removeEventListener(Event.STAGE_RENDERED, asyncHandler);
             var circle = g.__snap.select("circle");
             Assert.isNotNull(circle);
             Assert.areEqual("15", circle.attr("cx"));
@@ -246,9 +239,8 @@ class GraphicsTest {
 
             Assert.areEqual("stroke-width: 8" + strokeWidthPostfix + "; stroke-linecap: square; stroke-linejoin: bevel; stroke-miterlimit: 4; fill-rule: evenodd;" + transformPostfix, circle.attr("style"));
             Assert.areEqual("non-scaling-stroke", circle.attr("vector-effect"));
-            testDrawCircleHandler = null;
         }, 300);
-        Lib.__getStage().addEventListener(Event.STAGE_RENDERED, testDrawCircleHandler);
+        Lib.__getStage().addEventListener(Event.STAGE_RENDERED, asyncHandler);
     }
 
     @AsyncTest
@@ -256,7 +248,8 @@ class GraphicsTest {
         g.lineStyle(4, 0x1001AA, 1, true, LineScaleMode.NONE, CapsStyle.SQUARE, JointStyle.BEVEL, 4);
         g.beginFill(0x7020FF, 0.6);
         g.drawCircle(15.23, 17.78, 42.7);
-        testDrawCircleHandler = asyncFactory.createHandler(this, function() {
+        asyncHandler = asyncFactory.createHandler(this, function() {
+            Lib.__getStage().removeEventListener(Event.STAGE_RENDERED, asyncHandler);
             var circle = g.__snap.select("circle");
             Assert.isNotNull(circle);
             var cx = Std.parseFloat(circle.attr("cx"));
@@ -271,19 +264,17 @@ class GraphicsTest {
 
             Assert.areEqual("stroke-width: 4" + strokeWidthPostfix + "; stroke-linecap: square; stroke-linejoin: bevel; stroke-miterlimit: 4; fill-rule: evenodd;" + transformPostfix, circle.attr("style"));
             Assert.areEqual("non-scaling-stroke", circle.attr("vector-effect"));
-            testDrawCircleHandler = null;
         }, 300);
-        Lib.__getStage().addEventListener(Event.STAGE_RENDERED, testDrawCircleHandler);
+        Lib.__getStage().addEventListener(Event.STAGE_RENDERED, asyncHandler);
     }
-
-    private var testDrawRectHandler: Dynamic;
 
     @AsyncTest
     public function testDrawRect1(asyncFactory: AsyncFactory) {
         g.lineStyle(4, 0x1001AA, 1, true, LineScaleMode.NONE, CapsStyle.SQUARE, JointStyle.BEVEL, 4);
         g.beginFill(0x7020FF, 0.6);
         g.drawRect(10, 15, 70, 42);
-        testDrawRectHandler = asyncFactory.createHandler(this, function() {
+        asyncHandler = asyncFactory.createHandler(this, function() {
+            Lib.__getStage().removeEventListener(Event.STAGE_RENDERED, asyncHandler);
             var rect = g.__snap.select("rect");
             Assert.isNotNull(rect);
             Assert.areEqual("10", rect.attr("x"));
@@ -299,9 +290,8 @@ class GraphicsTest {
 
             Assert.areEqual("stroke-width: 4" + strokeWidthPostfix + "; stroke-linecap: square; stroke-linejoin: bevel; stroke-miterlimit: 4; fill-rule: evenodd;" + transformPostfix, rect.attr("style"));
             Assert.areEqual("non-scaling-stroke", rect.attr("vector-effect"));
-            testDrawRectHandler = null;
         }, 300);
-        Lib.__getStage().addEventListener(Event.STAGE_RENDERED, testDrawRectHandler);
+        Lib.__getStage().addEventListener(Event.STAGE_RENDERED, asyncHandler);
     }
 
     @AsyncTest
@@ -309,7 +299,8 @@ class GraphicsTest {
         g.lineStyle(8, 0xAA0110, 1, true, LineScaleMode.NONE, CapsStyle.SQUARE, JointStyle.BEVEL, 4);
         g.beginFill(0xFF2070, 0.4);
         g.drawRect(20.9, 3.22, 37.6, 88.3);
-        testDrawRectHandler = asyncFactory.createHandler(this, function() {
+        asyncHandler = asyncFactory.createHandler(this, function() {
+            Lib.__getStage().removeEventListener(Event.STAGE_RENDERED, asyncHandler);
             var rect = g.__snap.select("rect");
             Assert.isNotNull(rect);
             var val = Std.parseFloat(rect.attr("x"));
@@ -329,19 +320,17 @@ class GraphicsTest {
 
             Assert.areEqual("stroke-width: 8" + strokeWidthPostfix + "; stroke-linecap: square; stroke-linejoin: bevel; stroke-miterlimit: 4; fill-rule: evenodd;" + transformPostfix, rect.attr("style"));
             Assert.areEqual("non-scaling-stroke", rect.attr("vector-effect"));
-            testDrawRectHandler = null;
         }, 300);
-        Lib.__getStage().addEventListener(Event.STAGE_RENDERED, testDrawRectHandler);
+        Lib.__getStage().addEventListener(Event.STAGE_RENDERED, asyncHandler);
     }
-
-    private var testDrawRoundRectHandler: Dynamic;
 
     @AsyncTest
     public function testDrawRoundRect1(asyncFactory: AsyncFactory) {
         g.lineStyle(4, 0x1001AA, 1, true, LineScaleMode.NONE, CapsStyle.SQUARE, JointStyle.BEVEL, 4);
         g.beginFill(0x7020FF, 0.6);
         g.drawRoundRect(10, 15, 70, 42, 7);
-        testDrawRoundRectHandler = asyncFactory.createHandler(this, function() {
+        asyncHandler = asyncFactory.createHandler(this, function() {
+            Lib.__getStage().removeEventListener(Event.STAGE_RENDERED, asyncHandler);
             var rect = g.__snap.select("rect");
             Assert.isNotNull(rect);
             Assert.areEqual("10", rect.attr("x"));
@@ -357,9 +346,8 @@ class GraphicsTest {
 
             Assert.areEqual("stroke-width: 4" + strokeWidthPostfix + "; stroke-linecap: square; stroke-linejoin: bevel; stroke-miterlimit: 4; fill-rule: evenodd;" + transformPostfix, rect.attr("style"));
             Assert.areEqual("non-scaling-stroke", rect.attr("vector-effect"));
-            testDrawRoundRectHandler = null;
         }, 300);
-        Lib.__getStage().addEventListener(Event.STAGE_RENDERED, testDrawRoundRectHandler);
+        Lib.__getStage().addEventListener(Event.STAGE_RENDERED, asyncHandler);
     }
 
     @AsyncTest
@@ -367,7 +355,8 @@ class GraphicsTest {
         g.lineStyle(8, 0xAA0110, 1, true, LineScaleMode.NONE, CapsStyle.SQUARE, JointStyle.BEVEL, 4);
         g.beginFill(0xFF2070, 0.4);
         g.drawRoundRect(20.9, 3.22, 37.6, 7.3, 2.5);
-        testDrawRoundRectHandler = asyncFactory.createHandler(this, function() {
+        asyncHandler = asyncFactory.createHandler(this, function() {
+            Lib.__getStage().removeEventListener(Event.STAGE_RENDERED, asyncHandler);
             var rect = g.__snap.select("rect");
             Assert.isNotNull(rect);
             var val = Std.parseFloat(rect.attr("x"));
@@ -389,9 +378,8 @@ class GraphicsTest {
 
             Assert.areEqual("stroke-width: 8" + strokeWidthPostfix + "; stroke-linecap: square; stroke-linejoin: bevel; stroke-miterlimit: 4; fill-rule: evenodd;" + transformPostfix, rect.attr("style"));
             Assert.areEqual("non-scaling-stroke", rect.attr("vector-effect"));
-            testDrawRoundRectHandler = null;
         }, 300);
-        Lib.__getStage().addEventListener(Event.STAGE_RENDERED, testDrawRoundRectHandler);
+        Lib.__getStage().addEventListener(Event.STAGE_RENDERED, asyncHandler);
     }
 
     @AsyncTest
@@ -601,6 +589,39 @@ class GraphicsTest {
             Assert.areEqual('100%', stops.item(3).attributes.getNamedItem('offset').nodeValue);
             Assert.isTrue(tools.Color.areColorsEqual('#ffff00', stops.item(3).attributes.getNamedItem('stop-color').nodeValue));
             Assert.isNull(stops.item(3).attributes.getNamedItem('stop-opacity'));
+        }, 300);
+        Lib.__getStage().addEventListener(Event.STAGE_RENDERED, asyncHandler);
+    }
+
+    @AsyncTest
+    public function testBitmapFill1(asyncFactory: AsyncFactory) {
+        var bitmap = new Bitmap(Assets.getBitmapData("assets/openfl.png"));
+
+        g.beginBitmapFill(bitmap.bitmapData, null, true, false);
+        g.drawRect(10, 15, 450, 500);
+        g.endFill();
+        asyncHandler = asyncFactory.createHandler(this, function() {
+            Lib.__getStage().removeEventListener(Event.STAGE_RENDERED, asyncHandler);
+            var rect = g.__snap.select("rect");
+            Assert.isNotNull(rect);
+
+            Assert.areEqual("10", rect.attr("x"));
+            Assert.areEqual("15", rect.attr("y"));
+            Assert.areEqual("450", rect.attr("width"));
+            Assert.areEqual("500", rect.attr("height"));
+            Assert.areEqual("0", rect.attr("rx"));
+            Assert.areEqual("0", rect.attr("ry"));
+
+            Assert.areEqual("fill-rule: evenodd;", rect.attr("style"));
+            Assert.areEqual("none", rect.attr("stroke"));
+            var fill = rect.attr("fill");
+            Assert.isNotNull(fill);
+            var fillId = Helper.getAnchorIdFromUrl(fill);
+            Assert.isNotNull(fillId);
+            var fillParts = fill.split(' ');
+            Assert.areEqual(2, fillParts.length);
+            Assert.areEqual("transparent", fillParts[1]);
+
         }, 300);
         Lib.__getStage().addEventListener(Event.STAGE_RENDERED, asyncHandler);
     }
