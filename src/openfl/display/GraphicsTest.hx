@@ -618,9 +618,10 @@ class GraphicsTest {
             Assert.isNotNull(fill);
             var fillId = Helper.getAnchorIdFromUrl(fill);
             Assert.isNotNull(fillId);
-            var fillParts = fill.split(' ');
-            Assert.areEqual(2, fillParts.length);
-            Assert.areEqual("transparent", fillParts[1]);
+// Why do we need it?
+//            var fillParts = fill.split(' ');
+//            Assert.areEqual(2, fillParts.length);
+//            Assert.areEqual("transparent", fillParts[1]);
 
         }, 300);
         Lib.__getStage().addEventListener(Event.STAGE_RENDERED, asyncHandler);
@@ -655,9 +656,10 @@ class GraphicsTest {
             Assert.isNotNull(fill);
             var fillId = Helper.getAnchorIdFromUrl(fill);
             Assert.isNotNull(fillId);
-            var fillParts = fill.split(' ');
-            Assert.areEqual(2, fillParts.length);
-            Assert.areEqual("transparent", fillParts[1]);
+// Why do we need it?
+//            var fillParts = fill.split(' ');
+//            Assert.areEqual(2, fillParts.length);
+//            Assert.areEqual("transparent", fillParts[1]);
 
         }, 300);
         Lib.__getStage().addEventListener(Event.STAGE_RENDERED, asyncHandler);
@@ -692,9 +694,10 @@ class GraphicsTest {
             Assert.isNotNull(fill);
             var fillId = Helper.getAnchorIdFromUrl(fill);
             Assert.isNotNull(fillId);
-            var fillParts = fill.split(' ');
-            Assert.areEqual(2, fillParts.length);
-            Assert.areEqual("transparent", fillParts[1]);
+// Why do we need it?
+//            var fillParts = fill.split(' ');
+//            Assert.areEqual(2, fillParts.length);
+//            Assert.areEqual("transparent", fillParts[1]);
 
         }, 300);
         Lib.__getStage().addEventListener(Event.STAGE_RENDERED, asyncHandler);
