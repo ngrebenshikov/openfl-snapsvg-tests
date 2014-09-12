@@ -1,5 +1,9 @@
 package openfl.display;
 
+import openfl.events.KeyboardEvent;
+import js.Browser;
+import openfl.utils.Timer;
+import openfl.ui.Keyboard;
 import js.html.svg.TextElement;
 import flash.text.TextFieldType;
 import flash.text.TextFieldAutoSize;
@@ -111,10 +115,42 @@ class TextFieldTest {
 
         Lib.current.addChild(tf);
 
-        testTextFieldHandler = asyncFactory.createHandler(this, function() {
+        tf.stage.focus = tf;
+
+        var dispatchEvent = function(type: String, char: String, code: Int) {
+            var charCode = if (null != char) char.charCodeAt(0) else 0;
+            var e = new KeyboardEvent (type, true, false, charCode, code, code, false, false, false);
+            untyped tf.__fireEvent (e);
+        };
+
+        testTextFieldHandler = function(e) {
             Lib.__getStage().removeEventListener(Event.STAGE_RENDERED, testTextFieldHandler);
-        }, 300);
+
+            dispatchEvent(KeyboardEvent.KEY_PRESS, 'a', Keyboard.A);
+            dispatchEvent(KeyboardEvent.KEY_PRESS, 'b', Keyboard.B);
+            dispatchEvent(KeyboardEvent.KEY_PRESS, 'c', Keyboard.C);
+            dispatchEvent(KeyboardEvent.KEY_PRESS, 'd', Keyboard.D);
+            dispatchEvent(KeyboardEvent.KEY_PRESS, 'e', Keyboard.E);
+            dispatchEvent(KeyboardEvent.KEY_DOWN, null, Keyboard.LEFT);
+            dispatchEvent(KeyboardEvent.KEY_DOWN, null, Keyboard.LEFT);
+            dispatchEvent(KeyboardEvent.KEY_PRESS, 'f', Keyboard.F);
+            dispatchEvent(KeyboardEvent.KEY_DOWN, null, Keyboard.RIGHT);
+            dispatchEvent(KeyboardEvent.KEY_PRESS, 'g', Keyboard.G);
+            dispatchEvent(KeyboardEvent.KEY_DOWN, null, Keyboard.LEFT);
+            dispatchEvent(KeyboardEvent.KEY_DOWN, null, Keyboard.LEFT);
+            dispatchEvent(KeyboardEvent.KEY_DOWN, null, Keyboard.LEFT);
+            dispatchEvent(KeyboardEvent.KEY_DOWN, null, Keyboard.BACKSPACE);
+            dispatchEvent(KeyboardEvent.KEY_DOWN, null, Keyboard.LEFT);
+            dispatchEvent(KeyboardEvent.KEY_DOWN, null, Keyboard.DELETE);
+        };
+
         Lib.__getStage().addEventListener(Event.STAGE_RENDERED, testTextFieldHandler);
+
+        haxe.Timer.delay(asyncFactory.createHandler(this, function() {
+            Assert.areEqual('afdge', tf.text);
+        }, 2000),
+        1000);
+
     }
 
 }
