@@ -1,11 +1,6 @@
 import massive.munit.TestSuite;
 
-import openfl.display.ColorTest;
-import openfl.display.DisplayObjectTest;
-import openfl.display.GraphicsTest;
 import openfl.display.TextFieldTest;
-import openfl.FiltersTest;
-import openfl.LibTest;
 
 /**
  * Auto generated Test Suite for MassiveUnit.
@@ -19,11 +14,6 @@ class TestSuite extends massive.munit.TestSuite
 	{
 		super();
 
-		add(openfl.display.ColorTest);
-		add(openfl.display.DisplayObjectTest);
-		add(openfl.display.GraphicsTest);
 		add(openfl.display.TextFieldTest);
-		add(openfl.FiltersTest);
-		add(openfl.LibTest);
 	}
 }
