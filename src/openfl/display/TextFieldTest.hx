@@ -152,19 +152,19 @@ class TextFieldTest {
 //        1000);
 //
 //    }
-
-
+//
+//
     @Test
-    public function testSetSelection(asyncFactory: AsyncFactory) {
+    public function testSetSelection() {
         tf = new TextField();
         tf.background = true;
         tf.backgroundColor = 0xcccccc;
         tf.x = 20;
         tf.y = 100;
-        tf.width = 400;
-        tf.height = 20;
-        tf.wordWrap = true;
-        tf.autoSize = Std.string(TextFieldAutoSize.LEFT);
+        tf.width = 1000;
+        tf.height = 30;
+        //tf.wordWrap = true;
+        //tf.autoSize = Std.string(TextFieldAutoSize.LEFT);
         tf.textColor = 0x45ad00;
         tf.type = TextFieldType.INPUT;
 
@@ -178,5 +178,88 @@ class TextFieldTest {
         Assert.areEqual(10, tf.selectionBeginIndex);
         Assert.areEqual(25, tf.selectionEndIndex);
     }
+
+//    @Test
+//    public function testRemoveText() {
+//        // the whole selection before the formated inteval
+//        tf = new TextField();
+//        tf.type = TextFieldType.INPUT;
+//        tf.text = "abcdefghik";
+//        tf.setTextFormat(new TextFormat('Arial', 30, 0xff00ff, true, true, true), 3, 6);
+//        tf.setSelection(0,1);
+//        untyped tf.__fireEvent (new KeyboardEvent (KeyboardEvent.KEY_DOWN, true, false, 0, Keyboard.DELETE, Keyboard.DELETE, false, false, false));
+//        Assert.areEqual('cdefghik', tf.text);
+//        Assert.areEqual(12, tf.getTextFormat(0).size);
+//        Assert.areEqual(30, tf.getTextFormat(1).size);
+//        Assert.areEqual(12, tf.getTextFormat(5).size);
+//        Assert.areEqual(30, tf.getTextFormat(4).size);
+//
+//        // the whole selection after the formated interval
+//        tf = new TextField();
+//        tf.type = TextFieldType.INPUT;
+//        tf.text = "abcdefghik";
+//        tf.setTextFormat(new TextFormat('Arial', 30, 0xff00ff, true, true, true), 3, 6);
+//        tf.setSelection(7,8);
+//        untyped tf.__fireEvent (new KeyboardEvent (KeyboardEvent.KEY_DOWN, true, false, 0, Keyboard.DELETE, Keyboard.DELETE, false, false, false));
+//        Assert.areEqual('abcdefgk', tf.text);
+//        Assert.areEqual(12, tf.getTextFormat(2).size);
+//        Assert.areEqual(30, tf.getTextFormat(3).size);
+//        Assert.areEqual(12, tf.getTextFormat(7).size);
+//        Assert.areEqual(30, tf.getTextFormat(6).size);
+//
+//        // the whole selection equals the formated interval
+//        tf = new TextField();
+//        tf.type = TextFieldType.INPUT;
+//        tf.text = "abcdefghik";
+//        tf.setTextFormat(new TextFormat('Arial', 30, 0xff00ff, true, true, true), 3, 6);
+//        tf.setSelection(3,6);
+//        untyped tf.__fireEvent (new KeyboardEvent (KeyboardEvent.KEY_DOWN, true, false, 0, Keyboard.DELETE, Keyboard.DELETE, false, false, false));
+//        Assert.areEqual('abchik', tf.text);
+//        Assert.areEqual(12, tf.getTextFormat(2).size);
+//        Assert.areEqual(12, tf.getTextFormat(3).size);
+//        Assert.areEqual(12, tf.getTextFormat(4).size);
+//        Assert.areEqual(12, tf.getTextFormat(5).size);
+//        Assert.areEqual(12, tf.getTextFormat(6).size);
+//        Assert.areEqual(12, tf.getTextFormat(7).size);
+//
+//        // the whole selection in the formated interval
+//        tf = new TextField();
+//        tf.type = TextFieldType.INPUT;
+//        tf.text = "abcdefghik";
+//        tf.setTextFormat(new TextFormat('Arial', 30, 0xff00ff, true, true, true), 3, 6);
+//        tf.setSelection(3,6);
+//        untyped tf.__fireEvent (new KeyboardEvent (KeyboardEvent.KEY_DOWN, true, false, 0, Keyboard.DELETE, Keyboard.DELETE, false, false, false));
+//        Assert.areEqual('abchik', tf.text);
+//        Assert.areEqual(12, tf.getTextFormat(2).size);
+//        Assert.areEqual(12, tf.getTextFormat(3).size);
+//        Assert.areEqual(12, tf.getTextFormat(4).size);
+//        Assert.areEqual(12, tf.getTextFormat(5).size);
+//        Assert.areEqual(12, tf.getTextFormat(6).size);
+//        Assert.areEqual(12, tf.getTextFormat(7).size);
+//
+//        // the selection intersects the formated interval by the right side
+//        tf = new TextField();
+//        tf.type = TextFieldType.INPUT;
+//        tf.text = "abcdefghik";
+//        tf.setTextFormat(new TextFormat('Arial', 30, 0xff00ff, true, true, true), 3, 6);
+//        tf.setSelection(1,5);
+//        untyped tf.__fireEvent (new KeyboardEvent (KeyboardEvent.KEY_DOWN, true, false, 0, Keyboard.DELETE, Keyboard.DELETE, false, false, false));
+//        Assert.areEqual('aghik', tf.text);
+//        Assert.areEqual(12, tf.getTextFormat(0).size);
+//        Assert.areEqual(30, tf.getTextFormat(1).size);
+//        Assert.areEqual(12, tf.getTextFormat(2).size);
+//
+//        // the selection intersects the formated interval by the left side
+//        tf = new TextField();
+//        tf.type = TextFieldType.INPUT;
+//        tf.text = "abcdefghik";
+//        tf.setTextFormat(new TextFormat('Arial', 30, 0xff00ff, true, true, true), 3, 6);
+//        tf.setSelection(4,8);
+//        untyped tf.__fireEvent (new KeyboardEvent (KeyboardEvent.KEY_DOWN, true, false, 0, Keyboard.DELETE, Keyboard.DELETE, false, false, false));
+//        Assert.areEqual('abcdk', tf.text);
+//        Assert.areEqual(12, tf.getTextFormat(2).size);
+//        Assert.areEqual(30, tf.getTextFormat(3).size);
+//        Assert.areEqual(12, tf.getTextFormat(4).size);
+//    }
 
 }
