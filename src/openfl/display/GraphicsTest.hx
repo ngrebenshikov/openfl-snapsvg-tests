@@ -632,7 +632,7 @@ class GraphicsTest {
         g.lineStyle(8, 0xAA0110, 1, true, LineScaleMode.NONE, CapsStyle.SQUARE, JointStyle.BEVEL, 4);
 
         var bitmap = new Bitmap(Assets.getBitmapData("assets/openfl.png"));
-        g.beginBitmapFill(bitmap.bitmapData, null, true, false);
+        g.beginBitmapFill(bitmap.bitmapData, null, false, false);
         g.drawRect(10, 15, 450, 500);
         g.endFill();
         asyncHandler = asyncFactory.createHandler(this, function() {
@@ -667,6 +667,44 @@ class GraphicsTest {
 
     @AsyncTest
     public function testBitmapFill3(asyncFactory: AsyncFactory) {
+        g.lineStyle(8, 0xAA0110, 1, true, LineScaleMode.NONE, CapsStyle.SQUARE, JointStyle.BEVEL, 4);
+
+        var bitmap = new Bitmap(Assets.getBitmapData("assets/openfl.png"));
+        g.beginBitmapFill(bitmap.bitmapData, null, true, false);
+        g.drawRect(10, 15, 450, 500);
+        g.endFill();
+        asyncHandler = asyncFactory.createHandler(this, function() {
+            Lib.__getStage().removeEventListener(Event.STAGE_RENDERED, asyncHandler);
+            var rect = g.__snap.select("rect");
+            Assert.isNotNull(rect);
+
+            Assert.areEqual("10", rect.attr("x"));
+            Assert.areEqual("15", rect.attr("y"));
+            Assert.areEqual("450", rect.attr("width"));
+            Assert.areEqual("500", rect.attr("height"));
+            Assert.areEqual("0", rect.attr("rx"));
+            Assert.areEqual("0", rect.attr("ry"));
+
+            Assert.isTrue(tools.Color.areColorsEqual('#aa0110', rect.attr("stroke")));
+
+            Assert.areEqual("stroke-width: 8" + strokeWidthPostfix + "; stroke-linecap: square; stroke-linejoin: bevel; stroke-miterlimit: 4; fill-rule: evenodd;" + transformPostfix, rect.attr("style"));
+            Assert.areEqual("non-scaling-stroke", rect.attr("vector-effect"));
+
+            var fill = rect.attr("fill");
+            Assert.isNotNull(fill);
+            var fillId = Helper.getAnchorIdFromUrl(fill);
+            Assert.isNotNull(fillId);
+// Why do we need it?
+//            var fillParts = fill.split(' ');
+//            Assert.areEqual(2, fillParts.length);
+//            Assert.areEqual("transparent", fillParts[1]);
+
+        }, 300);
+        Lib.__getStage().addEventListener(Event.STAGE_RENDERED, asyncHandler);
+    }
+
+    @AsyncTest
+    public function testBitmapFill4(asyncFactory: AsyncFactory) {
         g.lineStyle(8, 0xAA0110, 1, true, LineScaleMode.NONE, CapsStyle.SQUARE, JointStyle.BEVEL, 4);
 
         var bitmap = new Bitmap(Assets.getBitmapData("assets/openfl.png"));
