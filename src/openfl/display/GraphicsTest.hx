@@ -618,11 +618,6 @@ class GraphicsTest {
             Assert.isNotNull(fill);
             var fillId = Helper.getAnchorIdFromUrl(fill);
             Assert.isNotNull(fillId);
-// Why do we need it?
-//            var fillParts = fill.split(' ');
-//            Assert.areEqual(2, fillParts.length);
-//            Assert.areEqual("transparent", fillParts[1]);
-
         }, 300);
         Lib.__getStage().addEventListener(Event.STAGE_RENDERED, asyncHandler);
     }
@@ -656,11 +651,6 @@ class GraphicsTest {
             Assert.isNotNull(fill);
             var fillId = Helper.getAnchorIdFromUrl(fill);
             Assert.isNotNull(fillId);
-// Why do we need it?
-//            var fillParts = fill.split(' ');
-//            Assert.areEqual(2, fillParts.length);
-//            Assert.areEqual("transparent", fillParts[1]);
-
         }, 300);
         Lib.__getStage().addEventListener(Event.STAGE_RENDERED, asyncHandler);
     }
@@ -671,7 +661,7 @@ class GraphicsTest {
 
         var bitmap = new Bitmap(Assets.getBitmapData("assets/openfl.png"));
         g.beginBitmapFill(bitmap.bitmapData, null, true, false);
-        g.drawRect(10, 15, 450, 500);
+        g.drawRect(10, 15, 900, 500);
         g.endFill();
         asyncHandler = asyncFactory.createHandler(this, function() {
             Lib.__getStage().removeEventListener(Event.STAGE_RENDERED, asyncHandler);
@@ -680,7 +670,7 @@ class GraphicsTest {
 
             Assert.areEqual("10", rect.attr("x"));
             Assert.areEqual("15", rect.attr("y"));
-            Assert.areEqual("450", rect.attr("width"));
+            Assert.areEqual("900", rect.attr("width"));
             Assert.areEqual("500", rect.attr("height"));
             Assert.areEqual("0", rect.attr("rx"));
             Assert.areEqual("0", rect.attr("ry"));
@@ -694,11 +684,9 @@ class GraphicsTest {
             Assert.isNotNull(fill);
             var fillId = Helper.getAnchorIdFromUrl(fill);
             Assert.isNotNull(fillId);
-// Why do we need it?
-//            var fillParts = fill.split(' ');
-//            Assert.areEqual(2, fillParts.length);
-//            Assert.areEqual("transparent", fillParts[1]);
 
+            Assert.areEqual(900, g.__snap.getBBox().width);
+            Assert.areEqual(500, g.__snap.getBBox().height);
         }, 300);
         Lib.__getStage().addEventListener(Event.STAGE_RENDERED, asyncHandler);
     }
@@ -732,11 +720,6 @@ class GraphicsTest {
             Assert.isNotNull(fill);
             var fillId = Helper.getAnchorIdFromUrl(fill);
             Assert.isNotNull(fillId);
-// Why do we need it?
-//            var fillParts = fill.split(' ');
-//            Assert.areEqual(2, fillParts.length);
-//            Assert.areEqual("transparent", fillParts[1]);
-
         }, 300);
         Lib.__getStage().addEventListener(Event.STAGE_RENDERED, asyncHandler);
     }
