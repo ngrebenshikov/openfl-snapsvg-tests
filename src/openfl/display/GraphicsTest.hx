@@ -723,4 +723,240 @@ class GraphicsTest {
         }, 300);
         Lib.__getStage().addEventListener(Event.STAGE_RENDERED, asyncHandler);
     }
+
+    @AsyncTest
+    public function complexPolygon1(asyncFactory: AsyncFactory) {
+        var myFill: GraphicsGradientFill = new GraphicsGradientFill();
+        myFill.type = GradientType.LINEAR;
+        myFill.colors = [0xff0000,0x00ff00,0x0000ff];
+        myFill.alphas = [1.0, 0.3, 0.7];
+        myFill.ratios = [0, 128, 255];
+        myFill.matrix = new Matrix();
+        myFill.matrix.createGradientBox(250, 200, 0);
+        myFill.spreadMethod = SpreadMethod.REFLECT;
+        myFill.interpolationMethod = InterpolationMethod.LINEAR_RGB;
+        myFill.focalPointRatio = 4;
+
+        // establish the stroke properties
+        var myStroke:GraphicsStroke = new GraphicsStroke(2);
+        myStroke.fill = new GraphicsSolidFill(0xDD00FF);
+        myStroke.thickness = 7;
+        myStroke.pixelHinting = true;
+        myStroke.scaleMode = LineScaleMode.NORMAL;
+        myStroke.caps = CapsStyle.SQUARE;
+        myStroke.joints = JointStyle.ROUND;
+        myStroke.miterLimit = 7;
+
+
+        // establish the path properties
+        var pathCommands: Array<Int> = new Array<Int>();
+        pathCommands.push(GraphicsPathCommand.MOVE_TO);
+        pathCommands.push(GraphicsPathCommand.LINE_TO);
+        pathCommands.push(GraphicsPathCommand.LINE_TO);
+        pathCommands.push(GraphicsPathCommand.LINE_TO);
+        pathCommands.push(GraphicsPathCommand.LINE_TO);
+
+        var pathCoordinates: Array<Int> = [300, 20, 500, 400, 50, 70, 550, 70, 100, 400];
+
+        var myPath:GraphicsPath = new GraphicsPath(pathCommands, pathCoordinates);
+
+        // populate the IGraphicsData Vector array
+        var myDrawing: Array<IGraphicsData> =[myFill, myStroke, myPath];
+
+        // render the drawing
+        g.drawGraphicsData(myDrawing);
+
+        asyncHandler = asyncFactory.createHandler(this, function() {
+            Lib.__getStage().removeEventListener(Event.STAGE_RENDERED, asyncHandler);
+            var path = g.__snap.select("path");
+
+            Assert.isNotNull(path);
+            Assert.areEqual("M300 20 L500 400 L50 70 L550 70 L100 400 L300 20 Z", path.attr("d"));
+
+            Assert.isTrue(tools.Color.areColorsEqual('rgba(221,0,255,1)', path.attr('stroke')));
+
+            Assert.isNotNull(path.attr('fill'));
+            var gradientId = Helper.getAnchorIdFromUrl(path.attr('fill'));
+            Assert.isNotNull(gradientId);
+
+            var gradient = Snap.select('#' + gradientId);
+            Assert.isNotNull(gradient);
+            Assert.areEqual('linearGradient', gradient.type);
+
+            Assert.areEqual('-819.2', gradient.attr('x1'));
+            Assert.areEqual('0', gradient.attr('y1'));
+            Assert.areEqual('819.2', gradient.attr('x2'));
+            Assert.areEqual('0', gradient.attr('y2'));
+            Assert.areEqual('reflect', gradient.attr('spreadMethod'));
+            Assert.areEqual('userSpaceOnUse', gradient.attr('gradientUnits'));
+
+            // Check matrix
+            var matrixString: String = gradient.attr('gradientTransform');
+            Assert.isNotNull(matrixString);
+            var coefficients = cast StringTools.replace(StringTools.replace(matrixString, 'matrix(', ''), ')', '').split(',');
+            Assert.isTrue(Math.abs(myFill.matrix.a - Std.parseFloat(coefficients[0])) < 0.01);
+            Assert.isTrue(Math.abs(myFill.matrix.b - Std.parseFloat(coefficients[1])) < 0.01);
+            Assert.isTrue(Math.abs(myFill.matrix.c - Std.parseFloat(coefficients[2])) < 0.01);
+            Assert.isTrue(Math.abs(myFill.matrix.d - Std.parseFloat(coefficients[3])) < 0.01);
+            Assert.isTrue(Math.abs(myFill.matrix.tx - Std.parseFloat(coefficients[4])) < 0.01);
+            Assert.isTrue(Math.abs(myFill.matrix.ty - Std.parseFloat(coefficients[5])) < 0.01);
+
+            // Check stops
+            var stops = gradient.node.childNodes;
+            Assert.areEqual('0%', stops.item(0).attributes.getNamedItem('offset').nodeValue);
+            Assert.isTrue(tools.Color.areColorsEqual('#ff0000', stops.item(0).attributes.getNamedItem('stop-color').nodeValue));
+            Assert.isNull(stops.item(0).attributes.getNamedItem('stop-opacity'));
+
+            Assert.areEqual('50%', stops.item(1).attributes.getNamedItem('offset').nodeValue);
+            Assert.isTrue(tools.Color.areColorsEqual('#00ff00', stops.item(1).attributes.getNamedItem('stop-color').nodeValue));
+            Assert.isTrue(Math.abs(0.3 - Std.parseFloat(stops.item(1).attributes.getNamedItem('stop-opacity').nodeValue)) < 0.01);
+
+            Assert.areEqual('100%', stops.item(2).attributes.getNamedItem('offset').nodeValue);
+            Assert.isTrue(tools.Color.areColorsEqual('#0000ff', stops.item(2).attributes.getNamedItem('stop-color').nodeValue));
+            Assert.isTrue(Math.abs(0.7 - Std.parseFloat(stops.item(2).attributes.getNamedItem('stop-opacity').nodeValue)) < 0.01);
+
+            Assert.areEqual("stroke-width: 7" + strokeWidthPostfix + "; stroke-linecap: square; stroke-linejoin: round; stroke-miterlimit: 7; fill-rule: evenodd;" + transformPostfix, path.attr("style"));
+            Assert.areEqual("none", path.attr("vector-effect"));
+        }, 300);
+        Lib.__getStage().addEventListener(Event.STAGE_RENDERED, asyncHandler);
+    }
+
+    @AsyncTest
+    public function complexPolygon2(asyncFactory: AsyncFactory) {
+        var myFill: GraphicsSolidFill = new GraphicsSolidFill();
+        myFill.alpha = 0.5;
+        myFill.color = 0x4E9AF4;
+
+        // establish the stroke properties
+        var myStroke:GraphicsStroke = new GraphicsStroke(2);
+        myStroke.fill = new GraphicsSolidFill(0xDD00FF);
+        myStroke.thickness = 7;
+        myStroke.pixelHinting = true;
+        myStroke.scaleMode = LineScaleMode.NORMAL;
+        myStroke.caps = CapsStyle.SQUARE;
+        myStroke.joints = JointStyle.ROUND;
+        myStroke.miterLimit = 7;
+
+
+        // establish the path properties
+        var pathCommands: Array<Int> = new Array<Int>();
+        pathCommands.push(GraphicsPathCommand.MOVE_TO);
+        pathCommands.push(GraphicsPathCommand.LINE_TO);
+        pathCommands.push(GraphicsPathCommand.LINE_TO);
+        pathCommands.push(GraphicsPathCommand.LINE_TO);
+        pathCommands.push(GraphicsPathCommand.LINE_TO);
+
+        var pathCoordinates: Array<Int> = [300, 20, 500, 400, 50, 70, 550, 70, 100, 400];
+
+        var myPath:GraphicsPath = new GraphicsPath(pathCommands, pathCoordinates);
+
+        // populate the IGraphicsData Vector array
+        var myDrawing: Array<IGraphicsData> =[myFill, myStroke, myPath];
+
+        // render the drawing
+        g.drawGraphicsData(myDrawing);
+
+        asyncHandler = asyncFactory.createHandler(this, function() {
+            Lib.__getStage().removeEventListener(Event.STAGE_RENDERED, asyncHandler);
+            var path = g.__snap.select("path");
+
+            Assert.isNotNull(path);
+            Assert.areEqual("M300 20 L500 400 L50 70 L550 70 L100 400 L300 20 Z", path.attr("d"));
+
+            Assert.isNotNull(path.attr('stroke'));
+            Assert.isTrue(tools.Color.areColorsEqual('rgba(221,0,255,1)', path.attr('stroke')));
+
+            Assert.isNotNull(path.attr('fill'));
+            Assert.isTrue(tools.Color.areColorsEqual('rgba(78,154,244,0.5)', path.attr("fill")));
+
+            Assert.areEqual("stroke-width: 7" + strokeWidthPostfix + "; stroke-linecap: square; stroke-linejoin: round; stroke-miterlimit: 7; fill-rule: evenodd;" + transformPostfix, path.attr("style"));
+            Assert.areEqual("none", path.attr("vector-effect"));
+        }, 300);
+        Lib.__getStage().addEventListener(Event.STAGE_RENDERED, asyncHandler);
+    }
+
+    @AsyncTest
+    public function complexPolygon3(asyncFactory: AsyncFactory) {
+        g.lineStyle(3, 0x123456, 0.4, true, LineScaleMode.NORMAL, CapsStyle.ROUND, JointStyle.BEVEL, 5);
+        g.beginFill(0x654321, 0.4);
+        g.moveTo(40, 30);
+        g.lineTo(120, 30);
+        g.lineTo(160, 70);
+        g.lineTo(190, 40);
+        g.lineTo(150, 100);
+        g.lineTo(130, 70);
+        g.lineTo(170, 30);
+        g.lineTo(170, 130);
+        g.lineTo(110, 80);
+        g.lineTo(100, 170);
+        g.lineTo(90, 180);
+        g.lineTo(90, 140);
+        g.lineTo(60, 120);
+        g.lineTo(70, 160);
+        g.lineTo(120, 160);
+        g.lineTo(60, 80);
+        g.lineTo(70, 50);
+
+        asyncHandler = asyncFactory.createHandler(this, function() {
+            Lib.__getStage().removeEventListener(Event.STAGE_RENDERED, asyncHandler);
+            var path = g.__snap.select("path");
+
+            Assert.isNotNull(path);
+            Assert.areEqual("M40 30 L120 30 L160 70 L190 40 L150 100 L130 70 L170 30 L170 130 L110 80 L100 170 L90 180 L90 140 L60 120 L70 160 L120 160 L60 80 L70 50 L40 30 Z", path.attr("d"));
+
+            Assert.isNotNull(path.attr('stroke'));
+            Assert.isTrue(tools.Color.areColorsEqual('rgba(18,52,86,0.4)', path.attr('stroke')));
+
+            Assert.isNotNull(path.attr('fill'));
+            Assert.isTrue(tools.Color.areColorsEqual('rgba(101,67,33,0.4)', path.attr('fill')));
+
+            Assert.areEqual("stroke-width: 3" + strokeWidthPostfix + "; stroke-linecap: round; stroke-linejoin: bevel; stroke-miterlimit: 5; fill-rule: evenodd;" + transformPostfix, path.attr("style"));
+            Assert.areEqual("none", path.attr("vector-effect"));
+        }, 300);
+        Lib.__getStage().addEventListener(Event.STAGE_RENDERED, asyncHandler);
+    }
+
+    @AsyncTest
+    public function complexPolygon4(asyncFactory: AsyncFactory) {
+        g.lineStyle(3, 0x123456, 0.4, true, LineScaleMode.NORMAL, CapsStyle.ROUND, JointStyle.BEVEL, 5);
+        var bitmap = new Bitmap(Assets.getBitmapData("assets/openfl.png"));
+        g.beginBitmapFill(bitmap.bitmapData, null, true, false);
+        g.moveTo(40, 30);
+        g.lineTo(120, 30);
+        g.lineTo(160, 70);
+        g.lineTo(190, 40);
+        g.lineTo(150, 100);
+        g.lineTo(130, 70);
+        g.lineTo(170, 30);
+        g.lineTo(170, 130);
+        g.lineTo(110, 80);
+        g.lineTo(100, 170);
+        g.lineTo(90, 180);
+        g.lineTo(90, 140);
+        g.lineTo(60, 120);
+        g.lineTo(70, 160);
+        g.lineTo(120, 160);
+        g.lineTo(60, 80);
+        g.lineTo(70, 50);
+
+        asyncHandler = asyncFactory.createHandler(this, function() {
+            Lib.__getStage().removeEventListener(Event.STAGE_RENDERED, asyncHandler);
+            var path = g.__snap.select("path");
+
+            Assert.isNotNull(path);
+            Assert.areEqual("M40 30 L120 30 L160 70 L190 40 L150 100 L130 70 L170 30 L170 130 L110 80 L100 170 L90 180 L90 140 L60 120 L70 160 L120 160 L60 80 L70 50 L40 30 Z", path.attr("d"));
+
+            Assert.isNotNull(path.attr('stroke'));
+            Assert.isTrue(tools.Color.areColorsEqual('rgba(18,52,86,0.4)', path.attr('stroke')));
+
+            var fill = path.attr("fill");
+            Assert.isNotNull(fill);
+            var fillId = Helper.getAnchorIdFromUrl(fill);
+            Assert.isNotNull(fillId);
+
+            Assert.areEqual("stroke-width: 3" + strokeWidthPostfix + "; stroke-linecap: round; stroke-linejoin: bevel; stroke-miterlimit: 5; fill-rule: evenodd;" + transformPostfix, path.attr("style"));
+            Assert.areEqual("none", path.attr("vector-effect"));
+        }, 300);
+        Lib.__getStage().addEventListener(Event.STAGE_RENDERED, asyncHandler);
+    }
 }
