@@ -959,4 +959,166 @@ class GraphicsTest {
         }, 300);
         Lib.__getStage().addEventListener(Event.STAGE_RENDERED, asyncHandler);
     }
+
+    @AsyncTest
+    public function complexPolygon5(asyncFactory: AsyncFactory) {
+        var myFill: GraphicsSolidFill = new GraphicsSolidFill();
+        myFill.alpha = 0.5;
+        myFill.color = 0x4E9AF4;
+
+        var strokeGradFill: GraphicsGradientFill = new GraphicsGradientFill();
+        strokeGradFill.type = GradientType.LINEAR;
+        strokeGradFill.colors = [0xff0000,0x00ff00,0x0000ff];
+        strokeGradFill.alphas = [1.0, 0.3, 0.7];
+        strokeGradFill.ratios = [0, 128, 255];
+        strokeGradFill.matrix = new Matrix();
+        strokeGradFill.matrix.createGradientBox(250, 200, 0);
+        strokeGradFill.spreadMethod = SpreadMethod.REFLECT;
+        strokeGradFill.interpolationMethod = InterpolationMethod.LINEAR_RGB;
+        strokeGradFill.focalPointRatio = 4;
+
+        // establish the stroke properties
+        var myStroke:GraphicsStroke = new GraphicsStroke(2);
+        myStroke.fill = strokeGradFill;
+        myStroke.thickness = 7;
+        myStroke.pixelHinting = true;
+        myStroke.scaleMode = LineScaleMode.NORMAL;
+        myStroke.caps = CapsStyle.SQUARE;
+        myStroke.joints = JointStyle.ROUND;
+        myStroke.miterLimit = 7;
+
+
+        // establish the path properties
+        var pathCommands: Array<Int> = new Array<Int>();
+        pathCommands.push(GraphicsPathCommand.MOVE_TO);
+        pathCommands.push(GraphicsPathCommand.LINE_TO);
+        pathCommands.push(GraphicsPathCommand.LINE_TO);
+        pathCommands.push(GraphicsPathCommand.LINE_TO);
+        pathCommands.push(GraphicsPathCommand.LINE_TO);
+
+        var pathCoordinates: Array<Int> = [300, 20, 500, 400, 50, 70, 550, 70, 100, 400];
+
+        var myPath:GraphicsPath = new GraphicsPath(pathCommands, pathCoordinates);
+
+        // populate the IGraphicsData Vector array
+        var myDrawing: Array<IGraphicsData> =[myFill, myStroke, myPath];
+
+        // render the drawing
+        g.drawGraphicsData(myDrawing);
+
+        asyncHandler = asyncFactory.createHandler(this, function() {
+            Lib.__getStage().removeEventListener(Event.STAGE_RENDERED, asyncHandler);
+            var path = g.__snap.select("path");
+
+            Assert.isNotNull(path);
+            Assert.areEqual("M300 20 L500 400 L50 70 L550 70 L100 400 L300 20 Z", path.attr("d"));
+
+            Assert.isNotNull(path.attr('stroke'));
+            var gradientId = Helper.getAnchorIdFromUrl(path.attr('stroke'));
+            Assert.isNotNull(gradientId);
+
+            var gradient = Snap.select('#' + gradientId);
+            Assert.isNotNull(gradient);
+            Assert.areEqual('linearGradient', gradient.type);
+
+            Assert.areEqual('-819.2', gradient.attr('x1'));
+            Assert.areEqual('0', gradient.attr('y1'));
+            Assert.areEqual('819.2', gradient.attr('x2'));
+            Assert.areEqual('0', gradient.attr('y2'));
+            Assert.areEqual('reflect', gradient.attr('spreadMethod'));
+            Assert.areEqual('userSpaceOnUse', gradient.attr('gradientUnits'));
+
+            // Check matrix
+            var matrixString: String = gradient.attr('gradientTransform');
+            Assert.isNotNull(matrixString);
+            var coefficients = cast StringTools.replace(StringTools.replace(matrixString, 'matrix(', ''), ')', '').split(',');
+            Assert.isTrue(Math.abs(strokeGradFill.matrix.a - Std.parseFloat(coefficients[0])) < 0.01);
+            Assert.isTrue(Math.abs(strokeGradFill.matrix.b - Std.parseFloat(coefficients[1])) < 0.01);
+            Assert.isTrue(Math.abs(strokeGradFill.matrix.c - Std.parseFloat(coefficients[2])) < 0.01);
+            Assert.isTrue(Math.abs(strokeGradFill.matrix.d - Std.parseFloat(coefficients[3])) < 0.01);
+            Assert.isTrue(Math.abs(strokeGradFill.matrix.tx - Std.parseFloat(coefficients[4])) < 0.01);
+            Assert.isTrue(Math.abs(strokeGradFill.matrix.ty - Std.parseFloat(coefficients[5])) < 0.01);
+
+            // Check stops
+            var stops = gradient.node.childNodes;
+            Assert.areEqual('0%', stops.item(0).attributes.getNamedItem('offset').nodeValue);
+            Assert.isTrue(tools.Color.areColorsEqual('#ff0000', stops.item(0).attributes.getNamedItem('stop-color').nodeValue));
+            Assert.isNull(stops.item(0).attributes.getNamedItem('stop-opacity'));
+
+            Assert.areEqual('50%', stops.item(1).attributes.getNamedItem('offset').nodeValue);
+            Assert.isTrue(tools.Color.areColorsEqual('#00ff00', stops.item(1).attributes.getNamedItem('stop-color').nodeValue));
+            Assert.isTrue(Math.abs(0.3 - Std.parseFloat(stops.item(1).attributes.getNamedItem('stop-opacity').nodeValue)) < 0.01);
+
+            Assert.areEqual('100%', stops.item(2).attributes.getNamedItem('offset').nodeValue);
+            Assert.isTrue(tools.Color.areColorsEqual('#0000ff', stops.item(2).attributes.getNamedItem('stop-color').nodeValue));
+            Assert.isTrue(Math.abs(0.7 - Std.parseFloat(stops.item(2).attributes.getNamedItem('stop-opacity').nodeValue)) < 0.01);
+
+            Assert.isNotNull(path.attr('fill'));
+            Assert.isTrue(tools.Color.areColorsEqual('rgba(78,154,244,0.5)', path.attr("fill")));
+
+            Assert.areEqual("stroke-width: 7" + strokeWidthPostfix + "; stroke-linecap: square; stroke-linejoin: round; stroke-miterlimit: 7; fill-rule: evenodd;" + transformPostfix, path.attr("style"));
+            Assert.areEqual("none", path.attr("vector-effect"));
+        }, 300);
+        Lib.__getStage().addEventListener(Event.STAGE_RENDERED, asyncHandler);
+    }
+
+    @AsyncTest
+    public function complexPolygon6(asyncFactory: AsyncFactory) {
+        var bitmap = new Bitmap(Assets.getBitmapData("assets/openfl.png"));
+
+        var myFill: GraphicsBitmapFill = new GraphicsBitmapFill();
+        myFill.bitmapData = bitmap.bitmapData;
+        myFill.matrix = null;
+        myFill.repeat = true;
+        myFill.smooth = false;
+
+        // establish the stroke properties
+        var myStroke:GraphicsStroke = new GraphicsStroke(2);
+        myStroke.fill = new GraphicsSolidFill(0xDD00FF);
+        myStroke.thickness = 7;
+        myStroke.pixelHinting = true;
+        myStroke.scaleMode = LineScaleMode.NORMAL;
+        myStroke.caps = CapsStyle.SQUARE;
+        myStroke.joints = JointStyle.ROUND;
+        myStroke.miterLimit = 7;
+
+
+        // establish the path properties
+        var pathCommands: Array<Int> = new Array<Int>();
+        pathCommands.push(GraphicsPathCommand.MOVE_TO);
+        pathCommands.push(GraphicsPathCommand.LINE_TO);
+        pathCommands.push(GraphicsPathCommand.LINE_TO);
+        pathCommands.push(GraphicsPathCommand.LINE_TO);
+        pathCommands.push(GraphicsPathCommand.LINE_TO);
+
+        var pathCoordinates: Array<Int> = [300, 20, 500, 400, 50, 70, 550, 70, 100, 400];
+
+        var myPath:GraphicsPath = new GraphicsPath(pathCommands, pathCoordinates);
+
+        // populate the IGraphicsData Vector array
+        var myDrawing: Array<IGraphicsData> =[myFill, myStroke, myPath];
+
+        // render the drawing
+        g.drawGraphicsData(myDrawing);
+
+        asyncHandler = asyncFactory.createHandler(this, function() {
+            Lib.__getStage().removeEventListener(Event.STAGE_RENDERED, asyncHandler);
+            var path = g.__snap.select("path");
+
+            Assert.isNotNull(path);
+            Assert.areEqual("M300 20 L500 400 L50 70 L550 70 L100 400 L300 20 Z", path.attr("d"));
+
+            Assert.isNotNull(path.attr('stroke'));
+            Assert.isTrue(tools.Color.areColorsEqual('rgba(221,0,255,1)', path.attr('stroke')));
+
+            var fill = path.attr("fill");
+            Assert.isNotNull(fill);
+            var fillId = Helper.getAnchorIdFromUrl(fill);
+            Assert.isNotNull(fillId);
+
+            Assert.areEqual("stroke-width: 7" + strokeWidthPostfix + "; stroke-linecap: square; stroke-linejoin: round; stroke-miterlimit: 7; fill-rule: evenodd;" + transformPostfix, path.attr("style"));
+            Assert.areEqual("none", path.attr("vector-effect"));
+        }, 300);
+        Lib.__getStage().addEventListener(Event.STAGE_RENDERED, asyncHandler);
+    }
 }
