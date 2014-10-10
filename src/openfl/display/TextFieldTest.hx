@@ -46,7 +46,7 @@ class TextFieldTest {
         tf.width = 400;
         tf.height = 20;
         tf.wordWrap = true;
-        tf.autoSize = Std.string(TextFieldAutoSize.LEFT);
+        tf.autoSize = TextFieldAutoSize.LEFT;
         tf.textColor = 0x45ad00;
         tf.defaultTextFormat = format;
         tf.text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.\nCras quis arcu cursus, tincidunt ligula eget, semper\ndiam. Nulla sodales diam ut sapien dictum blandit.";
