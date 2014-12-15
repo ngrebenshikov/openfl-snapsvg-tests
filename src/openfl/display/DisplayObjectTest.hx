@@ -359,4 +359,42 @@ class DisplayObjectTest {
         Lib.__getStage().addEventListener(Event.STAGE_RENDERED, asyncHandler);
     }
 
+    @AsyncTest
+    public function testGetSvgDataUrl(asyncFactory: AsyncFactory) {
+        var child1 = new Sprite();
+        child1.x = 100;
+        child1.y = 100;
+        child1.graphics.beginFill(0xffff00);
+        child1.graphics.drawRect(0,0,100,100);
+        Lib.current.addChild(child1);
+
+        asyncHandler = asyncFactory.createHandler(this, function() {
+            Lib.__getStage().removeEventListener(Event.STAGE_RENDERED, asyncHandler);
+            trace(child1.getSvgDataUrl());
+        }, 500);
+        Lib.__getStage().addEventListener(Event.STAGE_RENDERED, asyncHandler);
+
+    }
+
+    @AsyncTest
+    public function testDrawToSurface(asyncFactory: AsyncFactory) {
+        var child1 = new Sprite();
+        child1.x = 100;
+        child1.y = 100;
+        child1.graphics.beginFill(0xffff00);
+        child1.graphics.drawRect(0,0,100,100);
+
+        var bitmapData = new BitmapData(Std.int(child1.width), Std.int(child1.height));
+        var bitmap = new Bitmap(bitmapData);
+        bitmap.bitmapData.draw(child1);
+
+        Lib.current.addChild(bitmap);
+
+        asyncHandler = asyncFactory.createHandler(this, function() {
+            Lib.__getStage().removeEventListener(Event.STAGE_RENDERED, asyncHandler);
+        }, 500);
+        Lib.__getStage().addEventListener(Event.STAGE_RENDERED, asyncHandler);
+    }
+
+
 }
