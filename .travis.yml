@@ -12,9 +12,9 @@ install:
   - sudo apt-get install haxe -y --force-yes
   - mkdir ~/haxelib
   - haxelib setup ~/haxelib
-  - haxelib install lime
-  - haxelib install lime-tools
-  - haxelib install openfl
+  - haxelib install lime 1.0.1
+  - haxelib install lime-tools 1.5.7
+  - haxelib install openfl 2.0.1
   - haxelib install munit 2.1.0
   - git clone https://github.com/ngrebenshikov/MassiveUnit ~/munit --depth 1
   - haxelib dev munit ~/munit/src
