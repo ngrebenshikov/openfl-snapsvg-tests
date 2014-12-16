@@ -21,6 +21,6 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="munit" level="project" />
     <orderEntry type="library" name="hamcrest" level="project" />
+    <orderEntry type="library" name="lime" level="project" />
   </component>
 </module>
-

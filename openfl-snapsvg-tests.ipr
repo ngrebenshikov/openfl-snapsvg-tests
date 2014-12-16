@@ -169,6 +169,15 @@
         <root url="file://$PROJECT_DIR$/lib/hamcrest" />
       </SOURCES>
     </library>
+    <library name="lime" type="Haxe">
+      <CLASSES>
+        <root url="file:///usr/lib/haxe/lib/lime/2,0,1" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES>
+        <root url="file:///usr/lib/haxe/lib/lime/2,0,1" />
+      </SOURCES>
+    </library>
     <library name="munit" type="Haxe">
       <CLASSES>
         <root url="file://$PROJECT_DIR$/lib/munit" />
@@ -180,4 +189,3 @@
     </library>
   </component>
 </project>
-
