@@ -1,5 +1,6 @@
 import massive.munit.TestSuite;
 
+import openfl.AssetsTest;
 import openfl.display.ColorTest;
 import openfl.display.DisplayObjectTest;
 import openfl.display.GraphicsTest;
@@ -20,6 +21,7 @@ class TestSuite extends massive.munit.TestSuite
 	{
 		super();
 
+		add(openfl.AssetsTest);
 		add(openfl.display.ColorTest);
 		add(openfl.display.DisplayObjectTest);
 		add(openfl.display.GraphicsTest);
