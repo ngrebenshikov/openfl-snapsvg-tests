@@ -289,8 +289,8 @@ class TextFieldTest {
         tf.backgroundColor = 0xFFE100;
         tf.x = 20;
         tf.y = 100;
-        tf.width = 400;
-        tf.height = 400;
+        tf.width = 200;
+        tf.height = 50;
         tf.wordWrap = true;
         tf.textColor = 0x45ad00;
         tf.defaultTextFormat = format;
