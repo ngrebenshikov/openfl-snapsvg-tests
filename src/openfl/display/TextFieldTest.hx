@@ -302,4 +302,32 @@ class TextFieldTest {
         }, 300);
         Lib.__getStage().addEventListener(Event.STAGE_RENDERED, testTextFieldHandler);
     }
+
+    @AsyncTest
+    public function testShowAsPassword(asyncFactory: AsyncFactory) {
+        tf = new TextField();
+
+        var format = new TextFormat();
+        format.size = 18;
+        format.font = "Tahoma";
+        Lib.current.addChild(tf);
+
+        tf.background = true;
+        tf.backgroundColor = 0xFFE100;
+        tf.x = 20;
+        tf.y = 100;
+        tf.width = 200;
+        tf.height = 50;
+        tf.wordWrap = true;
+        tf.textColor = 0x45ad00;
+        tf.defaultTextFormat = format;
+        tf.displayAsPassword = true;
+        tf.multiline = true;
+        tf.type = TextFieldType.INPUT;
+        tf.text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.\nCras quis arcu cursus, tincidunt ligula eget, semper\ndiam. Nulla sodales diam ut sapien dictum blandit.";
+
+        testTextFieldHandler = asyncFactory.createHandler(this, function() {
+        }, 300);
+        Lib.__getStage().addEventListener(Event.STAGE_RENDERED, testTextFieldHandler);
+    }
 }
