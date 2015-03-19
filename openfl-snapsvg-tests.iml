@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module type="HAXE_MODULE" version="4">
   <component name="HaxeModuleSettingsStorage">
-    <option name="HXCPPPort" value="63341" />
     <option name="buildConfig" value="3" />
     <option name="flexSdkName" value="flex_sdk_4" />
     <option name="openFLTarget" value="HTML5" />
@@ -22,5 +21,82 @@
     <orderEntry type="library" name="munit" level="project" />
     <orderEntry type="library" name="hamcrest" level="project" />
     <orderEntry type="library" name="lime" level="project" />
+    <orderEntry type="module-library">
+      <library name="haxelib|/usr/lib/haxe/lib/openfl/2,1,7">
+        <CLASSES>
+          <root url="file:///usr/lib/haxe/lib/openfl/2,1,7" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file:///usr/lib/haxe/lib/openfl/2,1,7" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="haxelib|/usr/lib/haxe/lib/lime/2,0,1">
+        <CLASSES>
+          <root url="file:///usr/lib/haxe/lib/lime/2,0,1" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file:///usr/lib/haxe/lib/lime/2,0,1" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="haxelib|/Users/ngrebenshikov/repositories/MassiveUnitCorrect/src">
+        <CLASSES>
+          <root url="file://$MODULE_DIR$/../MassiveUnitCorrect/src" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$MODULE_DIR$/../MassiveUnitCorrect/src" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="haxelib|/usr/lib/haxe/lib/mlib/2,0,2">
+        <CLASSES>
+          <root url="file:///usr/lib/haxe/lib/mlib/2,0,2" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file:///usr/lib/haxe/lib/mlib/2,0,2" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="haxelib|/usr/lib/haxe/lib/mcover/2,1,1">
+        <CLASSES>
+          <root url="file:///usr/lib/haxe/lib/mcover/2,1,1" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file:///usr/lib/haxe/lib/mcover/2,1,1" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="haxelib|/usr/lib/haxe/lib/mconsole/1,6,0">
+        <CLASSES>
+          <root url="file:///usr/lib/haxe/lib/mconsole/1,6,0" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file:///usr/lib/haxe/lib/mconsole/1,6,0" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="haxelib|/Users/ngrebenshikov/repositories/openfl-snapsvg">
+        <CLASSES>
+          <root url="file://$MODULE_DIR$/../openfl-snapsvg" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$MODULE_DIR$/../openfl-snapsvg" />
+        </SOURCES>
+      </library>
+    </orderEntry>
   </component>
 </module>
